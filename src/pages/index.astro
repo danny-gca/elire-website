@@ -1,0 +1,964 @@
+---
+import Base from '../layouts/Base.astro';
+import exemples from '../data/exemples.json';
+import { APP_URL, COUNTS, DATA_DATE, FUNDING, REPO_URL, STORES } from '../config';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const first = exemples[0];
+
+const VOTES = [
+  { value: -2, label: 'Impossible', sign: '−2', color: 'var(--vote-m2)' },
+  { value: -1, label: 'Contre', sign: '−1', color: 'var(--vote-m1)' },
+  { value: 0, label: 'Neutre', sign: '0', color: 'var(--vote-0)' },
+  { value: 1, label: 'Pour', sign: '+1', color: 'var(--vote-p1)' },
+  { value: 2, label: 'Parfait', sign: '+2', color: 'var(--vote-p2)' },
+];
+
+// Illustration du Classement : scores fictifs, aucun nom ni visage.
+const PANELS = [
+  { rank: 1, score: 75, tied: true },
+  { rank: 1, score: 75, tied: true },
+  { rank: 3, score: 67, tied: false },
+  { rank: 4, score: 58, tied: true },
+  { rank: 4, score: 58, tied: true },
+  { rank: 6, score: 50, tied: false },
+];
+
+const VALEURS = [
+  {
+    nom: 'Neutralité',
+    cle: 'la mesure',
+    titre: 'Vous jugez la mesure, pas la personne.',
+    texte: 'Les propositions arrivent sans nom ni parti, dans un ordre mélangé. À égalité de score, les candidats partagent le même rang, dans un ordre tiré au hasard.',
+  },
+  {
+    nom: 'Transparence',
+    cle: 'sa source',
+    titre: 'Chaque fait a sa source.',
+    texte: 'Chaque proposition cite le texte exact de son origine, chaque scrutin renvoie au site officiel du Parlement. Une erreur ? Un lien permet de la signaler.',
+  },
+  {
+    nom: 'Responsabilité',
+    cle: 'un vote',
+    titre: 'Une promesse n’est pas un vote.',
+    texte: 'Le programme 2027 et les votes réels au Parlement sont séparés. Quand un candidat n’a pas voté lui-même, c’est écrit : position de son groupe.',
+  },
+  {
+    nom: 'Confidentialité',
+    cle: 'chez vous',
+    titre: 'Vos avis restent chez vous.',
+    texte: 'Aucun compte, aucune statistique envoyée. Vos votes sont enregistrés sur votre appareil seulement, et vous pouvez les effacer à tout moment.',
+  },
+];
+
+const keyed = (titre: string, cle: string) => {
+  const [avant, apres] = titre.split(cle);
+  return { avant, cle, apres };
+};
+
+const storesSoon = !STORES.ios || !STORES.android;
+---
+
+<Base
+  title="ÉLIRE, présidentielle 2027 : faites-vous votre avis"
+  description="Notez les propositions des candidats à l'aveugle, puis comparez-les à leurs votes réels au Parlement. Gratuit, sans compte, open source."
+>
+  <section class="hero" aria-labelledby="accroche">
+    <div class="hook">
+      <h1 id="accroche">Faites-vous votre avis. <span class="line">Sans savoir <span class="sweep">qui&nbsp;parle</span>.</span></h1>
+      <div class="act">
+        <a class="btn" href={APP_URL}>
+          Ouvrir l'app web
+          <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M3 8h10m-4-4 4 4-4 4" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </a>
+        <p class="stores">
+          {storesSoon ? 'Bientôt sur Android et iOS.' : 'Aussi sur Android et iOS.'}
+          <span>Gratuit, sans compte, sans publicité.</span>
+        </p>
+      </div>
+    </div>
+
+    <ol class="sheet" aria-label="Le fonctionnement en quatre temps">
+      <li class="col">
+        <h2 class="col-title"><span class="num">1.</span> Lire, sans savoir qui</h2>
+        <div class="mini-sheet">
+          <p class="mini-meta num"><span data-ex-ref>{first.ref}</span> · <span data-ex-theme style={`color:${first.accent}`}>{first.theme}</span></p>
+          <p class="mini-title" data-ex-title>{first.titre}</p>
+          <p class="mini-source">Voir la source et le contexte</p>
+        </div>
+        <p class="mini-note">Auteur masqué, ordre tiré au hasard.</p>
+      </li>
+
+      <li class="col">
+        <h2 class="col-title"><span class="num">2.</span> Noter de −2 à +2</h2>
+        <p class="mini-title"><span class="mark" data-ex-marked>{first.titre}</span></p>
+        <div class="mini-votes" aria-hidden="true">
+          {VOTES.map((v) => (
+            <span class="mini-vote num" data-vote={v.value} style={`--c:${v.color}`}>{v.sign}</span>
+          ))}
+        </div>
+        <p class="mini-chosen">Votre avis : <b data-vote-label>{VOTES[3].label} {VOTES[3].sign}</b></p>
+        <p class="mini-note">Votre note se marque au surligneur.</p>
+      </li>
+
+      <li class="col">
+        <h2 class="col-title"><span class="num">3.</span> Comparer, à égalité</h2>
+        <div class="board" aria-hidden="true">
+            {PANELS.map((p) => (
+              <span class="panel">
+                <b class="rank num">{p.rank}</b>
+                <i class="face"></i>
+                <i class="name"></i>
+                <span class="score num">{p.score} %</span>
+              </span>
+            ))}
+        </div>
+        <p class="mini-note">Le même panneau pour tous, ex æquo au même rang. Illustration, noms masqués.</p>
+      </li>
+
+      <li class="col">
+        <h2 class="col-title"><span class="num">4.</span> Vérifier les votes réels</h2>
+        <div class="loi">
+            <p class="mini-theme num">L-28 · Assemblée nationale · 4 déc. 2024</p>
+            <p class="mini-title">Motion de censure contre le gouvernement Michel Barnier</p>
+            <ul class="loi-rows">
+              <li><i class="name"></i><span>Pour</span><em>vote personnel</em></li>
+              <li><i class="name"></i><span>Contre</span><em>position du groupe</em></li>
+            </ul>
+            <a class="mini-link" href="https://www.assemblee-nationale.fr/dyn/17/scrutins/0519" rel="noopener"><span class="hl">Scrutin n° 519, site officiel</span></a>
+        </div>
+        <p class="mini-note">Une promesse n'est pas un vote : c'est écrit.</p>
+      </li>
+    </ol>
+
+    <script is:inline define:vars={{ exemples }}>
+      // Une proposition et un avis tirés au hasard à chaque visite : aucune mesure n'est mise en avant.
+      const ex = exemples[Math.floor(Math.random() * exemples.length)];
+      const vote = Math.floor(Math.random() * 5) - 2;
+      const set = (sel, text) => document.querySelectorAll(sel).forEach((el) => (el.textContent = text));
+      set('[data-ex-ref]', ex.ref);
+      set('[data-ex-title]', ex.titre);
+      set('[data-ex-marked]', ex.titre);
+      document.querySelectorAll('[data-ex-theme]').forEach((el) => {
+        el.textContent = ex.theme;
+        el.style.color = ex.accent;
+      });
+      const labels = { '-2': 'Impossible −2', '-1': 'Contre −1', '0': 'Neutre 0', '1': 'Pour +1', '2': 'Parfait +2' };
+      set('[data-vote-label]', labels[String(vote)]);
+      document.querySelectorAll('[data-vote]').forEach((el) => el.classList.toggle('is-chosen', Number(el.dataset.vote) === vote));
+    </script>
+  </section>
+
+  <section id="principe" class="section principe" aria-labelledby="principe-titre">
+    <div class="section-body">
+      <h2 id="principe-titre">ÉLIRE ne vous dit pas pour qui voter. Il vous montre de qui <span class="mark">vos idées</span> sont proches.</h2>
+      <p class="lede">
+        Vous notez des propositions de campagne sans savoir qui les a faites. Ensuite seulement, l'app calcule votre accord avec chaque candidat et vous montre ce qu'ils ont réellement voté au Parlement.
+      </p>
+      <p class="facts num">
+        <span><b>{COUNTS.candidats}</b> candidats</span>
+        <span><b>{COUNTS.propositions}</b> propositions vérifiées</span>
+        <span><b>{COUNTS.scrutins}</b> scrutins réels</span>
+        <span><b>{COUNTS.themes}</b> thèmes</span>
+      </p>
+      <p class="fine">Données vérifiées le {DATA_DATE}, chaque proposition contre sa source.</p>
+    </div>
+  </section>
+
+  <section id="fonctionnement" class="section" aria-labelledby="fonctionnement-titre">
+    <div class="section-body">
+      <h2 id="fonctionnement-titre">Comment ça <span class="mark">marche</span></h2>
+
+      <ol class="temps">
+        <li>
+          <div>
+            <h3><span class="num">1.</span> Lire à l'aveugle</h3>
+            <p>Les propositions arrivent une par une, sans nom ni parti, dans un ordre tiré au hasard. Jamais deux fois de suite le même candidat. La source et le contexte restent à un geste.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3><span class="num">2.</span> Noter sur cinq niveaux</h3>
+            <p>Votre avis, de la mesure inacceptable à la mesure idéale. Il se marque au surligneur et reste modifiable à tout moment.</p>
+            <ul class="scale" aria-label="Les cinq niveaux de vote">
+              {VOTES.map((v) => (
+                <li style={`--c:${v.color}`}><b class="num">{v.sign}</b> {v.label}</li>
+              ))}
+            </ul>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3><span class="num">3.</span> Comparer, à égalité</h3>
+            <p>Après 10 votes, le Classement s'ouvre : chaque candidat sur le même panneau numéroté. Un candidat est classé dès 2 de ses propositions notées ; deux scores égaux partagent le même rang.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3><span class="num">4.</span> Vérifier les votes réels</h3>
+            <p>Chaque fiche candidat sépare le programme 2027 et les votes au Parlement : vote personnel ou position de son groupe, toujours écrit, avec le lien vers le scrutin officiel.</p>
+          </div>
+        </li>
+      </ol>
+
+      <div class="explorer">
+        <figure class="phone">
+          <img src={`${base}/images/explorer.webp`} width="390" height="844" alt="L'écran Explorer de l'app : les douze thèmes en sommaire, avec le nombre de propositions notées pour chacun." decoding="async" />
+        </figure>
+        <div class="explorer-text">
+          <h3>Et pour tout parcourir</h3>
+          <p>Explorer range les {COUNTS.propositions} propositions par thème, auteurs visibles cette fois. L'onglet Lois liste les {COUNTS.scrutins} scrutins suivis, de l'Assemblée au Parlement européen.</p>
+          <ul class="ruled">
+            <li>Sommaire des {COUNTS.themes} thèmes, avec vos votes déjà posés</li>
+            <li>Recherche sans accents, par mesure ou par candidat</li>
+            <li>Filtre « pas encore votées » pour compléter votre cahier</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="valeurs" class="section" aria-labelledby="valeurs-titre">
+    <div class="section-body">
+      <h2 id="valeurs-titre">Nos <span class="mark">valeurs</span></h2>
+      <ul class="valeurs">
+        {VALEURS.map((v) => {
+          const t = keyed(v.titre, v.cle);
+          return (
+            <li class="valeur">
+              <h3>{v.nom}</h3>
+              <p class="valeur-lead">
+                {t.avant}
+                <span class="mark">{t.cle}</span>
+                {t.apres}
+              </p>
+              <p>{v.texte}</p>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  </section>
+
+  <section id="methode" class="section" aria-labelledby="methode-titre">
+    <div class="section-body methode">
+      <div>
+        <h2 id="methode-titre">Le calcul, <span class="mark">en clair</span></h2>
+        <p class="lede">Pour chaque candidat, l'app additionne vos notes sur ses propositions, de −2 à +2, et ramène la somme sur 0 à 100 %. Sans vote, rien n'est inventé : « pas encore évalué ».</p>
+        <ul class="ruled">
+          <li>Le calcul se fait sur votre appareil. Rien n'est envoyé.</li>
+          <li>Chaque proposition et chaque scrutin portent un numéro stable (P-531, L-28) pour être cités et corrigés.</li>
+          <li>Les couleurs de l'échelle ne servent qu'à vos votes, jamais à un parti.</li>
+        </ul>
+      </div>
+
+      <figure class="calc" aria-labelledby="calc-legende">
+        <p id="calc-legende" class="calc-head">Exemple : vous avez noté 3 propositions d'un même candidat</p>
+        <table>
+          <tbody>
+            <tr><th scope="row" class="num">P-412</th><td style="--c:var(--vote-p2)" class="num">Parfait +2</td></tr>
+            <tr><th scope="row" class="num">P-087</th><td style="--c:var(--vote-p1)" class="num">Pour +1</td></tr>
+            <tr><th scope="row" class="num">P-650</th><td style="--c:var(--vote-m1)" class="num">Contre −1</td></tr>
+          </tbody>
+        </table>
+        <p class="calc-line num">Somme <b>+2</b> sur une échelle de <b>−6</b> à <b>+6</b></p>
+        <p class="calc-result num">Accord <span class="mark">67 %</span></p>
+        <p class="calc-formula num">(2 + 6) ÷ 12 = 0,67</p>
+      </figure>
+    </div>
+  </section>
+
+  <section id="open-source" class="section" aria-labelledby="os-titre">
+    <div class="section-body">
+      <h2 id="os-titre">Ouvert, <span class="mark">de bout en bout</span></h2>
+      <p class="lede">Le code de l'app, les données et ce site sont publics. Vous pouvez tout relire, signaler une erreur, proposer une correction.</p>
+      <ul class="os">
+        <li>
+          <h3>Le code</h3>
+          <p>Sous licence MIT, sur GitHub. Les données sous CC BY-SA 4.0.</p>
+          <a class="link" href={REPO_URL} rel="noopener"><span class="hl">Voir le dépôt</span></a>
+        </li>
+        <li>
+          <h3>Une erreur ?</h3>
+          <p>Chaque proposition et chaque loi ont leur bouton « Signaler une erreur » dans l'app.</p>
+          <a class="link" href={`${REPO_URL}/issues/new?template=erreur-donnees.yml`} rel="noopener"><span class="hl">Signaler sur GitHub</span></a>
+        </li>
+        <li>
+          <h3>Contribuer</h3>
+          <p>Règles de sourçage, neutralité, conventions de code : tout est écrit.</p>
+          <a class="link" href={`${REPO_URL}/blob/main/CONTRIBUTING.md`} rel="noopener"><span class="hl">Lire le guide</span></a>
+        </li>
+        <li>
+          <h3>Soutenir</h3>
+          <p>ÉLIRE est gratuit et sans publicité. Un don aide à le maintenir.</p>
+          <p class="funding">
+            {FUNDING.map((f, i) => (
+              <>
+                {i > 0 && <span aria-hidden="true"> · </span>}
+                <a class="link" href={f.url} rel="noopener"><span class="hl">{f.label}</span></a>
+              </>
+            ))}
+          </p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="close" aria-labelledby="close-titre">
+    <h2 id="close-titre">Faites-vous <span class="mark">votre avis</span>.</h2>
+    <a class="btn" href={APP_URL}>
+      Ouvrir l'app web
+      <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M3 8h10m-4-4 4 4-4 4" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+    </a>
+    <p class="stores">{storesSoon ? 'Bientôt sur Android et iOS.' : 'Aussi sur Android et iOS.'}</p>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: clamp(32px, 6vw, 64px) var(--gutter) clamp(48px, 7vw, 88px);
+  }
+
+  .hook {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 48px;
+  }
+
+  h1 {
+    font-size: clamp(40px, 5vw, 72px);
+    line-height: 1.06;
+    letter-spacing: -0.035em;
+    font-weight: 700;
+    max-width: 16ch;
+  }
+  .line {
+    display: block;
+  }
+  @media (min-width: 821px) {
+    h1 {
+      max-width: none;
+    }
+  }
+
+  /* Le trait balaie l'accroche une fois, à l'arrivée. */
+  .sweep {
+    background-image: linear-gradient(transparent 52%, var(--mark-band) 52%, var(--mark-band) 92%, transparent 92%);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+    animation: sweep 900ms 250ms cubic-bezier(0.2, 0.7, 0.2, 1) backwards;
+  }
+  @keyframes sweep {
+    from {
+      background-size: 0% 100%;
+    }
+  }
+
+  .act {
+    flex: none;
+    width: min(320px, 100%);
+    display: grid;
+    gap: 12px;
+    padding-bottom: 8px;
+  }
+  .act .btn {
+    width: 100%;
+  }
+
+  .stores {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .stores span {
+    display: block;
+    font-weight: 500;
+    color: var(--graphite);
+  }
+
+  /* La feuille : quatre colonnes séparées par des filets. */
+  .sheet {
+    list-style: none;
+    margin: clamp(32px, 5vw, 56px) 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    background: var(--sheet);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+
+  .col {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 22px 24px 24px;
+    border-left: 1px solid var(--rule);
+  }
+  .col:first-child {
+    border-left: 0;
+  }
+
+  .col-title {
+    font-size: 21px;
+    line-height: 1.2;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .mini-sheet {
+    display: grid;
+    gap: 8px;
+    padding: 14px 16px;
+    background: var(--sheet);
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    box-shadow: 0 1px 0 var(--rule-soft);
+  }
+  .mini-meta {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--graphite);
+  }
+  .mini-source {
+    padding-top: 8px;
+    border-top: 1px solid var(--rule-soft);
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: var(--graphite);
+    text-underline-offset: 3px;
+  }
+  .mini-theme {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--graphite);
+  }
+  .mini-title {
+    font-size: 17px;
+    line-height: 1.35;
+    font-weight: 600;
+  }
+  .mini-note {
+    font-size: 13px;
+    color: var(--graphite);
+  }
+
+  .mini-votes {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 4px;
+  }
+  .mini-vote {
+    display: grid;
+    place-items: center;
+    min-height: 40px;
+    background: var(--sheet);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--c);
+  }
+  .mini-vote.is-chosen {
+    border-color: var(--ink);
+    box-shadow: inset 0 -4px 0 var(--mark);
+  }
+  .mini-chosen {
+    font-size: 15px;
+    color: var(--ink-soft);
+  }
+
+  .board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    padding: 6px 6px 10px;
+    background: var(--board);
+    border-radius: 8px;
+    box-shadow: inset 0 -4px 0 var(--board-edge);
+  }
+  .panel {
+    position: relative;
+    display: grid;
+    justify-items: center;
+    gap: 5px;
+    padding: 22px 4px 8px;
+    background: var(--sheet);
+    border-radius: 4px;
+  }
+  .rank {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 18px;
+    height: 18px;
+    display: grid;
+    place-items: center;
+    background: var(--ink);
+    color: var(--sheet);
+    font-size: 11px;
+  }
+  .face {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--rule-soft);
+  }
+  .name {
+    display: block;
+    width: 70%;
+    height: 6px;
+    border-radius: 3px;
+    background: var(--rule);
+  }
+  .score {
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .loi {
+    display: grid;
+    gap: 10px;
+    padding: 14px;
+    background: var(--sheet);
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+  }
+  .loi-rows {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 8px;
+  }
+  .loi-rows li {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 2px 10px;
+    padding-top: 8px;
+    border-top: 1px solid var(--rule-soft);
+  }
+  .loi-rows .name {
+    width: 80%;
+  }
+  /* Position d'un candidat : badge neutre, l'échelle de couleurs reste celle de l'utilisateur. */
+  .loi-rows span {
+    padding: 2px 8px;
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .loi-rows em {
+    grid-column: 1 / -1;
+    font-style: normal;
+    font-size: 12px;
+    color: var(--graphite);
+  }
+  .mini-link {
+    justify-self: start;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: var(--graphite);
+    text-underline-offset: 3px;
+  }
+
+  /* Sections : séparées par un filet, sans colonne de marge. */
+  .section {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: clamp(64px, 9vw, 120px) var(--gutter);
+    border-top: 1px solid var(--rule);
+  }
+  .section-body {
+    display: grid;
+    gap: 24px;
+    align-content: start;
+    min-width: 0;
+  }
+  .section h2 {
+    font-size: clamp(30px, 3.6vw, 48px);
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    font-weight: 700;
+    max-width: 22ch;
+  }
+  .principe h2 {
+    max-width: 26ch;
+  }
+  .lede {
+    font-size: clamp(18px, 1.6vw, 21px);
+    line-height: 1.55;
+    color: var(--ink-soft);
+    max-width: 62ch;
+  }
+  .facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 0;
+    margin-top: 8px;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+  .facts span {
+    padding: 16px 28px 16px 0;
+    margin-right: 28px;
+    border-right: 1px solid var(--rule);
+    font-size: 17px;
+    color: var(--ink-soft);
+  }
+  .facts span:last-child {
+    border-right: 0;
+  }
+  .facts b {
+    font-size: 24px;
+    color: var(--ink);
+    margin-right: 6px;
+  }
+  .fine {
+    font-size: 13px;
+    color: var(--graphite);
+  }
+
+  .temps {
+    list-style: none;
+    margin: 8px 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 48px;
+  }
+  .temps > li {
+    padding: 28px 0;
+    border-top: 1px solid var(--rule);
+  }
+  .temps h3,
+  .valeur h3,
+  .os h3,
+  .explorer h3 {
+    font-size: 21px;
+    line-height: 1.3;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .temps p,
+  .os p,
+  .explorer p,
+  .valeur p {
+    color: var(--ink-soft);
+    max-width: 58ch;
+  }
+  .scale {
+    list-style: none;
+    margin: 14px 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .scale li {
+    padding: 6px 10px;
+    background: var(--sheet);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .scale b {
+    color: var(--c);
+  }
+
+  .explorer {
+    display: grid;
+    grid-template-columns: auto minmax(0, 60ch);
+    justify-content: center;
+    align-items: center;
+    gap: clamp(24px, 4vw, 64px);
+    margin-top: 16px;
+    padding: 32px;
+    background: var(--sheet);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+  }
+  .explorer-text {
+    display: grid;
+    gap: 14px;
+  }
+  .explorer-text h3 {
+    margin: 0;
+  }
+  .phone {
+    width: clamp(180px, 20vw, 260px);
+    aspect-ratio: 390 / 600;
+    overflow: hidden;
+    border: 1px solid var(--rule);
+    border-radius: 22px;
+    background: var(--paper);
+  }
+  .phone img {
+    width: 100%;
+    height: auto;
+  }
+
+  .valeurs {
+    list-style: none;
+    margin: 8px 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    border-top: 1px solid var(--rule);
+  }
+  .valeur {
+    padding: 32px 40px 36px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .valeur:nth-child(even) {
+    padding-left: 40px;
+    padding-right: 0;
+    border-left: 1px solid var(--rule);
+  }
+  .valeur h3 {
+    font-size: clamp(26px, 2.6vw, 34px);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+  .valeur .valeur-lead {
+    font-size: 21px;
+    line-height: 1.35;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+
+  .methode {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    gap: 48px;
+    align-items: start;
+  }
+  .methode > div {
+    display: grid;
+    gap: 24px;
+  }
+  .ruled {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    max-width: 58ch;
+    color: var(--ink-soft);
+    border-top: 1px solid var(--rule);
+  }
+  .ruled li {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .calc {
+    margin: 0;
+    padding: 28px;
+    background: var(--sheet);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    display: grid;
+    gap: 14px;
+  }
+  .calc-head {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--graphite);
+  }
+  .calc table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .calc th,
+  .calc td {
+    padding: 12px 0;
+    border-top: 1px solid var(--rule-soft);
+    text-align: left;
+    font-size: 17px;
+  }
+  .calc th {
+    font-weight: 500;
+    color: var(--graphite);
+  }
+  .calc td {
+    text-align: right;
+    font-weight: 700;
+    color: var(--c);
+  }
+  .calc-line {
+    padding-top: 12px;
+    border-top: 1px solid var(--rule);
+    color: var(--ink-soft);
+  }
+  .calc-result {
+    font-size: 34px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  .calc-formula {
+    font-size: 13px;
+    color: var(--graphite);
+  }
+
+  .os {
+    list-style: none;
+    margin: 8px 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    border-top: 1px solid var(--rule);
+  }
+  .os li {
+    display: grid;
+    align-content: start;
+    gap: 10px;
+    padding: 28px 28px 8px 0;
+  }
+  .os li + li {
+    padding-left: 28px;
+    border-left: 1px solid var(--rule);
+  }
+  .os h3 {
+    margin: 0;
+  }
+  .os .link {
+    justify-self: start;
+    padding: 6px 0;
+  }
+  .funding .link {
+    display: inline-block;
+  }
+
+  .close {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: clamp(72px, 10vw, 140px) var(--gutter);
+    display: grid;
+    justify-items: center;
+    gap: 22px;
+    text-align: center;
+    border-top: 1px solid var(--rule);
+  }
+  .close h2 {
+    font-size: clamp(40px, 6vw, 80px);
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+    font-weight: 700;
+  }
+
+  @media (max-width: 600px) {
+    /* Grille 2x2 réglée : le chiffre au-dessus du libellé dans chaque case. */
+    .principe .facts {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+    }
+    .principe .facts span {
+      display: grid;
+      align-content: start;
+      gap: 2px;
+      margin: 0;
+      padding: 14px 0 14px 16px;
+      border: 0;
+      border-bottom: 1px solid var(--rule);
+      font-size: 15px;
+      line-height: 1.3;
+    }
+    .principe .facts span:nth-child(odd) {
+      padding-left: 0;
+      border-right: 1px solid var(--rule);
+    }
+    .principe .facts span:nth-last-child(-n + 2) {
+      border-bottom: 0;
+    }
+    .principe .facts b {
+      margin: 0;
+    }
+  }
+
+  @media (max-width: 1180px) {
+    .sheet {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .col:nth-child(3) {
+      border-left: 0;
+    }
+    .col:nth-child(n + 3) {
+      border-top: 1px solid var(--rule);
+    }
+    .col {
+      min-height: 0;
+    }
+    .os {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .os li:nth-child(3) {
+      padding-left: 0;
+      border-left: 0;
+    }
+  }
+
+  @media (max-width: 820px) {
+    .hook {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 28px;
+    }
+    .act {
+      width: 100%;
+    }
+    .sheet {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .col {
+      border-left: 0;
+    }
+    .col + .col {
+      border-top: 1px solid var(--rule);
+    }
+    .temps,
+    .valeurs,
+    .methode,
+    .os {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .valeur,
+    .valeur:nth-child(even) {
+      padding: 28px 0;
+      border-left: 0;
+    }
+    .os li,
+    .os li + li {
+      padding: 24px 0;
+      border-left: 0;
+      border-top: 1px solid var(--rule);
+    }
+    .os li:first-child {
+      border-top: 0;
+    }
+    .explorer {
+      grid-template-columns: minmax(0, 1fr);
+      justify-items: center;
+      padding: 24px;
+    }
+    .phone {
+      width: min(260px, 80%);
+    }
+    .facts span {
+      margin-right: 18px;
+      padding-right: 18px;
+    }
+  }
+</style>

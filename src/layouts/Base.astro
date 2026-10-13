@@ -1,0 +1,423 @@
+---
+import '../styles/global.css';
+import { REPO_URL, SITE_REPO_URL } from '../config';
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const canonical = new URL(Astro.url.pathname, Astro.site);
+
+const NAV = [
+  { id: 'principe', label: 'Le principe' },
+  { id: 'fonctionnement', label: 'Comment ça marche' },
+  { id: 'valeurs', label: 'Valeurs' },
+  { id: 'methode', label: 'Méthode' },
+  { id: 'open-source', label: 'Open source' },
+];
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href={`${base}/favicon.svg`} type="image/svg+xml" />
+    <meta name="theme-color" content="#F6F7F5" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fr_FR" />
+  </head>
+  <body>
+    <a class="skip" href="#contenu">Aller au contenu</a>
+
+    <header class="bar">
+      <a class="brand" href={`${base}/`} aria-label="ÉLIRE, accueil">
+        <svg viewBox="280 150 560 600" width="26" height="28" aria-hidden="true">
+          <rect x="300" y="602" width="520" height="128" rx="22" transform="rotate(-3 560 666)" fill="#EADB3F"></rect>
+          <path fill="#1C1E21" d="M392 318h372v92H492v84h236v88H492v92h282v92H392z"></path>
+          <path fill="#1C1E21" d="M560 168h112l-86 108h-86z"></path>
+        </svg>
+        <span>ÉLIRE</span>
+      </a>
+
+      <nav class="menu" aria-label="Sections">
+        <ul>
+          {NAV.map((item) => (
+            <li>
+              <a href={`${base}/#${item.id}`} data-spy={item.id}><span class="hl">{item.label}</span></a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      <div class="end">
+        <a class="gh hl" href={REPO_URL} rel="noopener">
+          <svg viewBox="0 0 16 16" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z"></path></svg>
+          <span>GitHub</span>
+        </a>
+        <details class="burger">
+          <summary aria-label="Menu des sections">Menu</summary>
+          <ul>
+            {NAV.map((item) => (
+              <li>
+                <a href={`${base}/#${item.id}`}><span class="hl">{item.label}</span></a>
+              </li>
+            ))}
+          </ul>
+        </details>
+      </div>
+    </header>
+
+    <main id="contenu">
+      <slot />
+    </main>
+
+    <footer class="foot">
+      <div class="foot-inner">
+        <p class="foot-claim">
+          Aucun compte, aucun cookie, aucun traceur. ÉLIRE n'est lié à aucun parti, à aucun candidat ni à l'État.
+        </p>
+        <ul class="foot-links">
+          <li><a href={REPO_URL} rel="noopener"><span class="hl">Code de l'app</span></a></li>
+          <li><a href={SITE_REPO_URL} rel="noopener"><span class="hl">Code du site</span></a></li>
+          <li><a href={`${REPO_URL}/blob/main/CODE_OF_CONDUCT.md`} rel="noopener"><span class="hl">Code de conduite</span></a></li>
+          <li><a href={`${REPO_URL}/blob/main/CONTRIBUTING.md`} rel="noopener"><span class="hl">Contribuer</span></a></li>
+        </ul>
+        <p class="foot-legal">Code sous licence MIT, données sous CC BY-SA 4.0.</p>
+      </div>
+    </footer>
+
+    <button class="reading" type="button" aria-label="Remonter en haut de la page" data-reading aria-hidden="true" tabindex="-1">
+      <span class="reading-name" data-reading-name>{NAV[0].label}</span>
+      <svg viewBox="0 0 48 48" width="56" height="56" aria-hidden="true">
+        <circle cx="24" cy="24" r="21" fill="none" stroke="var(--rule-soft)" stroke-width="4"></circle>
+        <circle class="reading-fill" cx="24" cy="24" r="21" fill="none" stroke="var(--mark)" stroke-width="4" pathLength="100" stroke-dasharray="100" stroke-dashoffset="100" transform="rotate(-90 24 24)"></circle>
+      </svg>
+      <span class="reading-label num" data-reading-label>01</span>
+      <svg class="reading-up" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M8 3 3 8m5-5 5 5M8 3v10" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+    </button>
+
+    <script>
+      const button = document.querySelector<HTMLButtonElement>('[data-reading]');
+      const fill = document.querySelector<SVGCircleElement>('.reading-fill');
+      const label = document.querySelector<HTMLElement>('[data-reading-label]');
+      const name = document.querySelector<HTMLElement>('[data-reading-name]');
+      const links = [...document.querySelectorAll<HTMLAnchorElement>('[data-spy]')];
+      const sections = links
+        .map((a) => document.getElementById(a.dataset.spy ?? ''))
+        .filter((s): s is HTMLElement => s !== null);
+
+      // Indicateur de lecture : visible après le premier écran, se remplit au fil de la page.
+      let ticking = false;
+      const update = () => {
+        ticking = false;
+        const max = document.documentElement.scrollHeight - innerHeight;
+        const ratio = max > 0 ? Math.min(1, scrollY / max) : 0;
+        if (fill) fill.style.strokeDashoffset = String(100 - ratio * 100);
+        if (button) {
+          const show = scrollY > innerHeight * 0.6;
+          button.classList.toggle('is-visible', show);
+          button.setAttribute('aria-hidden', String(!show));
+          button.tabIndex = show ? 0 : -1;
+        }
+        let current = -1;
+        sections.forEach((s, i) => {
+          if (s.getBoundingClientRect().top < innerHeight * 0.4) current = i;
+        });
+        links.forEach((a, i) => (i === current ? a.setAttribute('aria-current', 'true') : a.removeAttribute('aria-current')));
+        const index = Math.max(current, 0);
+        if (label) label.textContent = String(index + 1).padStart(2, '0');
+        if (name) name.textContent = links[index]?.textContent?.trim() ?? '';
+      };
+      addEventListener('scroll', () => {
+        if (!ticking) {
+          ticking = true;
+          requestAnimationFrame(update);
+        }
+      }, { passive: true });
+      addEventListener('resize', update);
+      update();
+      button?.addEventListener('click', () => {
+        scrollTo({ top: 0 });
+        document.querySelector<HTMLElement>('.brand')?.focus({ preventScroll: true });
+      });
+
+      // Menu mobile : se ferme après un choix.
+      const burger = document.querySelector<HTMLDetailsElement>('.burger');
+      burger?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => burger.removeAttribute('open')));
+    </script>
+
+    <style>
+      .skip {
+        position: absolute;
+        left: 16px;
+        top: -60px;
+        z-index: 30;
+        background: var(--ink);
+        color: var(--sheet);
+        padding: 10px 14px;
+        border-radius: 8px;
+        font-weight: 600;
+      }
+      .skip:focus {
+        top: 12px;
+      }
+
+      .bar {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        height: 72px;
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        align-items: center;
+        gap: 24px;
+        padding: 0 var(--gutter);
+        background: color-mix(in srgb, var(--paper) 94%, transparent);
+        backdrop-filter: saturate(1.2) blur(8px);
+        border-bottom: 1px solid var(--rule);
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        justify-self: start;
+        color: var(--ink);
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 20px;
+        letter-spacing: -0.2px;
+        min-height: 44px;
+      }
+
+      .menu ul,
+      .burger ul,
+      .foot-links {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      .menu ul {
+        display: flex;
+        gap: clamp(18px, 2.4vw, 36px);
+      }
+
+      .menu a,
+      .burger a,
+      .foot-links a {
+        color: inherit;
+        text-decoration: none;
+      }
+      .menu a {
+        display: inline-block;
+        padding: 12px 0;
+        font-size: 15px;
+        font-weight: 600;
+      }
+      /* Le survol du lien (zone tactile entière) déclenche le trait sur le libellé. */
+      a:hover > .hl,
+      a:focus-visible > .hl,
+      a[aria-current='true'] > .hl {
+        background-size: 100% 100%;
+      }
+
+      .end {
+        justify-self: end;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .gh {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        min-height: 44px;
+        padding: 0 12px;
+        border: 1px solid var(--ink);
+        border-radius: 10px;
+        font-size: 14px;
+        font-weight: 600;
+        background-image: linear-gradient(var(--mark), var(--mark));
+        background-size: 0% 100%;
+      }
+      .gh:hover,
+      .gh:focus-visible {
+        background-size: 100% 100%;
+      }
+
+      .burger {
+        display: none;
+        position: relative;
+      }
+      .burger summary {
+        list-style: none;
+        cursor: pointer;
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+        padding: 0 14px;
+        border: 1px solid var(--rule);
+        border-radius: 10px;
+        font-size: 14px;
+        font-weight: 600;
+        background: var(--sheet);
+      }
+      .burger summary::-webkit-details-marker {
+        display: none;
+      }
+      .burger[open] summary {
+        border-color: var(--ink);
+      }
+      .burger ul {
+        position: absolute;
+        right: 0;
+        top: calc(100% + 8px);
+        min-width: 240px;
+        background: var(--sheet);
+        border: 1px solid var(--rule);
+        border-radius: var(--radius);
+        padding: 8px 18px;
+        box-shadow: 0 12px 28px rgba(28, 30, 33, 0.12);
+      }
+      .burger li + li {
+        border-top: 1px solid var(--rule-soft);
+      }
+      .burger a {
+        display: inline-block;
+        padding: 12px 0;
+        font-weight: 600;
+      }
+
+      @media (max-width: 1080px) {
+        .bar {
+          grid-template-columns: 1fr auto;
+        }
+        .menu {
+          display: none;
+        }
+        .burger {
+          display: block;
+        }
+      }
+      @media (max-width: 420px) {
+        .gh span {
+          display: none;
+        }
+      }
+
+      .foot {
+        border-top: 1px solid var(--rule);
+        padding: 48px var(--gutter) 64px;
+      }
+      .foot-inner {
+        max-width: var(--max);
+        margin: 0 auto;
+        display: grid;
+        gap: 18px;
+      }
+      .foot-claim {
+        font-size: 17px;
+        color: var(--ink-soft);
+        max-width: 60ch;
+      }
+      .foot-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px 28px;
+      }
+      .foot-links a {
+        display: inline-block;
+        padding: 8px 0;
+        font-weight: 600;
+        font-size: 15px;
+      }
+      .foot-legal {
+        font-size: 13px;
+        color: var(--graphite);
+      }
+
+      .reading {
+        position: fixed;
+        right: max(16px, env(safe-area-inset-right));
+        bottom: max(16px, env(safe-area-inset-bottom));
+        z-index: 25;
+        height: 64px;
+        display: grid;
+        grid-template-columns: auto 64px;
+        align-items: center;
+        padding: 0 0 0 20px;
+        border: 1px solid var(--rule);
+        border-radius: 32px;
+        font: inherit;
+        background: var(--sheet);
+        color: var(--ink);
+        cursor: pointer;
+        box-shadow: 0 6px 18px rgba(28, 30, 33, 0.1);
+        transition: transform var(--sweep), opacity var(--sweep);
+      }
+      .reading:not(.is-visible) {
+        opacity: 0;
+        transform: translateY(12px) scale(0.92);
+        pointer-events: none;
+      }
+      .reading > svg,
+      .reading > .reading-label {
+        grid-row: 1;
+        grid-column: 2;
+        justify-self: center;
+      }
+      .reading-name {
+        grid-row: 1;
+        grid-column: 1;
+        font-size: 14px;
+        font-weight: 600;
+        white-space: nowrap;
+        padding-right: 2px;
+      }
+      @media (max-width: 600px) {
+        .reading {
+          height: 52px;
+          grid-template-columns: auto 52px;
+          padding-left: 16px;
+        }
+        .reading > svg:first-of-type {
+          width: 46px;
+          height: 46px;
+        }
+        .reading-name {
+          font-size: 13px;
+        }
+      }
+      .reading-fill {
+        transition: stroke-dashoffset 120ms linear;
+      }
+      .reading-label {
+        font-size: 13px;
+        font-weight: 700;
+      }
+      .reading-up {
+        opacity: 0;
+        transition: opacity var(--sweep);
+      }
+      .reading:hover .reading-label,
+      .reading:focus-visible .reading-label {
+        opacity: 0;
+      }
+      .reading:hover .reading-up,
+      .reading:focus-visible .reading-up {
+        opacity: 1;
+      }
+    </style>
+  </body>
+</html>

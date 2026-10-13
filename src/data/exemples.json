@@ -1,0 +1,98 @@
+[
+  {
+    "ref": "P-123",
+    "theme": "Environnement",
+    "themeId": "environnement",
+    "titre": "Construire 20 EPR",
+    "accent": "#3B7D4A",
+    "tint": "#E6F0E8"
+  },
+  {
+    "ref": "P-545",
+    "theme": "Économie",
+    "themeId": "economie",
+    "titre": "Rétablir l'ISF et créer une taxe de 4 % sur les rachats d'actions",
+    "accent": "#8C6A1A",
+    "tint": "#F2EDDF"
+  },
+  {
+    "ref": "P-961",
+    "theme": "Sécurité",
+    "themeId": "securite",
+    "titre": "Peine plancher pour les agresseurs de policiers",
+    "accent": "#5C5047",
+    "tint": "#ECE9E6"
+  },
+  {
+    "ref": "P-575",
+    "theme": "Travail",
+    "themeId": "travail",
+    "titre": "Les 35 heures sont « une erreur » : « donner le maximum de libertés dans l'entreprise »",
+    "accent": "#A0532C",
+    "tint": "#F4E8E1"
+  },
+  {
+    "ref": "P-408",
+    "theme": "Éducation",
+    "themeId": "education",
+    "titre": "Introduire un module obligatoire sur l'éthique animale et le respect du vivant dès l'école primaire",
+    "accent": "#1F7A70",
+    "tint": "#E0EFED"
+  },
+  {
+    "ref": "P-744",
+    "theme": "Santé",
+    "themeId": "sante",
+    "titre": "Réintégrer les soignants exclus et rétablir leurs trimestres de retraite perdus",
+    "accent": "#A3455C",
+    "tint": "#F4E5E8"
+  },
+  {
+    "ref": "P-881",
+    "theme": "Société",
+    "themeId": "societe",
+    "titre": "Régularisation de tous les sans-papiers et liberté de circulation et d'installation pour tous",
+    "accent": "#40707A",
+    "tint": "#E3EEEF"
+  },
+  {
+    "ref": "P-245",
+    "theme": "International",
+    "themeId": "international",
+    "titre": "Sortir totalement de l'OTAN (article 13 du traité de l'Atlantique Nord)",
+    "accent": "#3D5E88",
+    "tint": "#E3E9F1"
+  },
+  {
+    "ref": "P-667",
+    "theme": "Agriculture",
+    "themeId": "agriculture",
+    "titre": "Faire des coûts de production la base de la construction du prix agricole, via des indicateurs publics",
+    "accent": "#6B7722",
+    "tint": "#EEF0DE"
+  },
+  {
+    "ref": "P-233",
+    "theme": "Institutions",
+    "themeId": "institutions",
+    "titre": "Instaurer le référendum d'initiative citoyenne et la proportionnelle",
+    "accent": "#555E70",
+    "tint": "#E8EAEE"
+  },
+  {
+    "ref": "P-492",
+    "theme": "Numérique",
+    "themeId": "numerique",
+    "titre": "Interdire la publicité ciblée pour attaquer le modèle économique des plateformes",
+    "accent": "#2B6A8F",
+    "tint": "#E1ECF2"
+  },
+  {
+    "ref": "P-693",
+    "theme": "Logement",
+    "themeId": "logement",
+    "titre": "Assouplir le ZAN et décentraliser les zonages des politiques de logement",
+    "accent": "#77593A",
+    "tint": "#EFE9E2"
+  }
+]

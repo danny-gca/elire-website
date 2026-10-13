@@ -1,0 +1,915 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-13T12:00:00.000Z",
+  "title": "Design System: ÉLIRE (site vitrine)",
+  "extensions": {
+    "colorMeta": {
+      "paper": {
+        "role": "neutral",
+        "displayName": "Papier froid",
+        "canonical": "oklch(97.5% 0.003 128.5)",
+        "tonalRamp": [
+          "#0B0B0A",
+          "#262725",
+          "#444544",
+          "#656665",
+          "#888988",
+          "#ADAEAC",
+          "#D0D1CF",
+          "#EEEFED"
+        ]
+      },
+      "sheet": {
+        "role": "neutral",
+        "displayName": "Feuille",
+        "canonical": "oklch(100.0% 0.000 89.9)",
+        "tonalRamp": [
+          "#0B0B0B",
+          "#262626",
+          "#454545",
+          "#666666",
+          "#898989",
+          "#AEAEAE",
+          "#D1D1D1",
+          "#EEEEEE"
+        ]
+      },
+      "ink": {
+        "role": "primary",
+        "displayName": "Encre de cahier",
+        "canonical": "oklch(23.4% 0.007 258.4)",
+        "tonalRamp": [
+          "#090B0E",
+          "#24272A",
+          "#434549",
+          "#64666A",
+          "#87898D",
+          "#ABAEB2",
+          "#CED1D5",
+          "#ECEFF3"
+        ]
+      },
+      "ink-soft": {
+        "role": "neutral",
+        "displayName": "Encre douce",
+        "canonical": "oklch(36.5% 0.012 253.0)",
+        "tonalRamp": [
+          "#080C10",
+          "#22272C",
+          "#40464C",
+          "#61676D",
+          "#848A91",
+          "#A9AFB6",
+          "#CBD2D9",
+          "#E9EFF7"
+        ]
+      },
+      "graphite": {
+        "role": "neutral",
+        "displayName": "Graphite",
+        "canonical": "oklch(49.0% 0.013 252.2)",
+        "tonalRamp": [
+          "#070C11",
+          "#22272D",
+          "#40464C",
+          "#61676E",
+          "#838A91",
+          "#A8AFB6",
+          "#CBD2DA",
+          "#E8EFF8"
+        ]
+      },
+      "rule": {
+        "role": "neutral",
+        "displayName": "Filet",
+        "canonical": "oklch(88.3% 0.007 247.9)",
+        "tonalRamp": [
+          "#090B0E",
+          "#24272A",
+          "#424549",
+          "#63666A",
+          "#868A8D",
+          "#ABAEB2",
+          "#CDD1D5",
+          "#EBEFF3"
+        ]
+      },
+      "rule-soft": {
+        "role": "neutral",
+        "displayName": "Filet léger",
+        "canonical": "oklch(93.8% 0.004 236.5)",
+        "tonalRamp": [
+          "#0A0B0D",
+          "#252728",
+          "#434547",
+          "#646668",
+          "#87898B",
+          "#ABAEB0",
+          "#CED1D3",
+          "#ECEFF1"
+        ]
+      },
+      "board": {
+        "role": "neutral",
+        "displayName": "Tôle",
+        "canonical": "oklch(80.2% 0.011 248.0)",
+        "tonalRamp": [
+          "#080C10",
+          "#22272C",
+          "#41464B",
+          "#61676C",
+          "#848A8F",
+          "#A9AFB5",
+          "#CCD2D8",
+          "#E9EFF6"
+        ]
+      },
+      "board-edge": {
+        "role": "neutral",
+        "displayName": "Bord de tôle",
+        "canonical": "oklch(70.6% 0.013 248.0)",
+        "tonalRamp": [
+          "#070C10",
+          "#1F252A",
+          "#3A4046",
+          "#585E65",
+          "#7A8188",
+          "#9EA5AD",
+          "#C4CBD3",
+          "#E8EFF7"
+        ]
+      },
+      "mark": {
+        "role": "secondary",
+        "displayName": "Surligneur",
+        "canonical": "oklch(87.8% 0.167 103.7)",
+        "tonalRamp": [
+          "#0E0C00",
+          "#2B2700",
+          "#4C4706",
+          "#706812",
+          "#978C0D",
+          "#BFB118",
+          "#E4D537",
+          "#FFF37C"
+        ]
+      },
+      "mark-band": {
+        "role": "secondary",
+        "displayName": "Bande de surligneur",
+        "canonical": "oklch(87.8% 0.167 103.7 / 0.88)",
+        "tonalRamp": [
+          "#0E0C00",
+          "#2B2700",
+          "#4C4706",
+          "#706812",
+          "#978C0D",
+          "#BFB118",
+          "#E4D537",
+          "#FFF37C"
+        ]
+      },
+      "vote-impossible": {
+        "role": "tertiary",
+        "displayName": "Impossible −2",
+        "canonical": "oklch(45.9% 0.121 38.0)",
+        "tonalRamp": [
+          "#1D0100",
+          "#471101",
+          "#782507",
+          "#9F492E",
+          "#C66D51",
+          "#EF9275",
+          "#FDC1AF",
+          "#FEE9E3"
+        ]
+      },
+      "vote-contre": {
+        "role": "tertiary",
+        "displayName": "Contre −1",
+        "canonical": "oklch(52.6% 0.107 46.8)",
+        "tonalRamp": [
+          "#1B0300",
+          "#431700",
+          "#712E02",
+          "#97502B",
+          "#BE744E",
+          "#E69872",
+          "#FCC2A7",
+          "#FEEAE0"
+        ]
+      },
+      "vote-neutre": {
+        "role": "tertiary",
+        "displayName": "Neutre 0",
+        "canonical": "oklch(49.0% 0.013 252.2)",
+        "tonalRamp": [
+          "#070C11",
+          "#22272D",
+          "#40464C",
+          "#61676E",
+          "#838A91",
+          "#A8AFB6",
+          "#CBD2DA",
+          "#E8EFF8"
+        ]
+      },
+      "vote-pour": {
+        "role": "tertiary",
+        "displayName": "Pour +1",
+        "canonical": "oklch(53.7% 0.083 163.1)",
+        "tonalRamp": [
+          "#001007",
+          "#002F1E",
+          "#025238",
+          "#317558",
+          "#56997B",
+          "#7BBF9F",
+          "#9EE3C2",
+          "#C4FEE1"
+        ]
+      },
+      "vote-parfait": {
+        "role": "tertiary",
+        "displayName": "Parfait +2",
+        "canonical": "oklch(45.6% 0.081 163.2)",
+        "tonalRamp": [
+          "#001007",
+          "#002F1E",
+          "#075238",
+          "#337559",
+          "#58997B",
+          "#7DBE9F",
+          "#A0E2C2",
+          "#C1FFE0"
+        ]
+      },
+      "theme-environnement": {
+        "role": "tertiary",
+        "displayName": "Thématique Environnement",
+        "canonical": "oklch(53.3% 0.104 149.1)",
+        "tonalRamp": [
+          "#001002",
+          "#013010",
+          "#095423",
+          "#347644",
+          "#599B66",
+          "#7DC18A",
+          "#A0E5AC",
+          "#C9FED1"
+        ]
+      },
+      "theme-environnement-tint": {
+        "role": "tertiary",
+        "displayName": "Thématique Environnement (teinte)",
+        "canonical": "oklch(94.5% 0.015 151.8)",
+        "tonalRamp": [
+          "#070D08",
+          "#212923",
+          "#3F4741",
+          "#606962",
+          "#838C85",
+          "#A7B1A9",
+          "#CAD4CC",
+          "#E8F2EA"
+        ]
+      },
+      "theme-agriculture": {
+        "role": "tertiary",
+        "displayName": "Thématique Agriculture",
+        "canonical": "oklch(54.2% 0.108 117.1)",
+        "tonalRamp": [
+          "#0A0D00",
+          "#242A01",
+          "#424A09",
+          "#626E15",
+          "#84923F",
+          "#A9B765",
+          "#CCDB87",
+          "#E9F9A4"
+        ]
+      },
+      "theme-agriculture-tint": {
+        "role": "tertiary",
+        "displayName": "Thématique Agriculture (teinte)",
+        "canonical": "oklch(94.9% 0.024 112.0)",
+        "tonalRamp": [
+          "#0B0C02",
+          "#27281A",
+          "#454638",
+          "#666858",
+          "#898B7B",
+          "#AEB09F",
+          "#D1D3C1",
+          "#EEF0DE"
+        ]
+      },
+      "theme-economie": {
+        "role": "tertiary",
+        "displayName": "Thématique Economie",
+        "canonical": "oklch(54.5% 0.102 83.8)",
+        "tonalRamp": [
+          "#120900",
+          "#332300",
+          "#594101",
+          "#826008",
+          "#A68339",
+          "#CDA85F",
+          "#F1CC81",
+          "#FEECCB"
+        ]
+      },
+      "theme-economie-tint": {
+        "role": "tertiary",
+        "displayName": "Thématique Economie (teinte)",
+        "canonical": "oklch(94.6% 0.019 90.5)",
+        "tonalRamp": [
+          "#0E0B03",
+          "#2A261C",
+          "#494539",
+          "#6A665A",
+          "#8D897C",
+          "#B2AEA0",
+          "#D6D1C3",
+          "#F3EEE0"
+        ]
+      },
+      "theme-travail": {
+        "role": "tertiary",
+        "displayName": "Thématique Travail",
+        "canonical": "oklch(52.8% 0.115 45.8)",
+        "tonalRamp": [
+          "#1B0300",
+          "#431700",
+          "#712E05",
+          "#9A4E26",
+          "#C1714A",
+          "#EA966F",
+          "#FCC2A8",
+          "#FEEAE1"
+        ]
+      },
+      "theme-travail-tint": {
+        "role": "tertiary",
+        "displayName": "Thématique Travail (teinte)",
+        "canonical": "oklch(93.9% 0.016 52.6)",
+        "tonalRamp": [
+          "#110906",
+          "#2D241F",
+          "#4C433D",
+          "#6E645E",
+          "#928780",
+          "#B7ABA5",
+          "#DACEC7",
+          "#F8ECE5"
+        ]
+      },
+      "theme-logement": {
+        "role": "tertiary",
+        "displayName": "Thématique Logement",
+        "canonical": "oklch(48.8% 0.060 66.6)",
+        "tonalRamp": [
+          "#160700",
+          "#3A1F00",
+          "#5B3E20",
+          "#7E5F40",
+          "#A28262",
+          "#C8A786",
+          "#EDCAA8",
+          "#FFEBD7"
+        ]
+      },
+      "theme-logement-tint": {
+        "role": "tertiary",
+        "displayName": "Thématique Logement (teinte)",
+        "canonical": "oklch(93.7% 0.011 71.9)",
+        "tonalRamp": [
+          "#0E0A06",
+          "#2A2620",
+          "#49443E",
+          "#6A655F",
+          "#8E8882",
+          "#B3ADA6",
+          "#D6D0C9",
+          "#F3EDE6"
+        ]
+      },
+      "theme-sante": {
+        "role": "tertiary",
+        "displayName": "Thématique Sante",
+        "canonical": "oklch(52.0% 0.126 7.3)",
+        "tonalRamp": [
+          "#1F0007",
+          "#4D011D",
+          "#781D39",
+          "#A04259",
+          "#C8667C",
+          "#F18BA0",
+          "#FEBDC8",
+          "#FEE8EB"
+        ]
+      },
+      "theme-sante-tint": {
+        "role": "tertiary",
+        "displayName": "Thématique Sante (teinte)",
+        "canonical": "oklch(93.5% 0.017 3.7)",
+        "tonalRamp": [
+          "#11080A",
+          "#2E2325",
+          "#4D4144",
+          "#6F6265",
+          "#938588",
+          "#B8AAAD",
+          "#DBCDD0",
+          "#F9EAED"
+        ]
+      },
+      "theme-societe": {
+        "role": "tertiary",
+        "displayName": "Thématique Societe",
+        "canonical": "oklch(51.5% 0.054 212.5)",
+        "tonalRamp": [
+          "#000E13",
+          "#012C34",
+          "#1B4D56",
+          "#3F6F79",
+          "#62929D",
+          "#86B8C2",
+          "#A8DBE6",
+          "#D2F6FE"
+        ]
+      },
+      "theme-societe-tint": {
+        "role": "tertiary",
+        "displayName": "Thématique Societe (teinte)",
+        "canonical": "oklch(94.1% 0.012 203.5)",
+        "tonalRamp": [
+          "#060D0D",
+          "#202829",
+          "#3E4748",
+          "#5F6869",
+          "#818B8C",
+          "#A6B0B1",
+          "#C9D3D4",
+          "#E6F1F2"
+        ]
+      },
+      "theme-education": {
+        "role": "tertiary",
+        "displayName": "Thématique Education",
+        "canonical": "oklch(52.5% 0.084 184.2)",
+        "tonalRamp": [
+          "#000F0C",
+          "#012E29",
+          "#0A5049",
+          "#18756C",
+          "#459A8F",
+          "#6CC0B4",
+          "#90E3D7",
+          "#B9FFF4"
+        ]
+      },
+      "theme-education-tint": {
+        "role": "tertiary",
+        "displayName": "Thématique Education (teinte)",
+        "canonical": "oklch(94.0% 0.016 187.3)",
+        "tonalRamp": [
+          "#040D0C",
+          "#1E2928",
+          "#3C4846",
+          "#5C6968",
+          "#7F8C8B",
+          "#A3B1B0",
+          "#C6D5D3",
+          "#E3F2F0"
+        ]
+      },
+      "theme-numerique": {
+        "role": "tertiary",
+        "displayName": "Thématique Numerique",
+        "canonical": "oklch(50.1% 0.087 237.9)",
+        "tonalRamp": [
+          "#000D19",
+          "#022A3F",
+          "#004A6E",
+          "#2E6D92",
+          "#5391B8",
+          "#78B6DF",
+          "#A4D9FC",
+          "#DFF2FF"
+        ]
+      },
+      "theme-numerique-tint": {
+        "role": "tertiary",
+        "displayName": "Thématique Numerique (teinte)",
+        "canonical": "oklch(93.7% 0.014 231.2)",
+        "tonalRamp": [
+          "#060C10",
+          "#20282C",
+          "#3E474B",
+          "#5E686D",
+          "#818B90",
+          "#A5B0B5",
+          "#C8D3D9",
+          "#E5F0F6"
+        ]
+      },
+      "theme-international": {
+        "role": "tertiary",
+        "displayName": "Thématique International",
+        "canonical": "oklch(47.6% 0.079 255.0)",
+        "tonalRamp": [
+          "#000A22",
+          "#06264C",
+          "#26466E",
+          "#466893",
+          "#698BB8",
+          "#8CB1DF",
+          "#B4D4FD",
+          "#E5F0FE"
+        ]
+      },
+      "theme-international-tint": {
+        "role": "tertiary",
+        "displayName": "Thématique International (teinte)",
+        "canonical": "oklch(93.2% 0.013 255.5)",
+        "tonalRamp": [
+          "#080B10",
+          "#22272D",
+          "#41454C",
+          "#61676D",
+          "#848A91",
+          "#A9AEB6",
+          "#CCD1D9",
+          "#E9EFF7"
+        ]
+      },
+      "theme-institutions": {
+        "role": "tertiary",
+        "displayName": "Thématique Institutions",
+        "canonical": "oklch(48.1% 0.031 264.2)",
+        "tonalRamp": [
+          "#050B18",
+          "#1F2636",
+          "#3D4556",
+          "#5D6678",
+          "#80899D",
+          "#A4AEC2",
+          "#C7D1E6",
+          "#E7EFFE"
+        ]
+      },
+      "theme-institutions-tint": {
+        "role": "tertiary",
+        "displayName": "Thématique Institutions (teinte)",
+        "canonical": "oklch(93.7% 0.006 264.5)",
+        "tonalRamp": [
+          "#0A0B0E",
+          "#252629",
+          "#434548",
+          "#646669",
+          "#87898D",
+          "#ACAEB2",
+          "#CFD1D5",
+          "#ECEEF2"
+        ]
+      },
+      "theme-securite": {
+        "role": "tertiary",
+        "displayName": "Thématique Securite",
+        "canonical": "oklch(44.0% 0.022 59.0)",
+        "tonalRamp": [
+          "#120904",
+          "#2F241C",
+          "#4E423A",
+          "#70635A",
+          "#93867D",
+          "#B9ABA1",
+          "#DCCEC3",
+          "#FAEBE1"
+        ]
+      },
+      "theme-securite-tint": {
+        "role": "tertiary",
+        "displayName": "Thématique Securite (teinte)",
+        "canonical": "oklch(93.6% 0.005 67.8)",
+        "tonalRamp": [
+          "#0D0B09",
+          "#282624",
+          "#474442",
+          "#686563",
+          "#8B8986",
+          "#B0ADAA",
+          "#D3D0CD",
+          "#F1EEEB"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Accroche",
+        "purpose": "Accroche du premier écran seulement, sur deux lignes."
+      },
+      "display-close": {
+        "displayName": "Clôture",
+        "purpose": "Phrase finale centrée au-dessus du dernier bouton."
+      },
+      "headline": {
+        "displayName": "Titre de section",
+        "purpose": "Titres de section, 22ch max, un mot clé surligné."
+      },
+      "headline-value": {
+        "displayName": "Nom de valeur",
+        "purpose": "Nom de chacune des quatre valeurs."
+      },
+      "title": {
+        "displayName": "Intertitre",
+        "purpose": "Titres numérotés de la feuille, intertitres des temps, d'Explorer et de l'open source, phrase forte d'une valeur."
+      },
+      "lede": {
+        "displayName": "Chapeau",
+        "purpose": "Chapeau sous un titre de section, encre douce, 62ch max."
+      },
+      "body": {
+        "displayName": "Corps",
+        "purpose": "Paragraphes et listes réglées, 58ch max."
+      },
+      "button": {
+        "displayName": "Bouton",
+        "purpose": "Libellé du bouton primaire."
+      },
+      "nav": {
+        "displayName": "Menu",
+        "purpose": "Menu, liens du pied de page, mention des stores, en-tête du calcul."
+      },
+      "control": {
+        "displayName": "Contrôle compact",
+        "purpose": "Bouton GitHub, résumé Menu, nom de section de l'indicateur, puces d'échelle (500)."
+      },
+      "label": {
+        "displayName": "Note",
+        "purpose": "Notes sous les mini-écrans, mentions fines, formule."
+      },
+      "label-strong": {
+        "displayName": "Note forte",
+        "purpose": "Ligne meta et liens des mini-écrans, numéro de l'indicateur (700)."
+      }
+    },
+    "shadows": [
+      {
+        "name": "menu-float",
+        "value": "0 12px 28px rgba(28, 30, 33, 0.12)",
+        "purpose": "Panneau ouvert du menu déroulant sous 1080px."
+      },
+      {
+        "name": "reading-float",
+        "value": "0 6px 18px rgba(28, 30, 33, 0.1)",
+        "purpose": "Indicateur de lecture fixe."
+      },
+      {
+        "name": "board-edge",
+        "value": "inset 0 -4px 0 #9AA1A8",
+        "purpose": "Épaisseur basse de la tôle du mini Classement."
+      },
+      {
+        "name": "sheet-contact",
+        "value": "0 1px 0 #E8EBED",
+        "purpose": "Contact sous la mini feuille de proposition."
+      },
+      {
+        "name": "vote-chosen",
+        "value": "inset 0 -4px 0 #EADB3F",
+        "purpose": "Liseré jaune du niveau choisi dans la mini rangée de vote."
+      },
+      {
+        "name": "bar-glass",
+        "value": "background: rgba(246, 247, 245, 0.94); backdrop-filter: saturate(1.2) blur(8px)",
+        "purpose": "Barre du haut collante."
+      }
+    ],
+    "motion": [
+      {
+        "name": "sweep",
+        "value": "280ms cubic-bezier(0.2, 0.7, 0.2, 1)",
+        "purpose": "Balayage de la bande sur les libellés, remplissage jaune des boutons, apparition de l'indicateur de lecture."
+      },
+      {
+        "name": "hero-sweep",
+        "value": "900ms cubic-bezier(0.2, 0.7, 0.2, 1), délai 250ms, une fois",
+        "purpose": "La bande balaie « qui parle » à l'arrivée."
+      },
+      {
+        "name": "reading-ring",
+        "value": "120ms linear",
+        "purpose": "Remplissage de l'anneau de lecture au défilement."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "durées à 0.01ms, défilement direct",
+        "purpose": "Réglage système Réduire les animations."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "github-icon-only",
+        "value": "420px",
+        "purpose": "Sous ce seuil, le bouton GitHub ne garde que son icône."
+      },
+      {
+        "name": "compact",
+        "value": "600px",
+        "purpose": "Chiffres clés en grille 2x2 réglée, indicateur de lecture à 52px."
+      },
+      {
+        "name": "single-column",
+        "value": "820px",
+        "purpose": "Accroche et action empilées, feuille et grilles sur une colonne."
+      },
+      {
+        "name": "menu-collapse",
+        "value": "1080px",
+        "purpose": "Menu centré remplacé par le menu déroulant."
+      },
+      {
+        "name": "sheet-2x2",
+        "value": "1180px",
+        "purpose": "Feuille du premier écran en 2x2, open source en deux colonnes."
+      },
+      {
+        "name": "content-max",
+        "value": "1440px",
+        "purpose": "Largeur max de chaque bande de page."
+      }
+    ],
+    "highlighter": {
+      "posed": "background-image: linear-gradient(transparent 40%, rgba(234, 219, 63, 0.88) 40%, rgba(234, 219, 63, 0.88) 92%, transparent 92%); box-decoration-break: clone; padding: 0 0.08em; margin: 0 -0.08em;",
+      "sweep": "background-image: linear-gradient(transparent 46%, rgba(234, 219, 63, 0.88) 46%, rgba(234, 219, 63, 0.88) 94%, transparent 94%); background-size: 0% 100% vers 100% 100%; transition: background-size 280ms cubic-bezier(0.2, 0.7, 0.2, 1);",
+      "hero": "background-image: linear-gradient(transparent 52%, rgba(234, 219, 63, 0.88) 52%, rgba(234, 219, 63, 0.88) 92%, transparent 92%); animation 900ms, délai 250ms, une fois;",
+      "fill": "linear-gradient(#EADB3F, #EADB3F) no-repeat 0 0 / 0% 100% vers 100% 100%, sur le fond du bouton",
+      "selection": "rgba(234, 219, 63, 0.88)"
+    },
+    "focusRing": "outline: 2px solid #1C1E21; outline-offset: 3px; border-radius: 4px;"
+  },
+  "components": [
+    {
+      "name": "Bouton primaire",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Encre pleine qui se remplit de jaune de gauche à droite au survol et au focus.",
+      "html": "<a class=\"ds-btn\" href=\"#\">Ouvrir l'app web <svg viewBox=\"0 0 16 16\" width=\"16\" height=\"16\" aria-hidden=\"true\"><path d=\"M3 8h10m-4-4 4 4-4 4\" stroke=\"currentColor\" stroke-width=\"1.8\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></a>",
+      "css": ".ds-btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 26px;border-radius:12px;border:1.5px solid #1C1E21;font:600 17px/1 -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif;text-decoration:none;cursor:pointer;background:linear-gradient(#EADB3F,#EADB3F) no-repeat 0 0/0% 100%,#1C1E21;color:#FFFFFF;transition:background-size 280ms cubic-bezier(0.2, 0.7, 0.2, 1),color 280ms cubic-bezier(0.2, 0.7, 0.2, 1)}.ds-btn:hover,.ds-btn:focus-visible{background-size:100% 100%,auto;color:#1C1E21}.ds-btn:focus-visible{outline:2px solid #1C1E21;outline-offset:3px}"
+    },
+    {
+      "name": "Bouton GitHub",
+      "kind": "button",
+      "refersTo": "button-github",
+      "description": "Contour encre de la barre du haut, rempli de jaune au survol et au focus.",
+      "html": "<a class=\"ds-gh\" href=\"#\"><svg viewBox=\"0 0 16 16\" width=\"18\" height=\"18\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z\"/></svg><span>GitHub</span></a>",
+      "css": ".ds-gh{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 12px;border:1px solid #1C1E21;border-radius:10px;font:600 14px/1.5 -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif;color:#1C1E21;text-decoration:none;background-image:linear-gradient(#EADB3F,#EADB3F);background-repeat:no-repeat;background-size:0% 100%;transition:background-size 280ms cubic-bezier(0.2, 0.7, 0.2, 1)}.ds-gh:hover,.ds-gh:focus-visible{background-size:100% 100%}.ds-gh:focus-visible{outline:2px solid #1C1E21;outline-offset:3px}"
+    },
+    {
+      "name": "Barre et menu",
+      "kind": "nav",
+      "refersTo": "top-bar",
+      "description": "Barre de 72px : logo et ÉLIRE, menu centré dont le libellé se surligne au survol ; la section en cours garde sa bande.",
+      "html": "<header class=\"ds-bar\"><span class=\"ds-brand\">ÉLIRE</span><nav><a href=\"#\"><span class=\"ds-hl\">Le principe</span></a><a href=\"#\" aria-current=\"true\"><span class=\"ds-hl\">Comment ça marche</span></a><a href=\"#\"><span class=\"ds-hl\">Valeurs</span></a></nav><span></span></header>",
+      "css": ".ds-bar{height:72px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:24px;padding:0 24px;background:rgba(246,247,245,.94);border-bottom:1px solid #D5D9DD;font-family:-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif;color:#1C1E21}.ds-brand{font-weight:700;font-size:20px;letter-spacing:-.2px}.ds-bar nav{display:flex;gap:28px}.ds-bar nav a{display:inline-block;padding:12px 0;font-size:15px;font-weight:600;color:inherit;text-decoration:none}.ds-hl{background-image:linear-gradient(transparent 46%,rgba(234, 219, 63, 0.88) 46%,rgba(234, 219, 63, 0.88) 94%,transparent 94%);background-repeat:no-repeat;background-size:0% 100%;-webkit-box-decoration-break:clone;box-decoration-break:clone;transition:background-size 280ms cubic-bezier(0.2, 0.7, 0.2, 1)}.ds-bar nav a:hover>.ds-hl,.ds-bar nav a:focus-visible>.ds-hl,.ds-bar nav a[aria-current=true]>.ds-hl{background-size:100% 100%}.ds-bar nav a:focus-visible{outline:2px solid #1C1E21;outline-offset:3px;border-radius:4px}"
+    },
+    {
+      "name": "Lien de lecture",
+      "kind": "custom",
+      "refersTo": "nav-link",
+      "description": "Souligné graphite au repos ; au survol le soulignement s'efface et la bande balaie le libellé.",
+      "html": "<a class=\"ds-link\" href=\"#\"><span class=\"ds-link-hl\">Voir le dépôt</span></a>",
+      "css": ".ds-link{font:600 17px/1.5 -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif;color:#1C1E21;text-decoration:underline;text-decoration-color:#5B6168;text-decoration-thickness:1px;text-underline-offset:3px}.ds-link:hover,.ds-link:focus-visible{text-decoration-color:transparent}.ds-link-hl{background-image:linear-gradient(transparent 46%,rgba(234, 219, 63, 0.88) 46%,rgba(234, 219, 63, 0.88) 94%,transparent 94%);background-repeat:no-repeat;background-size:0% 100%;-webkit-box-decoration-break:clone;box-decoration-break:clone;transition:background-size 280ms cubic-bezier(0.2, 0.7, 0.2, 1)}.ds-link:hover>.ds-link-hl,.ds-link:focus-visible>.ds-link-hl{background-size:100% 100%}"
+    },
+    {
+      "name": "Titre à mot clé",
+      "kind": "custom",
+      "refersTo": "headline",
+      "description": "Titre de section avec un seul mot clé posé au surligneur.",
+      "html": "<h2 class=\"ds-h2\">Le calcul, <span class=\"ds-mark\">en clair</span></h2>",
+      "css": ".ds-h2{margin:0;font:700 48px/1.1 -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif;letter-spacing:-.025em;color:#1C1E21;max-width:22ch}.ds-mark{background-image:linear-gradient(transparent 40%,rgba(234, 219, 63, 0.88) 40%,rgba(234, 219, 63, 0.88) 92%,transparent 92%);-webkit-box-decoration-break:clone;box-decoration-break:clone;padding:0 .08em;margin:0 -.08em}"
+    },
+    {
+      "name": "Colonne de la feuille",
+      "kind": "card",
+      "refersTo": "hero-sheet",
+      "description": "Une colonne numérotée de la feuille du premier écran, avec la mini rangée de vote anonyme.",
+      "html": "<div class=\"ds-sheet\"><div class=\"ds-col\"><h3>1. Lire, sans savoir qui</h3><div class=\"ds-mini\"><p class=\"ds-meta\">P-123 · <span style=\"color:#3B7D4A\">Environnement</span></p><p class=\"ds-title\">Construire 20 EPR</p><p class=\"ds-src\">Voir la source et le contexte</p></div><p class=\"ds-note\">Auteur masqué, ordre tiré au hasard.</p></div><div class=\"ds-col\"><h3>2. Noter de −2 à +2</h3><div class=\"ds-votes\"><span style=\"color:#8E3A1F\">−2</span><span style=\"color:#9C5530\">−1</span><span style=\"color:#5B6168\">0</span><span class=\"is-on\" style=\"color:#3A7D60\">+1</span><span style=\"color:#22654A\">+2</span></div><p class=\"ds-chosen\">Votre avis : <b>Pour +1</b></p></div></div>",
+      "css": ".ds-sheet{display:grid;grid-template-columns:1fr 1fr;background:#FFFFFF;border:1px solid #D5D9DD;border-radius:14px;overflow:hidden;font-family:-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif;color:#1C1E21;max-width:720px}.ds-col{display:flex;flex-direction:column;gap:14px;padding:22px 24px 24px}.ds-col+.ds-col{border-left:1px solid #D5D9DD}.ds-col h3{margin:0;font-size:21px;line-height:1.2;font-weight:600;letter-spacing:-.01em}.ds-mini{display:grid;gap:8px;padding:14px 16px;border:1px solid #D5D9DD;border-radius:10px;box-shadow:0 1px 0 #E8EBED}.ds-mini p,.ds-note,.ds-chosen{margin:0}.ds-meta{font-size:13px;font-weight:600;color:#5B6168;font-variant-numeric:tabular-nums}.ds-title{font-size:17px;line-height:1.35;font-weight:600}.ds-src{padding-top:8px;border-top:1px solid #E8EBED;font-size:13px;font-weight:600;text-decoration:underline;text-decoration-color:#5B6168;text-underline-offset:3px}.ds-note{font-size:13px;color:#5B6168}.ds-votes{display:grid;grid-template-columns:repeat(5,1fr);gap:4px}.ds-votes span{display:grid;place-items:center;min-height:40px;border:1px solid #D5D9DD;border-radius:8px;font-size:15px;font-weight:700;font-variant-numeric:tabular-nums}.ds-votes .is-on{border-color:#1C1E21;box-shadow:inset 0 -4px 0 #EADB3F}.ds-chosen{font-size:15px;color:#3A3F45}"
+    },
+    {
+      "name": "Mini Classement",
+      "kind": "card",
+      "refersTo": "mini-board",
+      "description": "Panneaux identiques sur la tôle, rangs ex æquo partagés, visages et noms masqués.",
+      "html": "<div class=\"ds-board\"><span class=\"ds-panel\"><b>1</b><i class=\"ds-face\"></i><i class=\"ds-name\"></i><span>75 %</span></span><span class=\"ds-panel\"><b>1</b><i class=\"ds-face\"></i><i class=\"ds-name\"></i><span>75 %</span></span><span class=\"ds-panel\"><b>3</b><i class=\"ds-face\"></i><i class=\"ds-name\"></i><span>67 %</span></span></div>",
+      "css": ".ds-board{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:6px 6px 10px;background:#B9BFC5;border-radius:8px;box-shadow:inset 0 -4px 0 #9AA1A8;font-family:-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif;max-width:300px}.ds-panel{position:relative;display:grid;justify-items:center;gap:5px;padding:22px 4px 8px;background:#FFFFFF;border-radius:4px}.ds-panel b{position:absolute;top:0;left:0;width:18px;height:18px;display:grid;place-items:center;background:#1C1E21;color:#FFFFFF;font-size:11px;font-variant-numeric:tabular-nums}.ds-face{width:26px;height:26px;border-radius:50%;background:#E8EBED}.ds-name{display:block;width:70%;height:6px;border-radius:3px;background:#D5D9DD}.ds-panel>span{font-size:13px;font-weight:700;color:#1C1E21;font-variant-numeric:tabular-nums}"
+    },
+    {
+      "name": "Liste réglée",
+      "kind": "custom",
+      "refersTo": "body",
+      "description": "Liste sans puces, filet en haut et sous chaque élément.",
+      "html": "<ul class=\"ds-ruled\"><li>Le calcul se fait sur votre appareil. Rien n'est envoyé.</li><li>Chaque proposition porte un numéro stable (P-531, L-28).</li><li>Les couleurs de l'échelle ne servent qu'à vos votes.</li></ul>",
+      "css": ".ds-ruled{list-style:none;margin:0;padding:0;max-width:58ch;font:400 17px/1.5 -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif;color:#3A3F45;border-top:1px solid #D5D9DD}.ds-ruled li{padding:12px 0;border-bottom:1px solid #D5D9DD}"
+    },
+    {
+      "name": "Indicateur de lecture",
+      "kind": "custom",
+      "refersTo": "reading-indicator",
+      "description": "Pastille fixe en bas à droite : nom de section et anneau jaune de progression ; remonte en haut au clic.",
+      "html": "<button class=\"ds-reading\" type=\"button\" aria-label=\"Remonter en haut de la page\"><span class=\"ds-reading-name\">Valeurs</span><svg viewBox=\"0 0 48 48\" width=\"56\" height=\"56\" aria-hidden=\"true\"><circle cx=\"24\" cy=\"24\" r=\"21\" fill=\"none\" stroke=\"#E8EBED\" stroke-width=\"4\"/><circle cx=\"24\" cy=\"24\" r=\"21\" fill=\"none\" stroke=\"#EADB3F\" stroke-width=\"4\" pathLength=\"100\" stroke-dasharray=\"100\" stroke-dashoffset=\"45\" transform=\"rotate(-90 24 24)\"/></svg><span class=\"ds-reading-num\">03</span></button>",
+      "css": ".ds-reading{height:64px;display:inline-grid;grid-template-columns:auto 64px;align-items:center;padding:0 0 0 20px;border:1px solid #D5D9DD;border-radius:32px;background:#FFFFFF;color:#1C1E21;font-family:-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif;cursor:pointer;box-shadow:0 6px 18px rgba(28,30,33,.1)}.ds-reading>svg,.ds-reading-num{grid-row:1;grid-column:2;justify-self:center}.ds-reading-name{grid-row:1;grid-column:1;font-size:14px;font-weight:600;white-space:nowrap}.ds-reading-num{font-size:13px;font-weight:700;font-variant-numeric:tabular-nums}.ds-reading:focus-visible{outline:2px solid #1C1E21;outline-offset:3px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Le cahier annoté",
+    "overview": "Le site reprend la matière de l'app : papier blanc froid, feuilles blanches à filets, encre presque noire, graphite pour le secondaire, police système, échelle de vote terre cuite à vert. Il n'invente pas de seconde identité ; il pose la même feuille à l'échelle d'un écran de bureau. La page se lit comme une suite de sections séparées par des filets hairline, sur une largeur de 1440px, avec une feuille pleine largeur en quatre colonnes dans le premier écran qui montre l'app en miniature.\n\nLe jaune du surligneur garde son sens (une marque qu'on pose en lisant) et devient en plus le geste du site, par décision de l'utilisateur : une bande qui balaie de gauche à droite sous ce qu'on survole ou qu'on atteint au clavier, un bouton d'encre qui se remplit de jaune, et un mot clé posé dans chaque titre. Tout le reste reste en encre neutre, parce que le site, comme l'app, ne prend pas parti : aucune proposition n'est mise en avant (exemple tiré au hasard à chaque visite) et aucun candidat n'est nommé, montré ou associé à un parti.\n\nRejets confirmés : l'air de site gouvernemental, l'appli gadget ou gamifiée, la pile de cartes à swiper et le dégradé violet, la carte centrée à puce colorée du standard civique, les surtitres en capitales, la colonne de marge hors de la feuille de l'app. Thème clair uniquement.",
+    "keyCharacteristics": [
+      "Papier blanc froid, feuilles blanches, encre, graphite, filets ; jamais de crème.",
+      "Le surligneur est le geste du site : bande qui balaie au survol et au focus, boutons qui se remplissent de jaune, un mot clé posé par titre.",
+      "Sections séparées par des filets, listes réglées au filet plutôt qu'à puces.",
+      "Mini-écrans de l'app construits en HTML, noms et visages masqués.",
+      "Valeur de vote écrite en toutes lettres avec son signe, dans sa couleur d'échelle.",
+      "Police système, aucune police distante ; chiffres tabulaires pour les numéros et compteurs."
+    ],
+    "rules": [
+      {
+        "name": "The Highlighter Gesture Rule",
+        "body": "Le jaune a quatre emplois sur le site et pas d'autre : le geste de survol et de focus (bande qui balaie, bouton qui se remplit), le mot clé posé d'un titre ou d'une phrase forte, la note de l'utilisateur dans les mini-écrans, et la progression de l'indicateur de lecture. Le wordmark texte, les statuts, les issues parlementaires et les fonds de section ne sont jamais jaunes ; seul le logo de l'app porte sa bande.",
+        "section": "colors"
+      },
+      {
+        "name": "The Scale Is Yours Rule",
+        "body": "Les couleurs d'échelle n'expriment que des votes de l'utilisateur. Les issues parlementaires et les positions des candidats s'écrivent en encre neutre.",
+        "section": "colors"
+      },
+      {
+        "name": "The Cold Paper Rule",
+        "body": "Fond papier froid, feuilles blanches. Pas de crème, pas de violet, pas de dégradé décoratif ; les seuls `linear-gradient` du système sont la bande de surligneur et le remplissage jaune des boutons.",
+        "section": "colors"
+      },
+      {
+        "name": "The Small Steps Rule",
+        "body": "Sous le corps, le site descend en 15, puis 13 ; le 14 est réservé aux contrôles compacts de la barre et de l'indicateur. Les chiffres forts (24px pour les chiffres clés, 34px pour le résultat du calcul) sont des valeurs, pas des titres.",
+        "section": "typography"
+      },
+      {
+        "name": "The Written Value Rule",
+        "body": "Une note s'écrit en toutes lettres avec son signe : Impossible −2, Contre −1, Neutre 0, Pour +1, Parfait +2, avec le vrai signe moins (U+2212). Numéros (P-531, L-28), compteurs et scores en chiffres tabulaires.",
+        "section": "typography"
+      },
+      {
+        "name": "The Margin Belongs to the App Sheet Rule",
+        "body": "Aucune colonne de marge sur le site. Le numéro d'une étape s'écrit dans son titre (« 1. Lire à l'aveugle »), la référence d'une proposition dans la ligne meta ; la marge large reste une affaire de la feuille Voter de l'app.",
+        "section": "layout"
+      },
+      {
+        "name": "The Ruled Page Rule",
+        "body": "On sépare au filet : entre sections, entre colonnes, entre les éléments d'une liste. Pas de bandes de fond alternées, pas de puces.",
+        "section": "layout"
+      },
+      {
+        "name": "The Floating Only Rule",
+        "body": "Une ombre n'existe que pour ce qui flotte (menu ouvert, indicateur de lecture). Feuilles, cartes et listes posées sur la page n'en ont pas.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Highlighter Sweep Rule",
+        "body": "Le surligneur bouge toujours de la même façon : de gauche à droite, en 280ms (`cubic-bezier(0.2, 0.7, 0.2, 1)`), au survol ou au focus. L'accroche « qui parle » est la seule bande qui balaie d'elle-même, une fois, à l'arrivée (900ms après 250ms). Le mot clé des titres est posé, immobile. Tout mouvement suit « Réduire les animations ».",
+        "section": "components"
+      },
+      {
+        "name": "The No Face Rule",
+        "body": "Le site ne montre aucun nom, visage ou parti de candidat : visages en disques vides, noms en barres, scores fictifs. La proposition d'exemple et l'avis affiché sont tirés au hasard à chaque visite.",
+        "section": "components"
+      },
+      {
+        "name": "The Identical Furniture Rule",
+        "body": "Tous les panneaux du mini Classement sont identiques ; deux scores égaux partagent le même rang.",
+        "section": "components"
+      }
+    ],
+    "dos": [
+      "Do faire répondre au survol et au focus chaque lien et bouton par le geste du surligneur : bande qui balaie de gauche à droite en 280ms, ou remplissage jaune pour les boutons.",
+      "Do poser un mot clé surligné dans chaque titre de section, un seul.",
+      "Do séparer les sections, colonnes et éléments de liste par des filets de 1px.",
+      "Do numéroter les étapes dans leur titre (« 1. ») plutôt que dans une marge.",
+      "Do écrire chaque note en toutes lettres avec son signe, dans sa couleur d'échelle.",
+      "Do garder les mini-écrans anonymes : disques vides, barres à la place des noms, exemple tiré au hasard.",
+      "Do donner 44px minimum à chaque cible."
+    ],
+    "donts": [
+      "Don't mettre du jaune sur le wordmark texte, un statut, une issue parlementaire ou un fond de section.",
+      "Don't colorer une position de candidat ou une issue parlementaire avec l'échelle de vote.",
+      "Don't ajouter une colonne de marge hors de la feuille de l'app.",
+      "Don't poser de surtitre en capitales au-dessus d'un titre.",
+      "Don't utiliser de puces : les listes sont réglées.",
+      "Don't montrer un nom, un visage ou un parti de candidat sur le site.",
+      "Don't utiliser de crème, de violet ou de dégradé décoratif, ni d'ombre sur une feuille posée.",
+      "Don't évoquer un site gouvernemental, une appli gamifiée ou des cartes à swiper."
+    ]
+  }
+}

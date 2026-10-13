@@ -1,0 +1,19 @@
+node_modules/
+dist/
+.astro/
+.DS_Store
+.env
+.env.*
+
+# outils IA locaux (installés par chaque développeur)
+.agent/
+.gemini/
+.claude/skills/impeccable/
+.claude/agents/
+.claude/settings.local.json
+
+# impeccable (sorties de travail locales)
+.impeccable/mocks/
+.impeccable/review/
+.impeccable/build/
+.impeccable/questions/
