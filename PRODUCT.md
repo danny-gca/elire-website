@@ -1,6 +1,6 @@
 # Product
 
-<!-- impeccable:product-schema 1 -->
+<!-- impeccable:product-schema 1 test -->
 
 ## Platform
 
