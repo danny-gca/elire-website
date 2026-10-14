@@ -1,0 +1,76 @@
+---
+import { MARKERS } from '../config';
+
+interface Props {
+  /** Libellés visibles sous chaque trait ; sinon, lus seulement par les lecteurs d'écran. */
+  labels?: boolean;
+  class?: string;
+}
+
+const { labels = false, class: className } = Astro.props;
+---
+
+<div class:list={['picker', { 'picker-labels': labels }, className]} role="group" aria-label="Couleur de votre surligneur">
+  {MARKERS.map((m) => (
+    <button type="button" class="pick" data-pick={m.id} aria-pressed="false" style={`--c:var(--marker-${m.id})`}>
+      <svg viewBox="0 0 40 18" width="40" height="18" aria-hidden="true"><path d="M2 15 7 4h31l-5 11z" fill="var(--c)"></path></svg>
+      <span class:list={[{ 'visually-hidden': !labels }]}>{m.label}</span>
+    </button>
+  ))}
+</div>
+
+<style>
+  .picker {
+    display: flex;
+    align-items: center;
+  }
+  .pick {
+    display: grid;
+    justify-items: center;
+    align-content: center;
+    gap: 6px;
+    min-width: 36px;
+    min-height: 44px;
+    padding: 0 2px;
+    border: 0;
+    background: none;
+    font: inherit;
+    color: var(--ink);
+    cursor: pointer;
+  }
+  .pick svg {
+    width: 28px;
+    height: auto;
+    transition: transform var(--sweep);
+  }
+  .pick:hover svg {
+    transform: translateY(-2px) rotate(-4deg);
+  }
+  /* Le trait choisi est souligné d'encre : lisible sans la couleur. */
+  .pick[aria-pressed='true'] svg {
+    filter: drop-shadow(0 2px 0 var(--ink));
+  }
+  .picker-labels {
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .picker-labels .pick {
+    min-width: 76px;
+    padding: 12px 10px 10px;
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    background: var(--sheet);
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .picker-labels .pick svg {
+    width: 48px;
+  }
+  .picker-labels .pick[aria-pressed='true'] {
+    border-color: var(--ink);
+    box-shadow: inset 0 0 0 1px var(--ink);
+  }
+  .picker-labels .pick[aria-pressed='true'] svg {
+    filter: none;
+  }
+</style>
