@@ -1,15 +1,31 @@
 ---
 import Base from '../layouts/Base.astro';
+import MarkerPicker from '../components/MarkerPicker.astro';
 import exemples from '../data/exemples.json';
+import scrutins from '../data/scrutins.json';
 import { APP_URL, COUNTS, DATA_DATE, FUNDING, REPO_URL, STORES } from '../config';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const first = exemples[0];
+const scrutin = scrutins[0];
+
+const LOI_CHOICES = [
+  { value: 'contre', label: 'Contre', color: 'var(--vote-m1)' },
+  { value: 'abstention', label: 'Abstention', color: 'var(--vote-0)' },
+  { value: 'pour', label: 'Pour', color: 'var(--vote-p1)' },
+];
+
+// Avis déjà posés dans le cahier : chacun garde la couleur de son trait.
+const CAHIER = [
+  { tone: 'jaune', vote: 2 },
+  { tone: 'rose', vote: -1 },
+  { tone: 'vert', vote: 1 },
+];
+const VALEUR_TONES = ['bleu', 'vert', 'rose', 'jaune'];
 
 const VOTES = [
   { value: -2, label: 'Impossible', sign: '−2', color: 'var(--vote-m2)' },
   { value: -1, label: 'Contre', sign: '−1', color: 'var(--vote-m1)' },
-  { value: 0, label: 'Neutre', sign: '0', color: 'var(--vote-0)' },
   { value: 1, label: 'Pour', sign: '+1', color: 'var(--vote-p1)' },
   { value: 2, label: 'Parfait', sign: '+2', color: 'var(--vote-p2)' },
 ];
@@ -57,6 +73,41 @@ const keyed = (titre: string, cle: string) => {
 };
 
 const storesSoon = !STORES.ios || !STORES.android;
+
+// Les vraies questions des testeurs, réponses tirées du fonctionnement de l'app.
+const FAQ = [
+  {
+    question: 'Combien de temps faut-il ?',
+    reponse: `Comptez environ 20 secondes par question. Le Classement s'ouvre après 10 votes, soit 3 à 5 minutes ; ensuite, toutes les 10 questions, un bilan dit si votre score est déjà fiable. Vous arrêtez quand vous voulez : vos votes restent sur votre appareil.`,
+  },
+  {
+    question: 'Et si je ne comprends pas une mesure ?',
+    reponse: `Touchez « En savoir plus » : le contexte de la mesure et l'explication de ses sigles s'affichent, sans révéler qui l'a proposée. Toujours un doute ? « Je ne sais pas » passe la question sans toucher à votre score.`,
+  },
+  {
+    question: 'Mon score est-il fiable ?',
+    reponse: `Chaque score dit sur combien d'éléments il repose : une proposition notée ou un vote personnel compte 1, un vote de groupe ½. Fragile sous 3, assez sûr de 3 à 4,5, fiable à partir de 5. Chaque candidat a 6 propositions : tous peuvent devenir fiables, qu'ils aient siégé au Parlement ou non.`,
+  },
+  {
+    question: 'ÉLIRE me dit-il pour qui voter ?',
+    reponse: `Non. Il calcule de qui vos avis sont proches, sur les seules propositions et les seuls scrutins que vous avez notés. Le reste, programmes complets, débats, convictions, vous appartient.`,
+  },
+  {
+    question: 'Pourquoi tel candidat n’y est pas ?',
+    reponse: `ÉLIRE suit ${COUNTS.candidats} candidats dont la candidature est déclarée ou annoncée publiquement, avec une source. Il en manque un ? Signalez-le sur GitHub : il peut être ajouté dès que sa candidature et ses propositions sont sourcées.`,
+  },
+  {
+    question: 'Qui vérifie les données ?',
+    reponse: `Chaque proposition est relue contre sa source, avec la citation exacte. Les votes viennent des données ouvertes de l'Assemblée nationale et des pages officielles du Sénat et du Parlement européen. Dernière vérification le ${DATA_DATE}. Une erreur ? Chaque fiche a son bouton « Signaler une erreur ».`,
+  },
+  {
+    question: 'Mes votes sont-ils envoyés quelque part ?',
+    reponse: `Non. Pas de compte, pas de statistiques : vos votes et votre score restent sur votre appareil, et vous pouvez tout effacer depuis le Classement.`,
+  },
+];
+const voteOf = (value: number) => VOTES.find((v) => v.value === value)!;
+// Pas un niveau : la question est passée sans compter dans le score.
+const UNSURE = { value: 0, label: 'Je ne sais pas', sign: '', color: 'var(--vote-0)' };
 ---
 
 <Base
@@ -84,21 +135,21 @@ const storesSoon = !STORES.ios || !STORES.android;
         <div class="mini-sheet">
           <p class="mini-meta num"><span data-ex-ref>{first.ref}</span> · <span data-ex-theme style={`color:${first.accent}`}>{first.theme}</span></p>
           <p class="mini-title" data-ex-title>{first.titre}</p>
-          <p class="mini-source">Voir la source et le contexte</p>
+          <p class="mini-source">En savoir plus</p>
         </div>
         <p class="mini-note">Auteur masqué, ordre tiré au hasard.</p>
       </li>
 
       <li class="col">
         <h2 class="col-title"><span class="num">2.</span> Noter de −2 à +2</h2>
-        <p class="mini-title"><span class="mark" data-ex-marked>{first.titre}</span></p>
-        <div class="mini-votes" aria-hidden="true">
+        <p class="mini-title"><span class="mini-mark" data-ex-marked>{first.titre}</span></p>
+        <div class="mini-votes" role="group" aria-label="Essai : notez cette mesure">
           {VOTES.map((v) => (
-            <span class="mini-vote num" data-vote={v.value} style={`--c:${v.color}`}>{v.sign}</span>
+            <button type="button" class="mini-vote num" data-vote={v.value} aria-pressed="false" aria-label={`${v.label} ${v.sign}`} style={`--c:${v.color}`}>{v.sign}</button>
           ))}
         </div>
-        <p class="mini-chosen">Votre avis : <b data-vote-label>{VOTES[3].label} {VOTES[3].sign}</b></p>
-        <p class="mini-note">Votre note se marque au surligneur.</p>
+        <p class="mini-chosen" aria-live="polite"><span class="note">Votre avis :</span> <b data-vote-label>à vous de choisir</b></p>
+        <p class="mini-note">Votre note se marque au surligneur, ou « Je ne sais pas ». Les scrutins se votent aussi : contre, abstention, pour.</p>
       </li>
 
       <li class="col">
@@ -131,29 +182,13 @@ const storesSoon = !STORES.ios || !STORES.android;
       </li>
     </ol>
 
-    <script is:inline define:vars={{ exemples }}>
-      // Une proposition et un avis tirés au hasard à chaque visite : aucune mesure n'est mise en avant.
-      const ex = exemples[Math.floor(Math.random() * exemples.length)];
-      const vote = Math.floor(Math.random() * 5) - 2;
-      const set = (sel, text) => document.querySelectorAll(sel).forEach((el) => (el.textContent = text));
-      set('[data-ex-ref]', ex.ref);
-      set('[data-ex-title]', ex.titre);
-      set('[data-ex-marked]', ex.titre);
-      document.querySelectorAll('[data-ex-theme]').forEach((el) => {
-        el.textContent = ex.theme;
-        el.style.color = ex.accent;
-      });
-      const labels = { '-2': 'Impossible −2', '-1': 'Contre −1', '0': 'Neutre 0', '1': 'Pour +1', '2': 'Parfait +2' };
-      set('[data-vote-label]', labels[String(vote)]);
-      document.querySelectorAll('[data-vote]').forEach((el) => el.classList.toggle('is-chosen', Number(el.dataset.vote) === vote));
-    </script>
   </section>
 
   <section id="principe" class="section principe" aria-labelledby="principe-titre">
     <div class="section-body">
-      <h2 id="principe-titre">ÉLIRE ne vous dit pas pour qui voter. Il vous montre de qui <span class="mark">vos idées</span> sont proches.</h2>
+      <h2 id="principe-titre">ÉLIRE vous montre de quels candidats <span class="mark" data-tone="rose">vos idées</span> sont proches. Le choix reste le vôtre.</h2>
       <p class="lede">
-        Vous notez des propositions de campagne sans savoir qui les a faites. Ensuite seulement, l'app calcule votre accord avec chaque candidat et vous montre ce qu'ils ont réellement voté au Parlement.
+        Vous notez des propositions de campagne sans savoir qui les a faites, et vous votez sur de vrais scrutins du Parlement. Ensuite seulement, l'app calcule votre accord avec chaque candidat et vous montre ce qu'ils ont réellement voté.
       </p>
       <p class="facts num">
         <span><b>{COUNTS.candidats}</b> candidats</span>
@@ -167,30 +202,31 @@ const storesSoon = !STORES.ios || !STORES.android;
 
   <section id="fonctionnement" class="section" aria-labelledby="fonctionnement-titre">
     <div class="section-body">
-      <h2 id="fonctionnement-titre">Comment ça <span class="mark">marche</span></h2>
+      <h2 id="fonctionnement-titre">Comment ça <span class="mark" data-tone="vert">marche</span></h2>
 
       <ol class="temps">
         <li>
           <div>
             <h3><span class="num">1.</span> Lire à l'aveugle</h3>
-            <p>Les propositions arrivent une par une, sans nom ni parti, dans un ordre tiré au hasard. Jamais deux fois de suite le même candidat. La source et le contexte restent à un geste.</p>
+            <p>Les propositions arrivent une par une, sans nom ni parti, dans un ordre tiré au hasard. Jamais deux fois de suite le même candidat. « En savoir plus » donne le contexte et explique les sigles ; la source est dans Explorer, une fois l'auteur visible.</p>
           </div>
         </li>
         <li>
           <div>
-            <h3><span class="num">2.</span> Noter sur cinq niveaux</h3>
-            <p>Votre avis, de la mesure inacceptable à la mesure idéale. Il se marque au surligneur et reste modifiable à tout moment.</p>
-            <ul class="scale" aria-label="Les cinq niveaux de vote">
+            <h3><span class="num">2.</span> Noter sur quatre niveaux</h3>
+            <p>Votre avis, de la mesure inacceptable à la mesure idéale. Il se marque au surligneur et reste modifiable à tout moment. Une mesure que vous ne comprenez pas ou qui vous laisse sans avis : « Je ne sais pas », qui ne compte pas dans le score.</p>
+            <ul class="scale" aria-label="Les niveaux de vote">
               {VOTES.map((v) => (
                 <li style={`--c:${v.color}`}><b class="num">{v.sign}</b> {v.label}</li>
               ))}
+              <li class="scale-unsure">{UNSURE.label}</li>
             </ul>
           </div>
         </li>
         <li>
           <div>
             <h3><span class="num">3.</span> Comparer, à égalité</h3>
-            <p>Après 10 votes, le Classement s'ouvre : chaque candidat sur le même panneau numéroté. Un candidat est classé dès 2 de ses propositions notées ; deux scores égaux partagent le même rang.</p>
+            <p>Après 10 votes, le Classement s'ouvre : chaque candidat sur le même panneau numéroté, avec un seul score qui réunit son programme et ses votes. Un candidat est classé dès 2 de ses propositions notées ; deux scores égaux partagent le même rang. Toutes les 10 questions, un bilan dit si chaque score est encore fragile, assez sûr ou fiable.</p>
           </div>
         </li>
         <li>
@@ -200,6 +236,32 @@ const storesSoon = !STORES.ios || !STORES.android;
           </div>
         </li>
       </ol>
+
+      <div class="geste">
+        <div class="geste-text">
+          <h3>Le geste du vote</h3>
+          <p>À vous : notez cette proposition. Un trait sur le niveau que vous choisissez, un trait sur la mesure, puis la feuille se range en « Dernier vote » et la suivante arrive. Le trait prend la couleur de votre surligneur.</p>
+          <p class="fine">Rien n'est enregistré : c'est un essai, l'app garde vos vrais votes.</p>
+        </div>
+        <div class="demo" data-demo role="group" aria-label="Essai : notez une proposition">
+          <div class="demo-last" aria-hidden="true">
+            <span class="demo-last-label note">Dernier vote</span>
+            <span class="demo-last-row"><b class="num" data-demo-tag></b><span data-demo-last-title></span></span>
+          </div>
+          <div class="demo-card">
+            <p class="mini-meta num"><span data-da-ref>{first.ref}</span> · <span data-da-theme style={`color:${first.accent}`}>{first.theme}</span></p>
+            <p class="mini-title"><span class="demo-sweep" data-da-title>{first.titre}</span></p>
+            <div class="mini-votes">
+              {VOTES.map((v) => (
+                <button type="button" class="mini-vote demo-vote num" data-demo-vote={v.value} aria-label={`${v.label} ${v.sign}`} style={`--c:${v.color}`}><svg class="demo-stroke" aria-hidden="true"><path pathLength="1"></path></svg>{v.sign}</button>
+              ))}
+            </div>
+            <button type="button" class="mini-vote demo-vote demo-unsure" data-demo-vote={UNSURE.value}><svg class="demo-stroke" aria-hidden="true"><path pathLength="1"></path></svg>{UNSURE.label}</button>
+            <p class="mini-note">Choisissez un niveau, de −2 à +2, ou « Je ne sais pas ».</p>
+          </div>
+          <p class="visually-hidden" aria-live="polite" data-demo-status></p>
+        </div>
+      </div>
 
       <div class="explorer">
         <figure class="phone">
@@ -218,18 +280,89 @@ const storesSoon = !STORES.ios || !STORES.android;
     </div>
   </section>
 
+  <section id="parlement" class="section" aria-labelledby="parlement-titre">
+    <div class="section-body duo">
+      <div class="duo-text">
+        <h2 id="parlement-titre">Votez comme <span class="mark" data-tone="bleu">au Parlement</span></h2>
+        <p class="lede">Entre deux propositions, un vrai scrutin tombe : la question posée aux élus, sans nom ni résultat. Vous répondez comme eux, contre, abstention ou pour, et ce vote compte dans votre accord avec chaque candidat.</p>
+        <ul class="ruled points">
+          <li><b class="num">+2</b> pour chaque candidat qui a voté comme vous, <b class="num">−2</b> pour chaque candidat qui a voté l'inverse.</li>
+          <li><b class="num">0</b> si le candidat s'est abstenu. Votre abstention, elle, ne compte pour personne.</li>
+          <li><b class="num">× 0,5</b> quand seul son groupe a voté, pas le candidat lui-même.</li>
+          <li><b>Rien</b> pour un candidat qui ne siégeait pas : ni point en plus, ni point en moins.</li>
+        </ul>
+      </div>
+
+      <figure class="scrutin" data-scrutin aria-labelledby="scrutin-q">
+        <p class="mini-meta num"><span data-sc-ref>{scrutin.ref}</span> · Scrutin · <span data-sc-theme style={`color:${scrutin.accent}`}>{scrutin.theme}</span></p>
+        <p id="scrutin-q" class="mini-title" data-sc-q>{scrutin.question}</p>
+        <div class="sc-choices" role="group" aria-label="Votre vote sur ce scrutin">
+          {LOI_CHOICES.map((c) => (
+            <button type="button" class="sc-choice" data-sc-vote={c.value} aria-pressed="false" style={`--c:${c.color}`}><svg class="sc-stroke" aria-hidden="true"><path pathLength="1"></path></svg>{c.label}</button>
+          ))}
+        </div>
+        <div class="hemi" aria-hidden="true">
+          <div class="hemi-seats" data-hemi>
+          {scrutin.positions.map((_, i) => (
+            <i class="seat" data-rel="idle" style={`--a:${180 - (180 * i) / Math.max(1, scrutin.positions.length - 1)}deg;--i:${i}`}></i>
+          ))}
+          </div>
+          <span class="hemi-you" data-hemi-you></span>
+        </div>
+        <p class="hemi-legend" data-hemi-legend aria-live="polite">{scrutin.positions.length} candidats ont voté ce texte. Votez pour voir où ils siègent par rapport à vous.</p>
+        <div class="sc-foot">
+          <p class="mini-note">Un vrai scrutin, tiré au hasard. Plein : comme vous. Vide : à l'inverse. Gris : abstention.</p>
+          <button type="button" class="link sc-next" data-sc-next><span class="hl">Un autre scrutin</span></button>
+        </div>
+      </figure>
+    </div>
+  </section>
+
+  <section id="surligneur" class="section" aria-labelledby="surligneur-titre">
+    <div class="section-body duo">
+      <div class="duo-text">
+        <h2 id="surligneur-titre">Votre <span class="mark">surligneur</span></h2>
+        <p class="lede">À la fin de la présentation de l'app, vous choisissez votre couleur parmi quatre. Vous pouvez en changer à tout moment dans le Classement : chaque avis garde la couleur du trait qui l'a posé, comme un cahier annoté au fil des semaines.</p>
+        <MarkerPicker labels />
+        <p class="fine">Ce site prend aussi votre couleur : essayez. Le choix reste sur cet appareil, sans cookie. Aucune couleur ne correspond à un parti.</p>
+      </div>
+
+      <figure class="cahier" aria-labelledby="cahier-legende">
+        <p id="cahier-legende" class="calc-head">Votre cahier, au fil des votes</p>
+        <ol class="cahier-rows" data-cahier>
+          {CAHIER.map((c, i) => {
+            const e = exemples[i + 2];
+            const v = voteOf(c.vote);
+            return (
+              <li>
+                <p class="mini-meta num"><span data-ca-ref>{e.ref}</span> · <span data-ca-theme style={`color:${e.accent}`}>{e.theme}</span></p>
+                <p class="cahier-title"><span class="mark" data-tone={c.tone} data-ca-title>{e.titre}</span></p>
+                <b class="cahier-vote num" style={`--c:${v.color}`}>{v.label} {v.sign}</b>
+              </li>
+            );
+          })}
+          <li class="is-next">
+            <p class="mini-meta num"><span data-ca-ref>{exemples[5].ref}</span> · <span data-ca-theme style={`color:${exemples[5].accent}`}>{exemples[5].theme}</span></p>
+            <p class="cahier-title"><span class="mark" data-ca-title>{exemples[5].titre}</span></p>
+            <b class="cahier-vote">Votre prochain trait</b>
+          </li>
+        </ol>
+      </figure>
+    </div>
+  </section>
+
   <section id="valeurs" class="section" aria-labelledby="valeurs-titre">
     <div class="section-body">
-      <h2 id="valeurs-titre">Nos <span class="mark">valeurs</span></h2>
+      <h2 id="valeurs-titre">Nos <span class="mark" data-tone="jaune">valeurs</span></h2>
       <ul class="valeurs">
-        {VALEURS.map((v) => {
+        {VALEURS.map((v, i) => {
           const t = keyed(v.titre, v.cle);
           return (
             <li class="valeur">
               <h3>{v.nom}</h3>
               <p class="valeur-lead">
                 {t.avant}
-                <span class="mark">{t.cle}</span>
+                <span class="mark" data-tone={VALEUR_TONES[i]}>{t.cle}</span>
                 {t.apres}
               </p>
               <p>{v.texte}</p>
@@ -243,9 +376,13 @@ const storesSoon = !STORES.ios || !STORES.android;
   <section id="methode" class="section" aria-labelledby="methode-titre">
     <div class="section-body methode">
       <div>
-        <h2 id="methode-titre">Le calcul, <span class="mark">en clair</span></h2>
-        <p class="lede">Pour chaque candidat, l'app additionne vos notes sur ses propositions, de −2 à +2, et ramène la somme sur 0 à 100 %. Sans vote, rien n'est inventé : « pas encore évalué ».</p>
+        <h2 id="methode-titre">Le calcul, <span class="mark" data-tone="rose">en clair</span></h2>
+        <p class="lede">Pour chaque candidat, l'app additionne vos notes sur ses propositions, de −2 à +2, et les points de ses scrutins, +2 ou −2, puis ramène la somme sur 0 à 100 %. Sans vote, rien n'est inventé : « pas encore évalué ».</p>
         <ul class="ruled">
+          <li>Un vote de groupe compte moitié moins qu'un vote personnel. Un scrutin où le candidat ne siégeait pas n'est pas compté pour lui.</li>
+          <li>Le Classement montre un seul score ; la fiche du candidat sépare son programme et ses votes au Parlement.</li>
+          <li>« Je ne sais pas » ne compte pas : ni dans le score, ni pour ouvrir le Classement.</li>
+          <li>Chaque score dit sa fiabilité : fragile sous 3 éléments, assez sûr de 3 à 4,5, fiable à partir de 5. Une proposition ou un vote personnel compte 1, un vote de groupe ½. Avec 6 propositions chacun, tous les candidats peuvent devenir fiables.</li>
           <li>Le calcul se fait sur votre appareil. Rien n'est envoyé.</li>
           <li>Chaque proposition et chaque scrutin portent un numéro stable (P-531, L-28) pour être cités et corrigés.</li>
           <li>Les couleurs de l'échelle ne servent qu'à vos votes, jamais à un parti.</li>
@@ -253,24 +390,41 @@ const storesSoon = !STORES.ios || !STORES.android;
       </div>
 
       <figure class="calc" aria-labelledby="calc-legende">
-        <p id="calc-legende" class="calc-head">Exemple : vous avez noté 3 propositions d'un même candidat</p>
+        <p id="calc-legende" class="calc-head">Exemple : 3 propositions et 2 scrutins d'un même candidat</p>
         <table>
           <tbody>
             <tr><th scope="row" class="num">P-412</th><td style="--c:var(--vote-p2)" class="num">Parfait +2</td></tr>
             <tr><th scope="row" class="num">P-087</th><td style="--c:var(--vote-p1)" class="num">Pour +1</td></tr>
             <tr><th scope="row" class="num">P-650</th><td style="--c:var(--vote-m1)" class="num">Contre −1</td></tr>
+            <tr class="calc-loi"><th scope="row" class="num">L-12 <span>vote personnel, à l'inverse de vous</span></th><td class="num">−2</td></tr>
+            <tr class="calc-loi"><th scope="row" class="num">L-31 <span>vote du groupe, comme vous, × 0,5</span></th><td class="num">+1</td></tr>
           </tbody>
         </table>
-        <p class="calc-line num">Somme <b>+2</b> sur une échelle de <b>−6</b> à <b>+6</b></p>
-        <p class="calc-result num">Accord <span class="mark">67 %</span></p>
-        <p class="calc-formula num">(2 + 6) ÷ 12 = 0,67</p>
+        <p class="calc-line num">Somme <b>+1</b> sur une échelle de <b>−9</b> à <b>+9</b></p>
+        <p class="calc-result num">Accord <span class="mark" data-tone="bleu">56 %</span></p>
+        <p class="calc-formula num">(1 + 9) ÷ 18 = 0,56</p>
+        <p class="calc-line num calc-reliability"><span class="gauge" aria-hidden="true"><i class="on"></i><i class="on"></i><i></i></span><span>Score assez sûr : 3 propositions + 1 vote personnel + ½ vote de groupe = <b>4,5</b> éléments, fiable dès 5.</span></p>
       </figure>
+    </div>
+  </section>
+
+  <section id="questions" class="section" aria-labelledby="questions-titre">
+    <div class="section-body">
+      <h2 id="questions-titre">Vos <span class="mark" data-tone="jaune">questions</span></h2>
+      <div class="faq">
+        {FAQ.map((q) => (
+          <details class="faq-item">
+            <summary><span class="hl">{q.question}</span></summary>
+            <p>{q.reponse}</p>
+          </details>
+        ))}
+      </div>
     </div>
   </section>
 
   <section id="open-source" class="section" aria-labelledby="os-titre">
     <div class="section-body">
-      <h2 id="os-titre">Ouvert, <span class="mark">de bout en bout</span></h2>
+      <h2 id="os-titre">Ouvert, <span class="mark" data-tone="vert">de bout en bout</span></h2>
       <p class="lede">Le code de l'app, les données et ce site sont publics. Vous pouvez tout relire, signaler une erreur, proposer une correction.</p>
       <ul class="os">
         <li>
@@ -312,6 +466,177 @@ const storesSoon = !STORES.ios || !STORES.android;
     </a>
     <p class="stores">{storesSoon ? 'Bientôt sur Android et iOS.' : 'Aussi sur Android et iOS.'}</p>
   </section>
+
+  <!-- En fin de page : tous les blocs tirés au hasard existent déjà. -->
+  <script is:inline define:vars={{ exemples, scrutins }}>
+    // Geste du surligneur (même tirage que l'app, src/lib/stroke.ts) : droit, diagonal, ondulé ou les deux, toujours de gauche à droite.
+    const drawStroke = (button) => {
+      const svg = button.querySelector('svg');
+      const { width: w, height: h } = button.getBoundingClientRect();
+      const r = (min, max) => min + Math.random() * (max - min);
+      const kind = Math.floor(Math.random() * 4);
+      const diagonal = kind % 2 === 1;
+      const wavy = kind >= 2;
+      const over = Math.random() < 0.25 ? 0.06 : 0;
+      const x0 = r(-0.06, 0.04) - over;
+      const x1 = r(0.94, 1.04) + over;
+      const yc = r(0.46, 0.6);
+      // Pente en hauteur par largeur : plus à plat sur un bouton large.
+      const slope = diagonal ? r(0.12, 0.3) * Math.min(1, (1.5 * h) / w) : r(-0.03, 0.03);
+      const amp = wavy ? r(0.035, 0.07) : 0;
+      const waves = r(1.2, 2.4);
+      const phase = Math.random() * Math.PI * 2;
+      const pts = [];
+      for (let i = 0; i <= 28; i++) {
+        const t = i / 28;
+        const y = yc - slope * (t - 0.5) + amp * Math.sin(phase + t * waves * Math.PI * 2);
+        pts.push(`${((x0 + (x1 - x0) * t) * w).toFixed(1)} ${(y * h).toFixed(1)}`);
+      }
+      svg.setAttribute('viewBox', `0 0 ${w.toFixed(1)} ${h.toFixed(1)}`);
+      const path = svg.querySelector('path');
+      path.setAttribute('d', `M${pts.join('L')}`);
+      path.style.strokeWidth = `${(r(0.34, 0.46) * h).toFixed(1)}px`;
+    };
+    // Une proposition et un avis tirés au hasard à chaque visite : aucune mesure n'est mise en avant.
+    const ex = exemples[Math.floor(Math.random() * exemples.length)];
+    const set = (sel, text) => document.querySelectorAll(sel).forEach((el) => (el.textContent = text));
+    set('[data-ex-ref]', ex.ref);
+    set('[data-ex-title]', ex.titre);
+    set('[data-ex-marked]', ex.titre);
+    document.querySelectorAll('[data-ex-theme]').forEach((el) => {
+      el.textContent = ex.theme;
+      el.style.color = ex.accent;
+    });
+    const labels = { '-2': 'Impossible −2', '-1': 'Contre −1', '0': 'Je ne sais pas', '1': 'Pour +1', '2': 'Parfait +2' };
+    // Colonne 2 : aucune note n'est choisie à la place du visiteur ; son clic pose le trait sur la mesure.
+    document.querySelectorAll('[data-vote]').forEach((button) =>
+      button.addEventListener('click', () => {
+        document.querySelectorAll('[data-vote]').forEach((el) => {
+          el.classList.toggle('is-chosen', el === button);
+          el.setAttribute('aria-pressed', String(el === button));
+        });
+        set('[data-vote-label]', labels[button.dataset.vote]);
+        document.querySelector('[data-ex-marked]')?.classList.add('is-marked');
+      })
+    );
+
+    const colors = { '-2': 'var(--vote-m2)', '-1': 'var(--vote-m1)', '0': 'var(--vote-0)', '1': 'var(--vote-p1)', '2': 'var(--vote-p2)' };
+    const shuffled = () => [...exemples].sort(() => Math.random() - 0.5);
+    const fill = (root, key, e) => {
+      root.querySelector(`[data-${key}-ref]`).textContent = e.ref;
+      const theme = root.querySelector(`[data-${key}-theme]`);
+      theme.textContent = e.theme;
+      theme.style.color = e.accent;
+      root.querySelector(`[data-${key}-title]`).textContent = e.titre;
+    };
+
+    // Cahier : d'autres mesures tirées au hasard.
+    const cahier = document.querySelector('[data-cahier]');
+    if (cahier) {
+      shuffled().slice(0, cahier.children.length).forEach((e, i) => fill(cahier.children[i], 'ca', e));
+    }
+
+    // Essai du geste : c'est le visiteur qui note ; trait sur son niveau, trait sur la mesure, la feuille se range.
+    const demo = document.querySelector('[data-demo]');
+    if (demo) {
+      const quick = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const queue = shuffled().filter((e) => e.ref !== demo.querySelector('[data-da-ref]').textContent);
+      const buttons = [...demo.querySelectorAll('[data-demo-vote]')];
+      const tag = demo.querySelector('[data-demo-tag]');
+      const status = demo.querySelector('[data-demo-status]');
+      const after = (ms, fn) => setTimeout(fn, quick ? 0 : ms);
+      let busy = false;
+      buttons.forEach((button) =>
+        button.addEventListener('click', () => {
+          if (busy) return;
+          busy = true;
+          const value = button.dataset.demoVote;
+          const title = demo.querySelector('[data-da-title]').textContent;
+          buttons.forEach((b) => (b.disabled = true));
+          drawStroke(button);
+          button.classList.add('is-picked');
+          status.textContent = `Vote noté : ${labels[value]}`;
+          // « Je ne sais pas » : pas de trait sur la mesure, aucun avis n'est posé.
+          if (value !== '0') after(340, () => demo.classList.add('is-swept'));
+          after(860, () => demo.classList.add('is-leaving'));
+          after(1260, () => {
+            tag.textContent = labels[value];
+            tag.style.setProperty('--c', colors[value]);
+            demo.querySelector('[data-demo-last-title]').textContent = title;
+            const next = queue.shift();
+            queue.push(next);
+            fill(demo, 'da', next);
+            button.classList.remove('is-picked');
+            demo.classList.remove('is-swept', 'is-leaving', 'is-entering');
+            void demo.offsetWidth;
+            demo.classList.add('has-last', 'is-entering');
+            buttons.forEach((b) => (b.disabled = false));
+            busy = false;
+          });
+        })
+      );
+    }
+
+    // Scrutin : les candidats qui l'ont voté prennent place, sans nom, triés comme vous / abstention / à l'inverse.
+    const sc = document.querySelector('[data-scrutin]');
+    if (sc) {
+      const seats = sc.querySelector('[data-hemi]');
+      const legend = sc.querySelector('[data-hemi-legend]');
+      const you = sc.querySelector('[data-hemi-you]');
+      let index = Math.floor(Math.random() * scrutins.length);
+      const relation = (user, pos) => (user === 'abstention' || pos === 'abstention' ? 'neutral' : user === pos ? 'same' : 'opposite');
+      const rank = { same: 0, neutral: 1, opposite: 2 };
+      const plural = (n, w) => `${n} ${w}${n > 1 ? 's' : ''}`;
+      const render = (user) => {
+        const s = scrutins[index];
+        const rels = user ? s.positions.map((p) => relation(user, p)).sort((x, y) => rank[x] - rank[y]) : s.positions.map(() => 'idle');
+        seats.replaceChildren(
+          ...rels.map((rel, i) => {
+            const seat = document.createElement('i');
+            seat.className = 'seat';
+            seat.dataset.rel = rel;
+            seat.style.setProperty('--a', `${180 - (180 * i) / Math.max(1, rels.length - 1)}deg`);
+            seat.style.setProperty('--i', String(i));
+            return seat;
+          })
+        );
+        sc.querySelectorAll('[data-sc-vote]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.scVote === user)));
+        you.textContent = user ? `Vous · ${user[0].toUpperCase()}${user.slice(1)}` : '';
+        if (!user) {
+          legend.textContent = `${s.positions.length} candidats ont voté ce texte. Votez pour voir où ils siègent par rapport à vous.`;
+          return;
+        }
+        if (user === 'abstention') {
+          legend.textContent = 'Abstention : ce texte ne change aucun score.';
+          return;
+        }
+        const n = (r) => rels.filter((x) => x === r).length;
+        legend.textContent = [n('same') && `${n('same')} comme vous`, n('opposite') && `${n('opposite')} à l’inverse`, n('neutral') && plural(n('neutral'), 'abstention')]
+          .filter(Boolean)
+          .join(', ') + '.';
+      };
+      const load = () => {
+        const s = scrutins[index];
+        sc.querySelector('[data-sc-ref]').textContent = s.ref;
+        const theme = sc.querySelector('[data-sc-theme]');
+        theme.textContent = s.theme;
+        theme.style.color = s.accent;
+        sc.querySelector('[data-sc-q]').textContent = s.question;
+        render(null);
+      };
+      sc.querySelectorAll('[data-sc-vote]').forEach((b) =>
+        b.addEventListener('click', () => {
+          drawStroke(b);
+          render(b.dataset.scVote);
+        })
+      );
+      sc.querySelector('[data-sc-next]')?.addEventListener('click', () => {
+        index = (index + 1) % scrutins.length;
+        load();
+      });
+      load();
+    }
+  </script>
 </Base>
 
 <style>
@@ -329,6 +654,7 @@ const storesSoon = !STORES.ios || !STORES.android;
   }
 
   h1 {
+    font-family: var(--font-display);
     font-size: clamp(40px, 5vw, 72px);
     line-height: 1.06;
     letter-spacing: -0.035em;
@@ -441,6 +767,7 @@ const storesSoon = !STORES.ios || !STORES.android;
     color: var(--graphite);
   }
   .mini-title {
+    font-family: var(--font-title);
     font-size: 17px;
     line-height: 1.35;
     font-weight: 600;
@@ -452,7 +779,7 @@ const storesSoon = !STORES.ios || !STORES.android;
 
   .mini-votes {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 4px;
   }
   .mini-vote {
@@ -852,10 +1179,483 @@ const storesSoon = !STORES.ios || !STORES.android;
     border-top: 1px solid var(--rule);
   }
   .close h2 {
+    font-family: var(--font-display);
     font-size: clamp(40px, 6vw, 80px);
     line-height: 1.05;
     letter-spacing: -0.035em;
     font-weight: 700;
+  }
+
+  /* Le geste du vote, rejoué : trait sur le niveau, trait sur la mesure, la feuille se range. */
+  .geste {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 420px);
+    align-items: center;
+    gap: clamp(24px, 5vw, 80px);
+    padding: 36px 0 12px;
+    border-top: 1px solid var(--rule);
+  }
+  .geste-text {
+    display: grid;
+    gap: 14px;
+    justify-items: start;
+  }
+  .geste-text h3 {
+    margin: 0;
+  }
+  .geste-text p {
+    color: var(--ink-soft);
+    max-width: 52ch;
+  }
+  .demo {
+    display: grid;
+    gap: 10px;
+  }
+  .demo-last {
+    display: grid;
+    gap: 4px;
+    padding: 10px 14px;
+    background: var(--sheet);
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    opacity: 0;
+  }
+  .demo-last-label {
+    font-size: 20px;
+  }
+  .demo-last-row {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    min-width: 0;
+    font-size: 14px;
+  }
+  .demo-last-row b {
+    flex: none;
+    font-size: 13px;
+    color: var(--c, var(--vote-p1));
+  }
+  .demo-last-row span {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .demo-card {
+    display: grid;
+    align-content: start;
+    gap: 12px;
+    padding: 16px;
+    background: var(--sheet);
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    box-shadow: 0 1px 0 var(--rule-soft);
+  }
+  .demo-vote {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    min-height: 44px;
+    padding: 0;
+    font-family: inherit;
+    cursor: pointer;
+    transition: border-color var(--sweep);
+  }
+  .demo-vote:hover:not(:disabled) {
+    border-color: var(--ink);
+  }
+  .demo-vote:disabled {
+    cursor: default;
+  }
+  .demo-unsure {
+    width: 100%;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--graphite);
+  }
+  .scale .scale-unsure {
+    color: var(--graphite);
+    border-style: dashed;
+  }
+  /* Le trait sort du bouton s'il le faut : SVG sans découpe, sous le texte. */
+  .demo-stroke,
+  .sc-stroke {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: visible;
+    pointer-events: none;
+  }
+  .demo-stroke path,
+  .sc-stroke path {
+    fill: none;
+    stroke: var(--mark-band);
+    stroke-linejoin: round;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+  }
+  .demo-sweep {
+    background-image: linear-gradient(transparent 40%, var(--mark-band) 40%, var(--mark-band) 92%, transparent 92%);
+    background-repeat: no-repeat;
+    background-size: 0% 100%;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+  .demo .is-picked {
+    border-color: var(--ink);
+    animation: demo-press 240ms both;
+  }
+  .demo .is-picked,
+  .sc-choice[aria-pressed='true'] {
+    overflow: visible;
+    z-index: 1;
+  }
+  .is-picked .demo-stroke path {
+    animation: demo-stroke 320ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  .is-swept .demo-sweep {
+    animation: demo-sweep 480ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+  .is-leaving .demo-card {
+    animation: demo-leave 400ms cubic-bezier(0.55, 0, 0.75, 0.2) both;
+  }
+  .is-entering .demo-card,
+  .is-entering .demo-last {
+    animation: demo-in 360ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  .has-last .demo-last {
+    opacity: 1;
+  }
+  @keyframes demo-press {
+    40% {
+      transform: scale(0.92);
+    }
+  }
+  @keyframes demo-stroke {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+  @keyframes demo-sweep {
+    to {
+      background-size: 100% 100%;
+    }
+  }
+  @keyframes demo-leave {
+    to {
+      opacity: 0;
+      transform: translateY(-40px) scale(0.94);
+    }
+  }
+  @keyframes demo-in {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* Deux colonnes : le texte, puis la preuve sur une feuille. */
+  .duo {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 520px);
+    gap: clamp(32px, 5vw, 80px);
+    align-items: start;
+  }
+  .duo-text {
+    display: grid;
+    gap: 24px;
+    align-content: start;
+    justify-items: start;
+  }
+  .points b {
+    color: var(--ink);
+  }
+
+  .scrutin,
+  .cahier {
+    margin: 0;
+    padding: 24px;
+    display: grid;
+    gap: 14px;
+    background: var(--sheet);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+  }
+  .sc-choices {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 6px;
+  }
+  .sc-choice {
+    min-height: 52px;
+    padding: 0 8px;
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    font: 600 16px/1.2 var(--font);
+    color: var(--c);
+    cursor: pointer;
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background: var(--sheet);
+    transition: border-color var(--sweep), color var(--sweep);
+  }
+  .sc-stroke path {
+    transition: stroke-dashoffset 320ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .sc-choice[aria-pressed='true'] .sc-stroke path {
+    stroke-dashoffset: 0;
+  }
+  .sc-choice:hover {
+    border-color: var(--ink);
+  }
+  .sc-choice[aria-pressed='true'] {
+    border-color: var(--ink);
+    color: var(--ink);
+  }
+
+  /* Hémicycle anonyme : un siège par candidat qui a voté ce texte. */
+  .hemi {
+    position: relative;
+    width: 288px;
+    max-width: 100%;
+    height: 156px;
+    margin: 6px auto 0;
+  }
+  .hemi::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 14px;
+    height: 1px;
+    background: var(--rule);
+  }
+  .hemi-seats {
+    position: absolute;
+    inset: 0;
+  }
+  .hemi-seats :global(.seat) {
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    left: calc(50% + cos(var(--a)) * 120px - 11px);
+    bottom: calc(sin(var(--a)) * 120px + 16px);
+    border-radius: 50%;
+    border: 1px solid var(--rule);
+    background: var(--rule-soft);
+    animation: seat-in 420ms calc(var(--i) * 45ms) cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  .hemi-seats :global(.seat[data-rel='same']) {
+    border: 1.5px solid var(--ink);
+    background: var(--mark);
+  }
+  .hemi-seats :global(.seat[data-rel='opposite']) {
+    border: 1.5px solid var(--ink);
+    background: var(--sheet);
+  }
+  .hemi-seats :global(.seat[data-rel='neutral']) {
+    border-color: var(--graphite);
+  }
+  @keyframes seat-in {
+    from {
+      opacity: 0;
+      transform: translateY(14px) scale(0.6);
+    }
+  }
+  .hemi-you {
+    position: absolute;
+    left: 50%;
+    bottom: 26px;
+    transform: translateX(-50%);
+    font-size: 14px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .hemi-legend {
+    min-height: 3em;
+    text-align: center;
+    font-size: 15px;
+    color: var(--ink-soft);
+  }
+  .sc-foot {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 6px 16px;
+    padding-top: 12px;
+    border-top: 1px solid var(--rule-soft);
+  }
+  .sc-foot .mini-note {
+    max-width: 40ch;
+  }
+  .sc-next {
+    padding: 10px 0;
+    border: 0;
+    background: none;
+    font: 600 15px var(--font);
+    color: var(--ink);
+    cursor: pointer;
+  }
+  .sc-next:hover > .hl,
+  .sc-next:focus-visible > .hl {
+    background-size: 100% 100%;
+  }
+
+  .cahier-rows {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .cahier-rows li {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: baseline;
+    gap: 4px 16px;
+    padding: 14px 0;
+    border-top: 1px solid var(--rule-soft);
+  }
+  .cahier-rows .mini-meta {
+    grid-column: 1 / -1;
+  }
+  .cahier-title {
+    font-family: var(--font-title);
+    font-size: 17px;
+    line-height: 1.35;
+    font-weight: 600;
+  }
+  .cahier-vote {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--c);
+    white-space: nowrap;
+  }
+  .is-next .cahier-vote {
+    font-weight: 600;
+    color: var(--graphite);
+  }
+
+  .calc-loi th span {
+    display: block;
+    font-size: 13px;
+  }
+  .calc .calc-loi td {
+    color: var(--ink);
+  }
+
+  /* Colonne 2 : la mesure se surligne au choix du visiteur. */
+  .mini-mark {
+    background-image: linear-gradient(transparent 40%, var(--mark-band) 40%, var(--mark-band) 92%, transparent 92%);
+    background-repeat: no-repeat;
+    background-size: 0% 100%;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+    transition: background-size 480ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .mini-mark.is-marked {
+    background-size: 100% 100%;
+  }
+  button.mini-vote {
+    font-family: inherit;
+    cursor: pointer;
+  }
+  button.mini-vote:hover {
+    border-color: var(--ink);
+  }
+
+  .calc-reliability {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+  .gauge {
+    display: inline-flex;
+    align-items: flex-end;
+    gap: 2px;
+    flex: none;
+  }
+  .gauge i {
+    width: 4px;
+    border-radius: 1px;
+    background: var(--rule);
+  }
+  .gauge i:nth-child(1) {
+    height: 6px;
+  }
+  .gauge i:nth-child(2) {
+    height: 9px;
+  }
+  .gauge i:nth-child(3) {
+    height: 12px;
+  }
+  .gauge i.on {
+    background: var(--ink);
+  }
+
+  /* FAQ : questions réglées au filet, réponse dépliée sous la question. */
+  .faq {
+    max-width: 72ch;
+    border-top: 1px solid var(--rule);
+  }
+  .faq-item {
+    border-bottom: 1px solid var(--rule);
+  }
+  .faq-item summary {
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    min-height: 56px;
+    padding: 14px 0;
+    font-family: var(--font-title);
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+  .faq-item summary::after {
+    content: '';
+    flex: none;
+    width: 8px;
+    height: 8px;
+    margin: 0 4px 4px 0;
+    border-right: 2px solid var(--graphite);
+    border-bottom: 2px solid var(--graphite);
+    transform: rotate(45deg);
+    transition: transform var(--sweep);
+  }
+  .faq-item[open] summary::after {
+    margin-bottom: -4px;
+    transform: rotate(-135deg);
+  }
+  .faq-item summary:hover > .hl,
+  .faq-item summary:focus-visible > .hl {
+    background-size: 100% 100%;
+  }
+  .faq-item p {
+    padding: 0 0 20px;
+    color: var(--ink-soft);
+    max-width: 66ch;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .demo,
+    .demo *,
+    .hemi-seats :global(.seat) {
+      animation: none !important;
+    }
+    .sc-stroke path {
+      transition: none;
+    }
   }
 
   @media (max-width: 600px) {
@@ -931,8 +1731,14 @@ const storesSoon = !STORES.ios || !STORES.android;
     .temps,
     .valeurs,
     .methode,
-    .os {
+    .os,
+    .geste,
+    .duo {
       grid-template-columns: minmax(0, 1fr);
+    }
+    .scrutin,
+    .cahier {
+      padding: 18px;
     }
     .valeur,
     .valeur:nth-child(even) {
