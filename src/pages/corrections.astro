@@ -1,0 +1,12 @@
+---
+import LegalPage from '../components/LegalPage.astro';
+import { CONTACT_URL, CORRECTIONS } from '../data/legal';
+---
+
+<LegalPage
+  title="Méthode et"
+  mark="corrections"
+  description="Comment les données sont choisies, vérifiées et corrigées."
+  sections={CORRECTIONS}
+  action={{ label: 'Écrire à contact@danny-garcia.fr', url: CONTACT_URL }}
+/>
