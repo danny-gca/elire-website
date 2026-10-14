@@ -3,7 +3,7 @@
     "ref": "P-123",
     "theme": "Environnement",
     "themeId": "environnement",
-    "titre": "Construire 20 EPR",
+    "titre": "Construire 20 réacteurs nucléaires de nouvelle génération (EPR)",
     "accent": "#3B7D4A",
     "tint": "#E6F0E8"
   },
@@ -11,7 +11,7 @@
     "ref": "P-545",
     "theme": "Économie",
     "themeId": "economie",
-    "titre": "Rétablir l'ISF et créer une taxe de 4 % sur les rachats d'actions",
+    "titre": "Rétablir l'impôt sur la fortune (ISF)",
     "accent": "#8C6A1A",
     "tint": "#F2EDDF"
   },
@@ -27,7 +27,7 @@
     "ref": "P-575",
     "theme": "Travail",
     "themeId": "travail",
-    "titre": "Les 35 heures sont « une erreur » : « donner le maximum de libertés dans l'entreprise »",
+    "titre": "Donner le maximum de liberté aux entreprises sur le temps de travail",
     "accent": "#A0532C",
     "tint": "#F4E8E1"
   },
@@ -35,7 +35,7 @@
     "ref": "P-408",
     "theme": "Éducation",
     "themeId": "education",
-    "titre": "Introduire un module obligatoire sur l'éthique animale et le respect du vivant dès l'école primaire",
+    "titre": "Enseigner le respect des animaux dans tous les programmes scolaires",
     "accent": "#1F7A70",
     "tint": "#E0EFED"
   },
@@ -59,7 +59,7 @@
     "ref": "P-245",
     "theme": "International",
     "themeId": "international",
-    "titre": "Sortir totalement de l'OTAN (article 13 du traité de l'Atlantique Nord)",
+    "titre": "Sortir complètement de l'Alliance atlantique (OTAN)",
     "accent": "#3D5E88",
     "tint": "#E3E9F1"
   },
@@ -67,7 +67,7 @@
     "ref": "P-667",
     "theme": "Agriculture",
     "themeId": "agriculture",
-    "titre": "Faire des coûts de production la base de la construction du prix agricole, via des indicateurs publics",
+    "titre": "Fixer le prix agricole à partir des coûts de production",
     "accent": "#6B7722",
     "tint": "#EEF0DE"
   },
@@ -83,7 +83,7 @@
     "ref": "P-492",
     "theme": "Numérique",
     "themeId": "numerique",
-    "titre": "Interdire la publicité ciblée pour attaquer le modèle économique des plateformes",
+    "titre": "Interdire la publicité ciblée sur les plateformes",
     "accent": "#2B6A8F",
     "tint": "#E1ECF2"
   },
@@ -91,7 +91,7 @@
     "ref": "P-693",
     "theme": "Logement",
     "themeId": "logement",
-    "titre": "Assouplir le ZAN et décentraliser les zonages des politiques de logement",
+    "titre": "Assouplir la règle « zéro artificialisation nette » (ZAN) et laisser les communes décider des zonages",
     "accent": "#77593A",
     "tint": "#EFE9E2"
   }

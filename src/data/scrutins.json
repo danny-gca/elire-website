@@ -1,0 +1,138 @@
+[
+  {
+    "ref": "L-44",
+    "theme": "Numérique",
+    "accent": "#2B6A8F",
+    "question": "Faut-il interdire les réseaux sociaux aux moins de 15 ans sans l'accord d'un parent ?",
+    "positions": [
+      "abstention",
+      "contre",
+      "contre",
+      "contre",
+      "pour",
+      "pour",
+      "pour",
+      "pour",
+      "pour"
+    ]
+  },
+  {
+    "ref": "L-43",
+    "theme": "Santé",
+    "accent": "#A3455C",
+    "question": "Faut-il créer un droit à l'aide à mourir pour les malades incurables en fin de vie qui le demandent ?",
+    "positions": [
+      "abstention",
+      "abstention",
+      "contre",
+      "contre",
+      "pour",
+      "pour",
+      "pour",
+      "pour",
+      "pour"
+    ]
+  },
+  {
+    "ref": "L-37",
+    "theme": "Sécurité",
+    "accent": "#5C5047",
+    "question": "Faut-il créer un parquet national et des prisons de haute sécurité contre le narcotrafic ?",
+    "positions": [
+      "abstention",
+      "abstention",
+      "contre",
+      "contre",
+      "pour",
+      "pour",
+      "pour",
+      "pour",
+      "pour"
+    ]
+  },
+  {
+    "ref": "L-25",
+    "theme": "Logement",
+    "accent": "#77593A",
+    "question": "Faut-il donner plus de pouvoirs aux maires pour limiter les meublés de tourisme type Airbnb ?",
+    "positions": [
+      "contre",
+      "pour",
+      "pour",
+      "pour",
+      "pour",
+      "pour",
+      "pour",
+      "pour"
+    ]
+  },
+  {
+    "ref": "L-10",
+    "theme": "Travail",
+    "accent": "#A0532C",
+    "question": "Faut-il demander 15 heures d'activité par semaine aux allocataires du RSA ?",
+    "positions": [
+      "contre",
+      "contre",
+      "contre",
+      "contre",
+      "contre",
+      "contre",
+      "pour",
+      "pour",
+      "pour"
+    ]
+  },
+  {
+    "ref": "L-09",
+    "theme": "International",
+    "accent": "#3D5E88",
+    "question": "Faut-il consacrer 413 milliards d'euros aux armées de 2024 à 2030 ?",
+    "positions": [
+      "abstention",
+      "contre",
+      "contre",
+      "contre",
+      "pour",
+      "pour",
+      "pour",
+      "pour",
+      "pour"
+    ]
+  },
+  {
+    "ref": "L-07",
+    "theme": "Environnement",
+    "accent": "#3B7D4A",
+    "question": "Faut-il simplifier les procédures pour construire rapidement 6 nouveaux réacteurs nucléaires ?",
+    "positions": [
+      "abstention",
+      "contre",
+      "contre",
+      "contre",
+      "pour",
+      "pour",
+      "pour",
+      "pour",
+      "pour",
+      "pour"
+    ]
+  },
+  {
+    "ref": "L-02",
+    "theme": "Éducation",
+    "accent": "#1F7A70",
+    "question": "Faut-il étendre le repas à 1 euro au restaurant universitaire à tous les étudiants ?",
+    "positions": [
+      "contre",
+      "contre",
+      "contre",
+      "pour",
+      "pour",
+      "pour",
+      "pour",
+      "pour",
+      "pour"
+    ]
+  }
+]

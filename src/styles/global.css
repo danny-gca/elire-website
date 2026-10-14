@@ -1,4 +1,49 @@
-/* Univers « cahier annoté », repris de l'app (DESIGN.md). Aucune police distante. */
+/* Univers « cahier annoté », repris de l'app (DESIGN.md). Polices auto-hébergées, SIL OFL 1.1 (licences dans public/fonts/). */
+@font-face {
+  font-family: 'Literata';
+  src: url('../assets/fonts/Literata-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Literata';
+  src: url('../assets/fonts/Literata36pt-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
+}
+/* Coupe optique 72 pt : réservée aux très grands titres (accroche, clôture). */
+@font-face {
+  font-family: 'Literata Display';
+  src: url('../assets/fonts/Literata72pt-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Atkinson Hyperlegible Next';
+  src: url('../assets/fonts/AtkinsonHyperlegibleNext-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Atkinson Hyperlegible Next';
+  src: url('../assets/fonts/AtkinsonHyperlegibleNext-SemiBold.woff2') format('woff2');
+  font-weight: 500 600;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Atkinson Hyperlegible Next';
+  src: url('../assets/fonts/AtkinsonHyperlegibleNext-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
+}
+/* Caveat réduite aux caractères latins. */
+@font-face {
+  font-family: 'Caveat';
+  src: url('../assets/fonts/Caveat-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
+}
+
 :root {
   --paper: #f6f7f5;
   --sheet: #ffffff;
@@ -10,20 +55,45 @@
   --board: #b9bfc5;
   --board-edge: #9aa1a8;
   --pressed: #eef0f1;
-  --mark: #eadb3f;
-  --mark-band: rgba(234, 219, 63, 0.88);
+  /* Les 4 surligneurs du lecteur, sans signification ; --mark suit le choix du lecteur (html[data-marker]). */
+  --marker-jaune: #eadb3f;
+  --marker-jaune-band: rgba(234, 219, 63, 0.88);
+  --marker-rose: #f2a7c3;
+  --marker-rose-band: rgba(242, 167, 195, 0.88);
+  --marker-vert: #a8e0a1;
+  --marker-vert-band: rgba(168, 224, 161, 0.88);
+  --marker-bleu: #a9d3f5;
+  --marker-bleu-band: rgba(169, 211, 245, 0.88);
+  --mark: var(--marker-jaune);
+  --mark-band: var(--marker-jaune-band);
   --vote-m2: #8e3a1f;
   --vote-m1: #9c5530;
   --vote-0: #5b6168;
   --vote-p1: #3a7d60;
   --vote-p2: #22654a;
 
-  --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  --font-title: 'Literata', Georgia, serif;
+  --font-display: 'Literata Display', 'Literata', Georgia, serif;
+  --font-note: 'Caveat', cursive;
   --gutter: clamp(16px, 5vw, 96px);
   --max: 1440px;
   --radius: 14px;
   --sweep: 280ms cubic-bezier(0.2, 0.7, 0.2, 1);
   color-scheme: light;
+}
+
+html[data-marker='rose'] {
+  --mark: var(--marker-rose);
+  --mark-band: var(--marker-rose-band);
+}
+html[data-marker='vert'] {
+  --mark: var(--marker-vert);
+  --mark-band: var(--marker-vert-band);
+}
+html[data-marker='bleu'] {
+  --mark: var(--marker-bleu);
+  --mark-band: var(--marker-bleu-band);
 }
 
 *,
@@ -63,7 +133,17 @@ figure {
 h1,
 h2,
 h3 {
+  font-family: var(--font-title);
   text-wrap: balance;
+}
+
+/* Écriture du lecteur (« Votre avis », « Dernier vote ») : en grand et en peu de mots. */
+.note {
+  font-family: var(--font-note);
+  font-weight: 700;
+  font-size: 1.35em;
+  line-height: 1.1;
+  color: var(--ink);
 }
 
 p {
@@ -112,10 +192,34 @@ a {
 /* Trait de surligneur posé (mot clé d'un titre). */
 .mark {
   background-image: linear-gradient(transparent 40%, var(--mark-band) 40%, var(--mark-band) 92%, transparent 92%);
+  background-size: 240px 100%;
+  background-repeat: repeat-x;
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
   padding: 0 0.08em;
   margin: 0 -0.08em;
+}
+.mark:nth-of-type(2n) {
+  background-position-x: -110px;
+}
+/* Trait ondulé par portions (généré) : la couleur de la marque, sinon celle du surligneur du lecteur. */
+.mark:not([data-tone]), .mark[data-tone='jaune'] { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 100' preserveAspectRatio='none'%3E%3Cpath fill='rgb(234,219,63)' fill-opacity='.88' d='M0 40.0L90 40.0L96 40.3L102 41.0L108 41.2L114 40.5L120 38.9L126 37.4L132 37.1L138 38.4L144 40.9L150 43.1L156 43.9L162 42.6L168 40.0L174 37.4L180 36.2L186 37.0L192 39.2L198 41.4L204 42.6L210 42.2L216 40.9L222 39.6L228 39.2L234 39.5L240 40.0L240 92.0L234 92.0L228 91.5L222 91.1L216 91.2L210 91.9L204 93.0L198 93.8L192 93.8L186 92.7L180 91.1L174 89.9L168 89.7L162 90.7L156 92.4L150 93.8L144 94.2L138 93.5L132 92.2L126 91.0L120 90.6L114 91.0L108 91.7L102 92.2L96 92.3L90 92.0L0 92.0Z'/%3E%3C/svg%3E"); }
+html[data-marker='rose'] .mark:not([data-tone]), .mark[data-tone='rose'] { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 100' preserveAspectRatio='none'%3E%3Cpath fill='rgb(242,167,195)' fill-opacity='.88' d='M0 40.0L90 40.0L96 40.3L102 41.0L108 41.2L114 40.5L120 38.9L126 37.4L132 37.1L138 38.4L144 40.9L150 43.1L156 43.9L162 42.6L168 40.0L174 37.4L180 36.2L186 37.0L192 39.2L198 41.4L204 42.6L210 42.2L216 40.9L222 39.6L228 39.2L234 39.5L240 40.0L240 92.0L234 92.0L228 91.5L222 91.1L216 91.2L210 91.9L204 93.0L198 93.8L192 93.8L186 92.7L180 91.1L174 89.9L168 89.7L162 90.7L156 92.4L150 93.8L144 94.2L138 93.5L132 92.2L126 91.0L120 90.6L114 91.0L108 91.7L102 92.2L96 92.3L90 92.0L0 92.0Z'/%3E%3C/svg%3E"); }
+html[data-marker='vert'] .mark:not([data-tone]), .mark[data-tone='vert'] { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 100' preserveAspectRatio='none'%3E%3Cpath fill='rgb(168,224,161)' fill-opacity='.88' d='M0 40.0L90 40.0L96 40.3L102 41.0L108 41.2L114 40.5L120 38.9L126 37.4L132 37.1L138 38.4L144 40.9L150 43.1L156 43.9L162 42.6L168 40.0L174 37.4L180 36.2L186 37.0L192 39.2L198 41.4L204 42.6L210 42.2L216 40.9L222 39.6L228 39.2L234 39.5L240 40.0L240 92.0L234 92.0L228 91.5L222 91.1L216 91.2L210 91.9L204 93.0L198 93.8L192 93.8L186 92.7L180 91.1L174 89.9L168 89.7L162 90.7L156 92.4L150 93.8L144 94.2L138 93.5L132 92.2L126 91.0L120 90.6L114 91.0L108 91.7L102 92.2L96 92.3L90 92.0L0 92.0Z'/%3E%3C/svg%3E"); }
+html[data-marker='bleu'] .mark:not([data-tone]), .mark[data-tone='bleu'] { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 100' preserveAspectRatio='none'%3E%3Cpath fill='rgb(169,211,245)' fill-opacity='.88' d='M0 40.0L90 40.0L96 40.3L102 41.0L108 41.2L114 40.5L120 38.9L126 37.4L132 37.1L138 38.4L144 40.9L150 43.1L156 43.9L162 42.6L168 40.0L174 37.4L180 36.2L186 37.0L192 39.2L198 41.4L204 42.6L210 42.2L216 40.9L222 39.6L228 39.2L234 39.5L240 40.0L240 92.0L234 92.0L228 91.5L222 91.1L216 91.2L210 91.9L204 93.0L198 93.8L192 93.8L186 92.7L180 91.1L174 89.9L168 89.7L162 90.7L156 92.4L150 93.8L144 94.2L138 93.5L132 92.2L126 91.0L120 90.6L114 91.0L108 91.7L102 92.2L96 92.3L90 92.0L0 92.0Z'/%3E%3C/svg%3E"); }
+
+/* Une marque déjà posée garde sa couleur, quel que soit le surligneur du lecteur. */
+[data-tone='jaune'] {
+  --mark-band: var(--marker-jaune-band);
+}
+[data-tone='rose'] {
+  --mark-band: var(--marker-rose-band);
+}
+[data-tone='vert'] {
+  --mark-band: var(--marker-vert-band);
+}
+[data-tone='bleu'] {
+  --mark-band: var(--marker-bleu-band);
 }
 
 /* Geste du surligneur : la bande balaie de gauche à droite au survol ou au focus. */
@@ -150,7 +254,7 @@ a {
   text-decoration-color: transparent;
 }
 
-/* Boutons : l'encre se couvre de jaune de gauche à droite. */
+/* Boutons : l'encre se couvre du surligneur de gauche à droite. */
 .btn {
   display: inline-flex;
   align-items: center;

@@ -1,0 +1,72 @@
+---
+import Base from '../layouts/Base.astro';
+import type { LegalSection } from '../data/legal';
+
+interface Props {
+  title: string;
+  mark: string;
+  description: string;
+  sections: LegalSection[];
+  action?: { label: string; url: string };
+}
+
+const { title, mark, description, sections, action } = Astro.props;
+---
+
+<Base title={`${title} ${mark} · ÉLIRE`} description={description}>
+  <article class="legal">
+    <h1>{title} <span class="mark" data-tone="jaune">{mark}</span></h1>
+    <p class="lede">{description}</p>
+    {sections.map((section) => (
+      <section aria-labelledby={`s-${section.titre}`}>
+        <h2 id={`s-${section.titre}`}>{section.titre}</h2>
+        {section.paragraphes.map((p) => <p>{p}</p>)}
+      </section>
+    ))}
+    {action && <p class="action"><a href={action.url} rel="noopener"><span class="hl">{action.label}</span></a></p>}
+  </article>
+</Base>
+
+<style>
+  .legal {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: clamp(48px, 7vw, 96px) var(--gutter) clamp(64px, 9vw, 120px);
+    display: grid;
+    gap: 20px;
+  }
+  h1 {
+    font-size: clamp(30px, 3.6vw, 48px);
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    font-weight: 700;
+    max-width: 20ch;
+  }
+  .lede {
+    font-size: clamp(18px, 1.6vw, 21px);
+    line-height: 1.55;
+    color: var(--ink-soft);
+    max-width: 62ch;
+  }
+  section {
+    display: grid;
+    gap: 10px;
+    max-width: 66ch;
+    padding-top: 28px;
+    margin-top: 12px;
+    border-top: 1px solid var(--rule);
+  }
+  h2 {
+    font-size: 21px;
+    line-height: 1.3;
+    font-weight: 600;
+  }
+  .action {
+    margin-top: 12px;
+  }
+  .action a {
+    display: inline-block;
+    padding: 8px 0;
+    font-weight: 600;
+  }
+</style>

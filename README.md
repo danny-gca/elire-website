@@ -6,14 +6,19 @@ Site de présentation de [ÉLIRE](https://github.com/danny-gca/elire-app), l'app
 
 ## Pages
 
-1. **Présentation** (`src/pages/index.astro`, fait) : accroche et feuille en quatre temps (lire, noter, comparer, vérifier), principe, fonctionnement, valeurs, méthode de calcul, open source, appel vers l'app web. La proposition d'exemple et l'avis affiché sont tirés au hasard à chaque visite (`src/data/exemples.json`, une par thème, douze candidats différents).
-2. **Signaler une erreur** (à faire) : formulaire sans compte, qui crée un ticket sur le dépôt de l'app. Pré-rempli depuis l'app (`?ref=P-531&titre=...`).
+1. **Présentation** (`src/pages/index.astro`, fait) : accroche et feuille en quatre temps (lire, noter, comparer, vérifier), principe, fonctionnement avec un essai du geste du vote (le visiteur note lui-même, rien n'est enregistré), « Votez comme au Parlement » (scrutin réel et hémicycle anonyme), « Votre surligneur », valeurs, méthode de calcul (propositions, scrutins et fiabilité du score), « Vos questions » (FAQ des testeurs), open source, appel vers l'app web. Propositions, avis et scrutin affichés sont tirés au hasard à chaque visite (`src/data/exemples.json`, une par thème, douze candidats différents ; `src/data/scrutins.json`, huit scrutins réels anonymes générés depuis le dataset de l'app).
+2. **Mentions légales et Méthode et corrections** (`src/pages/mentions-legales.astro`, `src/pages/corrections.astro`, fait) : même texte que l'app, dans `src/data/legal.ts` (éditeur, hébergeur, délai de correction, droit de réponse), liens en pied de page.
+3. **Signaler une erreur** (à faire) : formulaire sans compte, qui crée un ticket sur le dépôt de l'app. Pré-rempli depuis l'app (`?ref=P-531&titre=...`).
 
-Navigation centrée, lien GitHub en haut à droite, surligneur jaune qui balaie au survol des liens et boutons, indicateur de lecture en bas à droite. Liens, stores et chiffres : `src/config.ts`.
+Navigation centrée, sélecteur de surligneur et lien GitHub en haut à droite, surligneur qui balaie au survol des liens et boutons, indicateur de lecture en bas à droite. Liens, stores, chiffres et surligneurs : `src/config.ts`.
+
+Surligneur : 4 couleurs (jaune, rose, vert, bleu), comme dans l'app. Le choix du visiteur est enregistré dans le `localStorage` du navigateur (clé `elire-marker`), jamais envoyé, sans cookie ; sans choix, une couleur est tirée au hasard à chaque visite. Les mots clés déjà surlignés gardent leur couleur (`data-tone`).
 
 ## Principes
 
 - Site statique sur GitHub Pages, aucune requête tierce, aucun traceur, aucun cookie.
+- Polices : Literata, Atkinson Hyperlegible Next et Caveat, auto-hébergées (`src/assets/fonts/`, licences SIL OFL 1.1 dans `public/fonts/`), les mêmes que l'app.
+- Les exemples (`src/data/exemples.json`, `src/data/scrutins.json`) reprennent les titres et questions du dataset de l'app : les régénérer quand ils changent.
 - Même univers visuel que l'app : voir [DESIGN.md](DESIGN.md) (repris de l'app) et [PRODUCT.md](PRODUCT.md).
 
 ## Développement
