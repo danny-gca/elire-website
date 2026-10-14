@@ -26,16 +26,16 @@ Site vitrine de l'app ÉLIRE : expliquer en une page ce qu'est l'app, comment el
 
 ## Capabilities and Constraints
 
-- Deux pages seulement : one page de présentation, formulaire d'erreur.
+- Pages : one page de présentation, Mentions légales, Méthode et corrections, formulaire d'erreur (à faire).
 - Le formulaire crée un ticket GitHub sur `danny-gca/elire-app` via un Cloudflare Worker (label `via-formulaire`) ; aucun compte demandé, e-mail facultatif.
-- Aucune requête tierce côté visiteur (polices système, pas de CDN, pas d'analytics, pas de cookie), thème clair uniquement.
-- Les chiffres et textes viennent de l'app : 17 candidats, 96 propositions vérifiées, 26 scrutins ; 5 niveaux de vote (Impossible, Contre, Neutre, Pour, Parfait).
+- Aucune requête tierce côté visiteur (polices libres auto-hébergées, pas de CDN, pas d'analytics, pas de cookie), thème clair uniquement.
+- Les chiffres et textes viennent de l'app : 25 candidats, 144 propositions vérifiées, 42 scrutins ; 4 niveaux de vote sur les propositions (Impossible, Contre, Pour, Parfait) et « Je ne sais pas », non compté, 3 sur les scrutins (Contre, Abstention, Pour : +2 comme le candidat, −2 à l'inverse, 0 si le candidat s'est abstenu, rien si le lecteur s'abstient, moitié pour un vote de groupe, rien pour un candidat qui ne siégeait pas).
 - Domaine : `danny-gca.github.io/elire-website` pour l'instant.
 
 ## Brand Commitments
 
 - Nom : ÉLIRE (Présidentielle 2027).
-- Même univers que l'app : « le cahier annoté » (voir `DESIGN.md`). Papier blanc froid, encre, graphite, un surligneur jaune réservé aux avis de l'utilisateur ; Classement en panneaux électoraux identiques et numérotés.
+- Même univers que l'app : « le cahier annoté » (voir `DESIGN.md`). Papier blanc froid, encre, graphite, quatre surligneurs au choix du lecteur (jaune, rose, vert, bleu), sans signification, réservés à ses avis et à ses gestes ; Classement en panneaux électoraux identiques et numérotés.
 - Palette neutre : ni l'État ni un parti, sans dégradé ni violet ; accents thématiques sourds.
 - À ne jamais ressembler à : un site gouvernemental, une landing page de startup gadget ou gamifiée, les applis à cartes à swiper (dégradé violet).
 
