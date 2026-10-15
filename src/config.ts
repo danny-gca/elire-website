@@ -12,7 +12,7 @@ export const FUNDING = [
 ];
 
 // Chiffres du jeu de données (elire-app, vérification du 2026-10-14).
-export const COUNTS = { candidats: 25, propositions: 144, scrutins: 42, themes: 12 };
+export const COUNTS = { candidats: 25, propositions: 194, scrutins: 42, themes: 12 };
 export const DATA_DATE = '14 octobre 2026';
 
 // Surligneurs du lecteur, mêmes couleurs que l'app ; aucune ne correspond à un parti.
