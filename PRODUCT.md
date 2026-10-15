@@ -8,15 +8,15 @@ web
 
 ## Users
 
-Citoyens et électeurs français qui découvrent ÉLIRE (par un lien, un article, un moteur de recherche) ou qui veulent signaler une erreur dans ses données, souvent sur téléphone.
+Citoyens et électeurs français qui découvrent élire (par un lien, un article, un moteur de recherche) ou qui veulent signaler une erreur dans ses données, souvent sur téléphone.
 
 ## Product Purpose
 
-Site vitrine de l'app ÉLIRE : expliquer en une page ce qu'est l'app, comment elle fonctionne et pourquoi on peut lui faire confiance, puis mener vers l'app web. Deuxième page : un formulaire pour signaler une erreur dans les données, sans compte GitHub.
+Site vitrine de l'app élire : expliquer en une page ce qu'est l'app, comment elle fonctionne et pourquoi on peut lui faire confiance, puis mener vers l'app web. Deuxième page : un formulaire pour signaler une erreur dans les données, sans compte GitHub.
 
 ## Positioning
 
-ÉLIRE est un comparateur électoral 100 % local (zéro compte, zéro serveur, zéro télémétrie) et open source : vote à l'aveugle sur les propositions de campagne, puis confrontation aux votes réels au Parlement, chaque donnée avec sa source officielle.
+élire est un comparateur électoral 100 % local (zéro compte, zéro serveur, zéro télémétrie) et open source : vote à l'aveugle sur les propositions de campagne, puis confrontation aux votes réels au Parlement, chaque donnée avec sa source officielle.
 
 ## Operating Context
 
@@ -29,12 +29,12 @@ Site vitrine de l'app ÉLIRE : expliquer en une page ce qu'est l'app, comment el
 - Pages : one page de présentation, Mentions légales, Méthode et corrections, formulaire d'erreur (à faire).
 - Le formulaire crée un ticket GitHub sur `danny-gca/elire-app` via un Cloudflare Worker (label `via-formulaire`) ; aucun compte demandé, e-mail facultatif.
 - Aucune requête tierce côté visiteur (polices libres auto-hébergées, pas de CDN, pas d'analytics, pas de cookie), thème clair uniquement.
-- Les chiffres et textes viennent de l'app : 25 candidats, 144 propositions vérifiées, 42 scrutins ; 4 niveaux de vote sur les propositions (Impossible, Contre, Pour, Parfait) et « Je ne sais pas », non compté, 3 sur les scrutins (Contre, Abstention, Pour : +2 comme le candidat, −2 à l'inverse, 0 si le candidat s'est abstenu, rien si le lecteur s'abstient, moitié pour un vote de groupe, rien pour un candidat qui ne siégeait pas).
+- Les chiffres et textes viennent de l'app : 25 candidats, 144 propositions vérifiées, 42 scrutins ; 4 niveaux de vote sur les propositions (Impossible, Contre, Pour, Parfait) et « Je ne sais pas », non compté, 3 sur les scrutins (Contre, Abstention, Pour : +2 comme le candidat, −2 à l'inverse, 0 si le candidat s'est abstenu, rien si le lecteur s'abstient, moitié pour un vote de groupe, rien pour un candidat qui ne siégeait pas ; les scrutins jamais plus de la moitié du score ; égalités dans un ordre tiré au hasard).
 - Domaine : `danny-gca.github.io/elire-website` pour l'instant.
 
 ## Brand Commitments
 
-- Nom : ÉLIRE (Présidentielle 2027).
+- Nom : élire (Présidentielle 2027).
 - Même univers que l'app : « le cahier annoté » (voir `DESIGN.md`). Papier blanc froid, encre, graphite, quatre surligneurs au choix du lecteur (jaune, rose, vert, bleu), sans signification, réservés à ses avis et à ses gestes ; Classement en panneaux électoraux identiques et numérotés.
 - Palette neutre : ni l'État ni un parti, sans dégradé ni violet ; accents thématiques sourds.
 - À ne jamais ressembler à : un site gouvernemental, une landing page de startup gadget ou gamifiée, les applis à cartes à swiper (dégradé violet).

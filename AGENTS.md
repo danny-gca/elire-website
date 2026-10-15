@@ -1,4 +1,4 @@
-Static showcase website for the ÉLIRE app, deployed on GitHub Pages. Two pages only: a one-page presentation and an error-report form.
+Static showcase website for the élire app, deployed on GitHub Pages. Two pages only: a one-page presentation and an error-report form.
 
 ## Context to read first
 

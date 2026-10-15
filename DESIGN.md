@@ -1,6 +1,6 @@
 ---
-name: ÉLIRE (site vitrine)
-description: Le site vitrine d'ÉLIRE, le cahier annoté de l'app étendu au web, où le surligneur du lecteur (4 couleurs au choix) devient aussi le geste de survol.
+name: élire (site vitrine)
+description: Le site vitrine d'élire, le cahier annoté de l'app étendu au web, où le surligneur du lecteur (4 couleurs au choix) devient aussi le geste de survol.
 colors:
   paper: "#F6F7F5"
   sheet: "#FFFFFF"
@@ -237,7 +237,7 @@ components:
 
 > Système du site vitrine, relevé sur le build du 2026-10-13 (`src/styles/global.css`, `src/layouts/Base.astro`, `src/pages/index.astro`). Il étend le cahier annoté de l'app ; pour les écrans de l'app elle-même (onglets, champ de recherche, contrôle segmenté, bouton de réinitialisation, feuille Voter en taille réelle), [elire-app/DESIGN.md](https://github.com/danny-gca/elire-app/blob/main/DESIGN.md) reste la référence.
 
-# Design System: ÉLIRE (site vitrine)
+# Design System: élire (site vitrine)
 
 ## Overview
 
@@ -319,7 +319,7 @@ L'encre sur papier froid de l'app, sans couleur institutionnelle ni partisane ; 
 
 Chaque bande de page tient dans 1440px de large, centrée, avec une gouttière fluide (`clamp(16px, 5vw, 96px)`). Les sections prennent `clamp(64px, 9vw, 120px)` de marge verticale et sont séparées par un filet de 1px en haut ; le corps d'une section est une pile à 24px d'écart. Les colonnes de contenu s'écartent de 48px ; l'ancre d'une section tombe 88px sous le haut, sous la barre.
 
-La barre du haut fait 72px, collante : logo et « ÉLIRE » à gauche, menu de cinq sections centré, bouton GitHub à droite, filet en bas. Sous 1080px le menu passe dans un menu déroulant « Menu » à droite ; sous 420px le bouton GitHub ne garde que son icône.
+La barre du haut fait 72px, collante : logo et « élire » à gauche, menu de cinq sections centré, bouton GitHub à droite, filet en bas. Sous 1080px le menu passe dans un menu déroulant « Menu » à droite ; sous 420px le bouton GitHub ne garde que son icône.
 
 Le premier écran aligne l'accroche à gauche et, à droite, une colonne d'action de 320px (bouton, puis mention des stores), alignées par le bas ; sous 820px elles s'empilent. Dessous, la feuille en quatre colonnes passe en 2x2 sous 1180px puis en une colonne sous 820px. Les autres grilles (quatre temps, quatre valeurs, méthode, open source) suivent le même passage à une colonne sous 820px ; l'open source passe d'abord en deux colonnes sous 1180px. Les chiffres clés forment une rangée entre deux filets, et sous 600px une grille 2x2 réglée, le chiffre au-dessus du libellé.
 
