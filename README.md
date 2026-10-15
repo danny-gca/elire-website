@@ -1,6 +1,6 @@
-# ÉLIRE - site vitrine
+# élire - site vitrine
 
-Site de présentation de [ÉLIRE](https://github.com/danny-gca/elire-app), l'app citoyenne, neutre et open source pour la présidentielle 2027.
+Site de présentation de [élire](https://github.com/danny-gca/elire-app), l'app citoyenne, neutre et open source pour la présidentielle 2027.
 
 > Ce README décrit l'état **actuel** du site. Le plan de construction est dans [docs/plan.md](docs/plan.md).
 
@@ -30,4 +30,4 @@ Surligneur : 4 couleurs (jaune, rose, vert, bleu), comme dans l'app. Le choix du
 
 ## Licence
 
-Code sous [MIT](LICENSE). Code de conduite : [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
+Code sous [MIT](LICENSE). Code de conduite : [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md). Contribuer : [CONTRIBUTING.md](CONTRIBUTING.md) (Conventional Commits).
