@@ -1,4 +1,4 @@
-# Plan - site vitrine ÉLIRE
+# Plan - site vitrine élire
 
 Deux pages statiques sur GitHub Pages, même univers visuel que l'app (« le cahier annoté », `elire-app/DESIGN.md`), construites avec impeccable.
 
@@ -17,7 +17,7 @@ Deux pages statiques sur GitHub Pages, même univers visuel que l'app (« le cah
 1. **Socle** : Astro, déploiement GitHub Actions vers Pages (base `/elire-website/`), README, licence MIT.
 2. **Direction** (impeccable) : surface « vitrine » en mode Persuade, surface « formulaire » en mode Operate ; tokens repris de `elire-app/src/constants/theme.ts` en variables CSS ; police système, aucune requête tierce, aucun traceur.
 3. **Page 1, one page** (fait, composition « Du programme au vote ») :
-   - ouverture : ÉLIRE, présidentielle 2027, « se faire son avis seul, au calme », bouton vers l'app web ;
+   - ouverture : élire, présidentielle 2027, « se faire son avis seul, au calme », bouton vers l'app web ;
    - fonctionnement en 4 temps avec vraies captures : voter à l'aveugle, classement en panneaux, lois et votes réels, explorer par thème ;
    - les 4 principes : neutralité, transparence, responsabilité, confidentialité ;
    - méthode : calcul du score, sources vérifiées, chiffres (96 propositions, 17 candidats, 26 scrutins) ;

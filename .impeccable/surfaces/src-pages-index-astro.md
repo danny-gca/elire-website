@@ -7,11 +7,11 @@ related_targets: []
 
 ## Scope
 
-Page d'accueil du site vitrine ÉLIRE (one page). Mode : Persuade. Web, du 320 px au bureau. Thème clair unique.
+Page d'accueil du site vitrine élire (one page). Mode : Persuade. Web, du 320 px au bureau. Thème clair unique.
 
 ## Audience et tâche
 
-Citoyen qui découvre ÉLIRE, souvent sur téléphone : comprendre en quelques secondes ce que fait l'app, croire qu'elle est neutre et sourcée, ouvrir l'app web. Preuves : les vrais écrans de l'app, les chiffres vérifiables (17 candidats, 96 propositions, 42 scrutins), un vrai scrutin à voter avec son hémicycle anonyme, le code ouvert. Android et iOS : « bientôt ». À éviter : site gouv, landing de startup, cartes à swiper.
+Citoyen qui découvre élire, souvent sur téléphone : comprendre en quelques secondes ce que fait l'app, croire qu'elle est neutre et sourcée, ouvrir l'app web. Preuves : les vrais écrans de l'app, les chiffres vérifiables (17 candidats, 96 propositions, 42 scrutins), un vrai scrutin à voter avec son hémicycle anonyme, le code ouvert. Android et iOS : « bientôt ». À éviter : site gouv, landing de startup, cartes à swiper.
 
 ## Direction contract
 
@@ -21,7 +21,7 @@ OWN-WORLD: Le cahier annoté de l'app : papier #F6F7F5, feuille #FFFFFF à filet
 
 STORY: Le visiteur lit l'accroche, voit la feuille en quatre colonnes prouver le mécanisme, descend à travers les quatre temps et la démo du geste du vote, vote un vrai scrutin et voit l'hémicycle, choisit son surligneur, lit les quatre valeurs, la méthode et l'open source, puis ouvre l'app web.
 
-FIRST VIEWPORT: Barre de 72 px : ÉLIRE à gauche, menu centré, « GitHub » à droite. Accroche à gauche en 72 px sur deux lignes, « qui parle » surligné ; à droite CTA encre « Ouvrir l'app web » et « Bientôt sur Android et iOS ». Dessous, une feuille pleine largeur en 4 colonnes numérotées, chacune avec un vrai écran de l'app.
+FIRST VIEWPORT: Barre de 72 px : élire à gauche, menu centré, « GitHub » à droite. Accroche à gauche en 72 px sur deux lignes, « qui parle » surligné ; à droite CTA encre « Ouvrir l'app web » et « Bientôt sur Android et iOS ». Dessous, une feuille pleine largeur en 4 colonnes numérotées, chacune avec un vrai écran de l'app.
 
 FORM: « Du programme au vote », candidat 5 de la liste ordonnée, dealt lead. Signature : le surligneur du lecteur qui balaie de gauche à droite au survol ; un indicateur de lecture en bas à droite se remplit à sa couleur. Seed key 9b86e126.
 

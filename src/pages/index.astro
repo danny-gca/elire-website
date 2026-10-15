@@ -86,15 +86,15 @@ const FAQ = [
   },
   {
     question: 'Mon score est-il fiable ?',
-    reponse: `Chaque score dit sur combien d'éléments il repose : une proposition notée ou un vote personnel compte 1, un vote de groupe ½. Fragile sous 3, assez sûr de 3 à 4,5, fiable à partir de 5. Chaque candidat a 6 propositions : tous peuvent devenir fiables, qu'ils aient siégé au Parlement ou non.`,
+    reponse: `Chaque score dit sur combien d'éléments il repose : une proposition notée ou un vote personnel compte 1, un vote de groupe ½. Fragile sous 3, assez sûr de 3 à 4,5, fiable à partir de 5. Chaque candidat a jusqu'à 8 propositions : tous peuvent devenir fiables, qu'ils aient siégé au Parlement ou non.`,
   },
   {
-    question: 'ÉLIRE me dit-il pour qui voter ?',
+    question: 'élire me dit-il pour qui voter ?',
     reponse: `Non. Il calcule de qui vos avis sont proches, sur les seules propositions et les seuls scrutins que vous avez notés. Le reste, programmes complets, débats, convictions, vous appartient.`,
   },
   {
     question: 'Pourquoi tel candidat n’y est pas ?',
-    reponse: `ÉLIRE suit ${COUNTS.candidats} candidats dont la candidature est déclarée ou annoncée publiquement, avec une source. Il en manque un ? Signalez-le sur GitHub : il peut être ajouté dès que sa candidature et ses propositions sont sourcées.`,
+    reponse: `élire suit ${COUNTS.candidats} candidats dont la candidature est déclarée ou annoncée publiquement, avec une source. Il en manque un ? Signalez-le sur GitHub : il peut être ajouté dès que sa candidature et ses propositions sont sourcées.`,
   },
   {
     question: 'Qui vérifie les données ?',
@@ -111,7 +111,7 @@ const UNSURE = { value: 0, label: 'Je ne sais pas', sign: '', color: 'var(--vote
 ---
 
 <Base
-  title="ÉLIRE, présidentielle 2027 : faites-vous votre avis"
+  title="élire, présidentielle 2027 : faites-vous votre avis"
   description="Notez les propositions des candidats à l'aveugle, puis comparez-les à leurs votes réels au Parlement. Gratuit, sans compte, open source."
 >
   <section class="hero" aria-labelledby="accroche">
@@ -186,7 +186,7 @@ const UNSURE = { value: 0, label: 'Je ne sais pas', sign: '', color: 'var(--vote
 
   <section id="principe" class="section principe" aria-labelledby="principe-titre">
     <div class="section-body">
-      <h2 id="principe-titre">ÉLIRE vous montre de quels candidats <span class="mark" data-tone="rose">vos idées</span> sont proches. Le choix reste le vôtre.</h2>
+      <h2 id="principe-titre">élire vous montre de quels candidats <span class="mark" data-tone="rose">vos idées</span> sont proches. Le choix reste le vôtre.</h2>
       <p class="lede">
         Vous notez des propositions de campagne sans savoir qui les a faites, et vous votez sur de vrais scrutins du Parlement. Ensuite seulement, l'app calcule votre accord avec chaque candidat et vous montre ce qu'ils ont réellement voté.
       </p>
@@ -322,7 +322,7 @@ const UNSURE = { value: 0, label: 'Je ne sais pas', sign: '', color: 'var(--vote
     <div class="section-body duo">
       <div class="duo-text">
         <h2 id="surligneur-titre">Votre <span class="mark">surligneur</span></h2>
-        <p class="lede">À la fin de la présentation de l'app, vous choisissez votre couleur parmi quatre. Vous pouvez en changer à tout moment dans le Classement : chaque avis garde la couleur du trait qui l'a posé, comme un cahier annoté au fil des semaines.</p>
+        <p class="lede">À la fin de la présentation de l'app, vous choisissez votre couleur parmi quatre. Vous pouvez en changer à tout moment en haut de l’écran Voter : chaque avis garde la couleur du trait qui l'a posé, comme un cahier annoté au fil des semaines.</p>
         <MarkerPicker labels />
         <p class="fine">Ce site prend aussi votre couleur : essayez. Le choix reste sur cet appareil, sans cookie. Aucune couleur ne correspond à un parti.</p>
       </div>
@@ -380,9 +380,10 @@ const UNSURE = { value: 0, label: 'Je ne sais pas', sign: '', color: 'var(--vote
         <p class="lede">Pour chaque candidat, l'app additionne vos notes sur ses propositions, de −2 à +2, et les points de ses scrutins, +2 ou −2, puis ramène la somme sur 0 à 100 %. Sans vote, rien n'est inventé : « pas encore évalué ».</p>
         <ul class="ruled">
           <li>Un vote de groupe compte moitié moins qu'un vote personnel. Un scrutin où le candidat ne siégeait pas n'est pas compté pour lui.</li>
+          <li>Les scrutins comptent au nombre, mais jamais plus de la moitié du score : le programme reste la base commune, qu'un candidat ait siégé ou non. <a href="https://github.com/danny-gca/elire-app/tree/main/docs/simulations">La simulation qui a guidé ce choix</a> est publique.</li>
           <li>Le Classement montre un seul score ; la fiche du candidat sépare son programme et ses votes au Parlement.</li>
           <li>« Je ne sais pas » ne compte pas : ni dans le score, ni pour ouvrir le Classement.</li>
-          <li>Chaque score dit sa fiabilité : fragile sous 3 éléments, assez sûr de 3 à 4,5, fiable à partir de 5. Une proposition ou un vote personnel compte 1, un vote de groupe ½. Avec 6 propositions chacun, tous les candidats peuvent devenir fiables.</li>
+          <li>Chaque score dit sa fiabilité : fragile sous 3 éléments, assez sûr de 3 à 4,5, fiable à partir de 5. Une proposition ou un vote personnel compte 1, un vote de groupe ½. Avec jusqu'à 8 propositions chacun, tous les candidats peuvent devenir fiables.</li>
           <li>Le calcul se fait sur votre appareil. Rien n'est envoyé.</li>
           <li>Chaque proposition et chaque scrutin portent un numéro stable (P-531, L-28) pour être cités et corrigés.</li>
           <li>Les couleurs de l'échelle ne servent qu'à vos votes, jamais à un parti.</li>
@@ -444,7 +445,7 @@ const UNSURE = { value: 0, label: 'Je ne sais pas', sign: '', color: 'var(--vote
         </li>
         <li>
           <h3>Soutenir</h3>
-          <p>ÉLIRE est gratuit et sans publicité. Un don aide à le maintenir.</p>
+          <p>élire est gratuit et sans publicité. Un don aide à le maintenir.</p>
           <p class="funding">
             {FUNDING.map((f, i) => (
               <>
