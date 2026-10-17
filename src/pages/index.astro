@@ -45,25 +45,25 @@ const VALEURS = [
     nom: 'Neutralité',
     cle: 'la mesure',
     titre: 'Vous jugez la mesure, pas la personne.',
-    texte: 'Les propositions arrivent sans nom ni parti, dans un ordre mélangé. À égalité de score, les candidats partagent le même rang, dans un ordre tiré au hasard.',
+    texte: 'Les propositions arrivent sans nom ni parti, dans un ordre mélangé. Deux candidats à égalité ont le même rang et sont affichés dans un ordre tiré au hasard.',
   },
   {
     nom: 'Transparence',
     cle: 'sa source',
     titre: 'Chaque fait a sa source.',
-    texte: 'Chaque proposition cite le texte exact de son origine, chaque scrutin renvoie au site officiel du Parlement. Une erreur ? Un lien permet de la signaler.',
+    texte: 'Chaque proposition cite le texte exact d’où elle vient. Chaque scrutin renvoie au site officiel du Parlement. Une erreur ? Un bouton permet de la signaler.',
   },
   {
     nom: 'Responsabilité',
     cle: 'un vote',
     titre: 'Une promesse n’est pas un vote.',
-    texte: 'Le programme 2027 et les votes réels au Parlement sont séparés. Quand un candidat n’a pas voté lui-même, c’est écrit : position de son groupe.',
+    texte: 'Le programme 2027 et les votes réels au Parlement sont affichés à part. Quand un candidat n’a pas voté lui-même, la fiche l’indique : « position de son groupe ».',
   },
   {
     nom: 'Confidentialité',
     cle: 'chez vous',
     titre: 'Vos avis restent chez vous.',
-    texte: 'Aucun compte, aucune statistique envoyée. Vos votes sont enregistrés sur votre appareil seulement, et vous pouvez les effacer à tout moment.',
+    texte: 'Aucun compte, aucune statistique envoyée. Vos votes restent sur votre appareil, et vous pouvez les effacer à tout moment.',
   },
 ];
 
@@ -78,31 +78,31 @@ const storesSoon = !STORES.ios || !STORES.android;
 const FAQ = [
   {
     question: 'Combien de temps faut-il ?',
-    reponse: `Comptez environ 20 secondes par question. Le Classement s'ouvre après 10 votes, soit 3 à 5 minutes ; ensuite, toutes les 10 questions, un bilan dit si votre score est déjà fiable. Vous arrêtez quand vous voulez : vos votes restent sur votre appareil.`,
+    reponse: `Comptez environ 20 secondes par question. Le Classement s'ouvre après 10 votes, soit 3 à 5 minutes. Ensuite, toutes les 10 questions, un bilan indique si vos scores sont fiables. Vous pouvez arrêter quand vous voulez : vos votes restent sur votre appareil.`,
   },
   {
     question: 'Et si je ne comprends pas une mesure ?',
-    reponse: `Touchez « En savoir plus » : le contexte de la mesure et l'explication de ses sigles s'affichent, sans révéler qui l'a proposée. Toujours un doute ? « Je ne sais pas » passe la question sans toucher à votre score.`,
+    reponse: `Touchez « En savoir plus » : vous voyez le contexte de la mesure et le sens des sigles, sans savoir qui l'a proposée. Toujours un doute ? « Je ne sais pas » passe la question, sans effet sur votre score.`,
   },
   {
     question: 'Mon score est-il fiable ?',
-    reponse: `Chaque score dit sur combien d'éléments il repose : une proposition notée ou un vote personnel compte 1, un vote de groupe ½. Fragile sous 3, assez sûr de 3 à 4,5, fiable à partir de 5. Chaque candidat a jusqu'à 8 propositions : tous peuvent devenir fiables, qu'ils aient siégé au Parlement ou non.`,
+    reponse: `Chaque score indique sur combien d'éléments il repose. Une proposition notée ou un vote personnel compte 1, un vote de groupe ½. Sous 3, le score est fragile ; de 3 à 4,5, assez sûr ; à partir de 5, fiable. Chaque candidat a jusqu'à 8 propositions : tous peuvent atteindre « fiable », qu'ils aient siégé au Parlement ou non.`,
   },
   {
     question: 'élire me dit-il pour qui voter ?',
-    reponse: `Non. Il calcule de qui vos avis sont proches, sur les seules propositions et les seuls scrutins que vous avez notés. Le reste, programmes complets, débats, convictions, vous appartient.`,
+    reponse: `Non. élire calcule de quels candidats vos avis sont proches, uniquement sur les propositions et les scrutins que vous avez notés. Pour le reste (programmes complets, débats, convictions), c'est à vous de juger.`,
   },
   {
     question: 'Pourquoi tel candidat n’y est pas ?',
-    reponse: `élire suit ${COUNTS.candidats} candidats dont la candidature est déclarée ou annoncée publiquement, avec une source. Il en manque un ? Signalez-le sur GitHub : il peut être ajouté dès que sa candidature et ses propositions sont sourcées.`,
+    reponse: `élire suit ${COUNTS.candidats} candidats dont la candidature est déclarée ou annoncée publiquement, avec une source. Un candidat manque ? Signalez-le sur GitHub. Il pourra être ajouté dès que sa candidature et ses propositions auront une source.`,
   },
   {
     question: 'Qui vérifie les données ?',
-    reponse: `Chaque proposition est relue contre sa source, avec la citation exacte. Les votes viennent des données ouvertes de l'Assemblée nationale et des pages officielles du Sénat et du Parlement européen. Dernière vérification le ${DATA_DATE}. Une erreur ? Chaque fiche a son bouton « Signaler une erreur ».`,
+    reponse: `Chaque proposition est relue avec sa source, et la citation est exacte. Les votes viennent des données ouvertes de l'Assemblée nationale et des pages officielles du Sénat et du Parlement européen. Dernière vérification le ${DATA_DATE}. Une erreur ? Chaque fiche a son bouton « Signaler une erreur ».`,
   },
   {
     question: 'Mes votes sont-ils envoyés quelque part ?',
-    reponse: `Non. Pas de compte, pas de statistiques : vos votes et votre score restent sur votre appareil, et vous pouvez tout effacer depuis le Classement.`,
+    reponse: `Non. Pas de compte, pas de statistiques : vos votes et vos scores restent sur votre appareil. Vous pouvez tout effacer depuis l'onglet Cahier, avec « Réinitialiser mes votes ».`,
   },
 ];
 const voteOf = (value: number) => VOTES.find((v) => v.value === value)!;
@@ -112,7 +112,7 @@ const UNSURE = { value: 0, label: 'Je ne sais pas', sign: '', color: 'var(--vote
 
 <Base
   title="élire, présidentielle 2027 : faites-vous votre avis"
-  description="Notez les propositions des candidats à l'aveugle, puis comparez-les à leurs votes réels au Parlement. Gratuit, sans compte, open source."
+  description="Notez les propositions des candidats sans savoir qui les a faites, puis découvrez de qui vous êtes proche et ce que chacun a voté au Parlement. Gratuit, sans compte, open source."
 >
   <section class="hero" aria-labelledby="accroche">
     <div class="hook">
@@ -131,7 +131,7 @@ const UNSURE = { value: 0, label: 'Je ne sais pas', sign: '', color: 'var(--vote
 
     <ol class="sheet" aria-label="Le fonctionnement en quatre temps">
       <li class="col">
-        <h2 class="col-title"><span class="num">1.</span> Lire, sans savoir qui</h2>
+        <h2 class="col-title"><span class="num">1.</span> Lire sans voir l'auteur</h2>
         <div class="mini-sheet">
           <p class="mini-meta num"><span data-ex-ref>{first.ref}</span> · <span data-ex-theme style={`color:${first.accent}`}>{first.theme}</span></p>
           <p class="mini-title" data-ex-title>{first.titre}</p>
@@ -149,11 +149,11 @@ const UNSURE = { value: 0, label: 'Je ne sais pas', sign: '', color: 'var(--vote
           ))}
         </div>
         <p class="mini-chosen" aria-live="polite"><span class="note">Votre avis :</span> <b data-vote-label>à vous de choisir</b></p>
-        <p class="mini-note">Votre note se marque au surligneur, ou « Je ne sais pas ». Les scrutins se votent aussi : contre, abstention, pour.</p>
+        <p class="mini-note">Vous notez avec votre surligneur, ou vous passez avec « Je ne sais pas ». Sur les scrutins, vous votez contre, abstention ou pour.</p>
       </li>
 
       <li class="col">
-        <h2 class="col-title"><span class="num">3.</span> Comparer, à égalité</h2>
+        <h2 class="col-title"><span class="num">3.</span> Comparer les candidats</h2>
         <div class="board" aria-hidden="true">
             {PANELS.map((p) => (
               <span class="panel">
@@ -164,7 +164,7 @@ const UNSURE = { value: 0, label: 'Je ne sais pas', sign: '', color: 'var(--vote
               </span>
             ))}
         </div>
-        <p class="mini-note">Le même panneau pour tous, ex æquo au même rang. Illustration, noms masqués.</p>
+        <p class="mini-note">Chaque candidat a le même panneau. À score égal, même rang. Exemple, noms masqués.</p>
       </li>
 
       <li class="col">
@@ -178,7 +178,7 @@ const UNSURE = { value: 0, label: 'Je ne sais pas', sign: '', color: 'var(--vote
             </ul>
             <a class="mini-link" href="https://www.assemblee-nationale.fr/dyn/17/scrutins/0519" rel="noopener"><span class="hl">Scrutin n° 519, site officiel</span></a>
         </div>
-        <p class="mini-note">Une promesse n'est pas un vote : c'est écrit.</p>
+        <p class="mini-note">Promesses et votes réels sont affichés à part.</p>
       </li>
     </ol>
 
@@ -188,7 +188,7 @@ const UNSURE = { value: 0, label: 'Je ne sais pas', sign: '', color: 'var(--vote
     <div class="section-body">
       <h2 id="principe-titre">élire vous montre de quels candidats <span class="mark" data-tone="rose">vos idées</span> sont proches. Le choix reste le vôtre.</h2>
       <p class="lede">
-        Vous notez des propositions de campagne sans savoir qui les a faites, et vous votez sur de vrais scrutins du Parlement. Ensuite seulement, l'app calcule votre accord avec chaque candidat et vous montre ce qu'ils ont réellement voté.
+        Vous notez des propositions de campagne sans savoir qui les a faites. Vous votez aussi sur de vrais scrutins du Parlement. Ensuite, l'app calcule votre accord avec chaque candidat et vous montre ce qu'il a vraiment voté.
       </p>
       <p class="facts num">
         <span><b>{COUNTS.candidats}</b> candidats</span>
@@ -196,7 +196,7 @@ const UNSURE = { value: 0, label: 'Je ne sais pas', sign: '', color: 'var(--vote
         <span><b>{COUNTS.scrutins}</b> scrutins réels</span>
         <span><b>{COUNTS.themes}</b> thèmes</span>
       </p>
-      <p class="fine">Données vérifiées le {DATA_DATE}, chaque proposition contre sa source.</p>
+      <p class="fine">Données vérifiées le {DATA_DATE} : chaque proposition a été relue avec sa source.</p>
     </div>
   </section>
 
@@ -208,13 +208,13 @@ const UNSURE = { value: 0, label: 'Je ne sais pas', sign: '', color: 'var(--vote
         <li>
           <div>
             <h3><span class="num">1.</span> Lire à l'aveugle</h3>
-            <p>Les propositions arrivent une par une, sans nom ni parti, dans un ordre tiré au hasard. Jamais deux fois de suite le même candidat. « En savoir plus » donne le contexte et explique les sigles ; la source est dans Explorer, une fois l'auteur visible.</p>
+            <p>Les propositions arrivent une par une, sans nom ni parti, dans un ordre tiré au hasard. Deux propositions de suite ne viennent jamais du même candidat. « En savoir plus » donne le contexte et explique les sigles. La source est dans Explorer, où l'auteur est affiché.</p>
           </div>
         </li>
         <li>
           <div>
             <h3><span class="num">2.</span> Noter sur quatre niveaux</h3>
-            <p>Votre avis, de la mesure inacceptable à la mesure idéale. Il se marque au surligneur et reste modifiable à tout moment. Une mesure que vous ne comprenez pas ou qui vous laisse sans avis : « Je ne sais pas », qui ne compte pas dans le score.</p>
+            <p>Vous notez chaque mesure avec votre surligneur, d'« Impossible » à « Parfait ». Vous pouvez changer votre note à tout moment. Vous ne comprenez pas la mesure, ou vous n'avez pas d'avis ? Touchez « Je ne sais pas » : cette question ne compte pas dans le score.</p>
             <ul class="scale" aria-label="Les niveaux de vote">
               {VOTES.map((v) => (
                 <li style={`--c:${v.color}`}><b class="num">{v.sign}</b> {v.label}</li>
@@ -225,14 +225,14 @@ const UNSURE = { value: 0, label: 'Je ne sais pas', sign: '', color: 'var(--vote
         </li>
         <li>
           <div>
-            <h3><span class="num">3.</span> Comparer, à égalité</h3>
-            <p>Après 10 votes, le Classement s'ouvre : chaque candidat sur le même panneau numéroté, avec un seul score qui réunit son programme et ses votes. Un candidat est classé dès 2 de ses propositions notées ; deux scores égaux partagent le même rang. Toutes les 10 questions, un bilan dit si chaque score est encore fragile, assez sûr ou fiable.</p>
+            <h3><span class="num">3.</span> Comparer les candidats</h3>
+            <p>Après 10 votes, le Classement s'ouvre. Chaque candidat y a le même panneau numéroté et un seul score, qui réunit son programme et ses votes au Parlement. Un candidat apparaît dès que vous avez noté 2 de ses propositions. Deux scores égaux ont le même rang. Toutes les 10 questions, un bilan indique si chaque score est fragile, assez sûr ou fiable.</p>
           </div>
         </li>
         <li>
           <div>
             <h3><span class="num">4.</span> Vérifier les votes réels</h3>
-            <p>Chaque fiche candidat sépare le programme 2027 et les votes au Parlement : vote personnel ou position de son groupe, toujours écrit, avec le lien vers le scrutin officiel.</p>
+            <p>Sur chaque fiche candidat, le programme 2027 et les votes au Parlement sont séparés. Pour chaque vote, la fiche précise s'il a voté lui-même ou si c'est la position de son groupe, avec le lien vers le scrutin officiel.</p>
           </div>
         </li>
       </ol>
@@ -240,12 +240,12 @@ const UNSURE = { value: 0, label: 'Je ne sais pas', sign: '', color: 'var(--vote
       <div class="geste">
         <div class="geste-text">
           <h3>Le geste du vote</h3>
-          <p>À vous : notez cette proposition. Un trait sur le niveau que vous choisissez, un trait sur la mesure, puis la feuille se range en « Dernier vote » et la suivante arrive. Le trait prend la couleur de votre surligneur.</p>
-          <p class="fine">Rien n'est enregistré : c'est un essai, l'app garde vos vrais votes.</p>
+          <p>Essayez : notez cette proposition. Votre surligneur trace un trait sur la note choisie, puis sur la mesure. La proposition passe dans « A voté ! », et la suivante arrive.</p>
+          <p class="fine">C'est un essai : rien n'est enregistré ici. Vos vrais votes se font dans l'app.</p>
         </div>
         <div class="demo" data-demo role="group" aria-label="Essai : notez une proposition">
           <div class="demo-last" aria-hidden="true">
-            <span class="demo-last-label note">Dernier vote</span>
+            <span class="demo-last-label note">A voté !</span>
             <span class="demo-last-row"><b class="num" data-demo-tag></b><span data-demo-last-title></span></span>
           </div>
           <div class="demo-card">
@@ -257,7 +257,7 @@ const UNSURE = { value: 0, label: 'Je ne sais pas', sign: '', color: 'var(--vote
               ))}
             </div>
             <button type="button" class="mini-vote demo-vote demo-unsure" data-demo-vote={UNSURE.value}><svg class="demo-stroke" aria-hidden="true"><path pathLength="1"></path></svg>{UNSURE.label}</button>
-            <p class="mini-note">Choisissez un niveau, de −2 à +2, ou « Je ne sais pas ».</p>
+            <p class="mini-note">Choisissez une note de −2 à +2, ou « Je ne sais pas ».</p>
           </div>
           <p class="visually-hidden" aria-live="polite" data-demo-status></p>
         </div>
@@ -268,12 +268,12 @@ const UNSURE = { value: 0, label: 'Je ne sais pas', sign: '', color: 'var(--vote
           <img src={`${base}/images/explorer.webp`} width="390" height="844" alt="L'écran Explorer de l'app : les douze thèmes en sommaire, avec le nombre de propositions notées pour chacun." decoding="async" />
         </figure>
         <div class="explorer-text">
-          <h3>Et pour tout parcourir</h3>
-          <p>Explorer range les {COUNTS.propositions} propositions par thème, auteurs visibles cette fois. L'onglet Lois liste les {COUNTS.scrutins} scrutins suivis, de l'Assemblée au Parlement européen.</p>
+          <h3>Tout parcourir</h3>
+          <p>L'onglet Explorer range les {COUNTS.propositions} propositions par thème, cette fois avec leur auteur. L'onglet Lois liste les {COUNTS.scrutins} scrutins suivis, à l'Assemblée nationale, au Sénat et au Parlement européen.</p>
           <ul class="ruled">
-            <li>Sommaire des {COUNTS.themes} thèmes, avec vos votes déjà posés</li>
-            <li>Recherche sans accents, par mesure ou par candidat</li>
-            <li>Filtre « pas encore votées » pour compléter votre cahier</li>
+            <li>Les {COUNTS.themes} thèmes, avec le nombre de propositions déjà notées</li>
+            <li>Une recherche par mesure ou par candidat, même sans les accents</li>
+            <li>Un filtre « pas encore votées » pour noter ce qui reste</li>
           </ul>
         </div>
       </div>
@@ -284,11 +284,11 @@ const UNSURE = { value: 0, label: 'Je ne sais pas', sign: '', color: 'var(--vote
     <div class="section-body duo">
       <div class="duo-text">
         <h2 id="parlement-titre">Votez comme <span class="mark" data-tone="bleu">au Parlement</span></h2>
-        <p class="lede">Entre deux propositions, un vrai scrutin tombe : la question posée aux élus, sans nom ni résultat. Vous répondez comme eux, contre, abstention ou pour, et ce vote compte dans votre accord avec chaque candidat.</p>
+        <p class="lede">Entre deux propositions, l'app vous pose parfois la question d'un vrai scrutin du Parlement, sans les noms ni le résultat. Vous votez comme un élu : contre, abstention ou pour. Ce vote compte dans votre accord avec chaque candidat.</p>
         <ul class="ruled points">
           <li><b class="num">+2</b> pour chaque candidat qui a voté comme vous, <b class="num">−2</b> pour chaque candidat qui a voté l'inverse.</li>
-          <li><b class="num">0</b> si le candidat s'est abstenu. Votre abstention, elle, ne compte pour personne.</li>
-          <li><b class="num">× 0,5</b> quand seul son groupe a voté, pas le candidat lui-même.</li>
+          <li><b class="num">0</b> si le candidat s'est abstenu. Si vous vous abstenez, ce scrutin ne compte pour aucun candidat.</li>
+          <li><b class="num">× 0,5</b> quand c'est la position de son groupe, pas son vote personnel.</li>
           <li><b>Rien</b> pour un candidat qui ne siégeait pas : ni point en plus, ni point en moins.</li>
         </ul>
       </div>
@@ -309,9 +309,9 @@ const UNSURE = { value: 0, label: 'Je ne sais pas', sign: '', color: 'var(--vote
           </div>
           <span class="hemi-you" data-hemi-you></span>
         </div>
-        <p class="hemi-legend" data-hemi-legend aria-live="polite">{scrutin.positions.length} candidats ont voté ce texte. Votez pour voir où ils siègent par rapport à vous.</p>
+        <p class="hemi-legend" data-hemi-legend aria-live="polite">{scrutin.positions.length} candidats ont voté ce texte. Votez pour voir qui a voté comme vous.</p>
         <div class="sc-foot">
-          <p class="mini-note">Un vrai scrutin, tiré au hasard. Plein : comme vous. Vide : à l'inverse. Gris : abstention.</p>
+          <p class="mini-note">Un vrai scrutin, tiré au hasard. Point de votre couleur : comme vous. Point noir : l'inverse. Point vide : abstention.</p>
           <button type="button" class="link sc-next" data-sc-next><span class="hl">Un autre scrutin</span></button>
         </div>
       </figure>
@@ -322,13 +322,13 @@ const UNSURE = { value: 0, label: 'Je ne sais pas', sign: '', color: 'var(--vote
     <div class="section-body duo">
       <div class="duo-text">
         <h2 id="surligneur-titre">Votre <span class="mark">surligneur</span></h2>
-        <p class="lede">À la fin de la présentation de l'app, vous choisissez votre couleur parmi quatre. Vous pouvez en changer à tout moment en haut de l’écran Voter : chaque avis garde la couleur du trait qui l'a posé, comme un cahier annoté au fil des semaines.</p>
+        <p class="lede">Au début de la présentation de l'app, vous choisissez votre couleur parmi quatre. Vous pouvez la changer à tout moment, en haut de l’écran Voter. Vos anciennes notes gardent leur couleur, comme dans un cahier annoté au fil des semaines.</p>
         <MarkerPicker labels />
-        <p class="fine">Ce site prend aussi votre couleur : essayez. Le choix reste sur cet appareil, sans cookie. Aucune couleur ne correspond à un parti.</p>
+        <p class="fine">Essayez : ce site prend aussi votre couleur. Elle est gardée sur cet appareil, sans cookie. Aucune couleur ne correspond à un parti.</p>
       </div>
 
       <figure class="cahier" aria-labelledby="cahier-legende">
-        <p id="cahier-legende" class="calc-head">Votre cahier, au fil des votes</p>
+        <p id="cahier-legende" class="calc-head">Vos notes, chacune dans sa couleur</p>
         <ol class="cahier-rows" data-cahier>
           {CAHIER.map((c, i) => {
             const e = exemples[i + 2];
@@ -344,7 +344,7 @@ const UNSURE = { value: 0, label: 'Je ne sais pas', sign: '', color: 'var(--vote
           <li class="is-next">
             <p class="mini-meta num"><span data-ca-ref>{exemples[5].ref}</span> · <span data-ca-theme style={`color:${exemples[5].accent}`}>{exemples[5].theme}</span></p>
             <p class="cahier-title"><span class="mark" data-ca-title>{exemples[5].titre}</span></p>
-            <b class="cahier-vote">Votre prochain trait</b>
+            <b class="cahier-vote">Votre prochaine note</b>
           </li>
         </ol>
       </figure>
@@ -377,15 +377,15 @@ const UNSURE = { value: 0, label: 'Je ne sais pas', sign: '', color: 'var(--vote
     <div class="section-body methode">
       <div>
         <h2 id="methode-titre">Le calcul, <span class="mark" data-tone="rose">en clair</span></h2>
-        <p class="lede">Pour chaque candidat, l'app additionne vos notes sur ses propositions, de −2 à +2, et les points de ses scrutins, +2 ou −2, puis ramène la somme sur 0 à 100 %. Sans vote, rien n'est inventé : « pas encore évalué ».</p>
+        <p class="lede">Pour chaque candidat, l'app additionne vos notes sur ses propositions (de −2 à +2) et les points de ses scrutins (+2 ou −2). Elle convertit ensuite ce total en pourcentage, de 0 à 100 %. Tant que vous n'avez rien noté pour un candidat, il est marqué « pas encore évalué ».</p>
         <ul class="ruled">
-          <li>Un vote de groupe compte moitié moins qu'un vote personnel. Un scrutin où le candidat ne siégeait pas n'est pas compté pour lui.</li>
-          <li>Les scrutins comptent au nombre, mais jamais plus de la moitié du score : le programme reste la base commune, qu'un candidat ait siégé ou non. <a href="https://github.com/danny-gca/elire-app/tree/main/docs/simulations">La simulation qui a guidé ce choix</a> est publique.</li>
-          <li>Le Classement montre un seul score ; la fiche du candidat sépare son programme et ses votes au Parlement.</li>
+          <li>Un vote de groupe compte deux fois moins qu'un vote personnel. Un scrutin où le candidat ne siégeait pas n'est pas compté pour lui.</li>
+          <li>Plus il y a de scrutins comptés pour un candidat, plus ils pèsent, mais jamais plus de la moitié de son score. Le programme reste la base commune à tous, qu'un candidat ait siégé au Parlement ou non. <a href="https://github.com/danny-gca/elire-app/tree/main/docs/simulations">La simulation qui a guidé ce choix</a> est publique.</li>
+          <li>Le Classement montre un seul score. La fiche du candidat détaille à part son programme et ses votes au Parlement.</li>
           <li>« Je ne sais pas » ne compte pas : ni dans le score, ni pour ouvrir le Classement.</li>
-          <li>Chaque score dit sa fiabilité : fragile sous 3 éléments, assez sûr de 3 à 4,5, fiable à partir de 5. Une proposition ou un vote personnel compte 1, un vote de groupe ½. Avec jusqu'à 8 propositions chacun, tous les candidats peuvent devenir fiables.</li>
+          <li>Chaque score indique sa fiabilité. Une proposition ou un vote personnel compte 1, un vote de groupe ½. Sous 3, le score est fragile ; de 3 à 4,5, assez sûr ; à partir de 5, fiable. Avec jusqu'à 8 propositions chacun, tous les candidats peuvent atteindre « fiable ».</li>
           <li>Le calcul se fait sur votre appareil. Rien n'est envoyé.</li>
-          <li>Chaque proposition et chaque scrutin portent un numéro stable (P-531, L-28) pour être cités et corrigés.</li>
+          <li>Chaque proposition et chaque scrutin ont un numéro qui ne change jamais (P-531, L-28), pour les citer ou signaler une erreur.</li>
           <li>Les couleurs de l'échelle ne servent qu'à vos votes, jamais à un parti.</li>
         </ul>
       </div>
@@ -425,22 +425,22 @@ const UNSURE = { value: 0, label: 'Je ne sais pas', sign: '', color: 'var(--vote
 
   <section id="open-source" class="section" aria-labelledby="os-titre">
     <div class="section-body">
-      <h2 id="os-titre">Ouvert, <span class="mark" data-tone="vert">de bout en bout</span></h2>
-      <p class="lede">Le code de l'app, les données et ce site sont publics. Vous pouvez tout relire, signaler une erreur, proposer une correction.</p>
+      <h2 id="os-titre">Tout est <span class="mark" data-tone="vert">public</span></h2>
+      <p class="lede">Le code de l'app, les données et ce site sont en ligne, sur GitHub. Vous pouvez tout relire, signaler une erreur ou proposer une correction.</p>
       <ul class="os">
         <li>
           <h3>Le code</h3>
-          <p>Sous licence MIT, sur GitHub. Les données sous CC BY-SA 4.0.</p>
+          <p>Le code est sous licence MIT, les données sous CC BY-SA 4.0.</p>
           <a class="link" href={REPO_URL} rel="noopener"><span class="hl">Voir le dépôt</span></a>
         </li>
         <li>
           <h3>Une erreur ?</h3>
-          <p>Chaque proposition et chaque loi ont leur bouton « Signaler une erreur » dans l'app.</p>
+          <p>Dans l'app, chaque proposition et chaque loi ont un bouton « Signaler une erreur ».</p>
           <a class="link" href={`${REPO_URL}/issues/new?template=erreur-donnees.yml`} rel="noopener"><span class="hl">Signaler sur GitHub</span></a>
         </li>
         <li>
           <h3>Contribuer</h3>
-          <p>Règles de sourçage, neutralité, conventions de code : tout est écrit.</p>
+          <p>Les règles pour sourcer, rester neutre et écrire le code sont dans le guide.</p>
           <a class="link" href={`${REPO_URL}/blob/main/CONTRIBUTING.md`} rel="noopener"><span class="hl">Lire le guide</span></a>
         </li>
         <li>
@@ -604,7 +604,7 @@ const UNSURE = { value: 0, label: 'Je ne sais pas', sign: '', color: 'var(--vote
         sc.querySelectorAll('[data-sc-vote]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.scVote === user)));
         you.textContent = user ? `Vous · ${user[0].toUpperCase()}${user.slice(1)}` : '';
         if (!user) {
-          legend.textContent = `${s.positions.length} candidats ont voté ce texte. Votez pour voir où ils siègent par rapport à vous.`;
+          legend.textContent = `${s.positions.length} candidats ont voté ce texte. Votez pour voir qui a voté comme vous.`;
           return;
         }
         if (user === 'abstention') {
@@ -1455,12 +1455,14 @@ const UNSURE = { value: 0, label: 'Je ne sais pas', sign: '', color: 'var(--vote
     border: 1.5px solid var(--ink);
     background: var(--mark);
   }
+  /* Encre pleine à l'inverse, vide pour l'abstention : trois formes, ni rouge ni vert. */
   .hemi-seats :global(.seat[data-rel='opposite']) {
     border: 1.5px solid var(--ink);
-    background: var(--sheet);
+    background: var(--ink);
   }
   .hemi-seats :global(.seat[data-rel='neutral']) {
-    border-color: var(--graphite);
+    border: 1.5px solid var(--graphite);
+    background: var(--sheet);
   }
   @keyframes seat-in {
     from {

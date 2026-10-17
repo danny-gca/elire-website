@@ -297,7 +297,7 @@ L'encre sur papier froid de l'app, sans couleur institutionnelle ni partisane ; 
 **Body Font:** Atkinson Hyperlegible Next (Regular, SemiBold, Bold)
 **Annotation Font:** Caveat Bold, réduite aux caractères latins
 
-**Character:** la même charte que l'app : titres imprimés en Literata, lecture en Atkinson Hyperlegible Next, et la main du lecteur en Caveat sur ses seules annotations (« Votre avis », « Dernier vote », classe `.note`). Les trois sont sous SIL OFL 1.1 sans nom réservé, servies depuis le site (`src/assets/fonts/`, empaquetées par Astro ; licences dans `public/fonts/`), `font-display: swap`, accroche et texte préchargés. Aucune requête tierce.
+**Character:** la même charte que l'app : titres imprimés en Literata, lecture en Atkinson Hyperlegible Next, et la main du lecteur en Caveat sur ses seules annotations (« Votre avis », « A voté ! », classe `.note`). Les trois sont sous SIL OFL 1.1 sans nom réservé, servies depuis le site (`src/assets/fonts/`, empaquetées par Astro ; licences dans `public/fonts/`), `font-display: swap`, accroche et texte préchargés. Aucune requête tierce.
 
 ### Hierarchy
 - **Display** (700, clamp(40px, 5vw, 72px), 1.06): l'accroche du premier écran seulement, sur deux lignes. Sa variante de clôture (display-close, jusqu'à 80px) sert à la phrase finale centrée.
@@ -378,10 +378,10 @@ Une pastille fixe en bas à droite (64px de haut, 52px sous 600px), feuille blan
 Quatre traits biseautés (parallélogrammes) dans leur couleur, `aria-pressed` sur chacun. Dans la barre (au-dessus de 1320px, et entre 561 et 1080px) : traits de 28px sans libellé, le choisi souligné d'encre. Dans le bloc « Votre surligneur » : cases de 76px sur feuille à filet, libellé en 14 semi-gras, la choisie cerclée d'encre. Le choix est enregistré en `localStorage` (`elire-marker`) et appliqué par un script inline dans le `<head>` avant l'affichage ; sans choix enregistré, un surligneur est tiré au hasard à chaque visite, sans rien écrire.
 
 ### Essai du geste du vote
-Dans « Comment ça marche », une mini feuille que le visiteur note lui-même : rien ne bouge tant qu'il n'a pas choisi un niveau (boutons de 44px, « Choisissez un niveau, de −2 à +2 »). Au clic : appui (240ms), trait sur son niveau (320ms), tiré au hasard comme dans l'app : droit, diagonal, ondulé ou les deux, parfois hors du bouton, trait sur le titre (480ms), la feuille remonte de 40px en s'effaçant (400ms), puis « Dernier vote » affiche sa note et une autre proposition arrive. Le site ne choisit jamais de note à sa place et rien n'est enregistré. Avec « Réduire les animations » : le résultat s'affiche tout de suite.
+Dans « Comment ça marche », une mini feuille que le visiteur note lui-même : rien ne bouge tant qu'il n'a pas choisi un niveau (boutons de 44px, « Choisissez un niveau, de −2 à +2 »). Au clic : appui (240ms), trait sur son niveau (320ms), tiré au hasard comme dans l'app : droit, diagonal, ondulé ou les deux, parfois hors du bouton, trait sur le titre (480ms), la feuille remonte de 40px en s'effaçant (400ms), puis « A voté ! » affiche sa note et une autre proposition arrive. Le site ne choisit jamais de note à sa place et rien n'est enregistré. Avec « Réduire les animations » : le résultat s'affiche tout de suite.
 
 ### Scrutin et hémicycle
-Feuille à filet de 24px de marge : ligne meta « L-44 · Scrutin · Thème », question en 17 semi-gras, trois choix de 52px (Contre, Abstention, Pour dans leur couleur d'échelle, le choix cerclé d'encre avec le même trait tiré au hasard, pente adoucie sur ces boutons larges). Dessous, l'hémicycle anonyme : un siège par candidat qui a voté le texte sur un arc de 120px, triés comme vous, abstention, à l'inverse ; plein au surligneur et cerclé d'encre (comme vous), vide cerclé d'encre (à l'inverse), gris (abstention), lisible sans la couleur. Les sièges montent en cascade (45ms). Légende en toutes lettres, « Un autre scrutin » en lien de lecture. Scrutins réels tirés de `src/data/scrutins.json`.
+Feuille à filet de 24px de marge : ligne meta « L-44 · Scrutin · Thème », question en 17 semi-gras, trois choix de 52px (Contre, Abstention, Pour dans leur couleur d'échelle, le choix cerclé d'encre avec le même trait tiré au hasard, pente adoucie sur ces boutons larges). Dessous, l'hémicycle anonyme : un siège par candidat qui a voté le texte sur un arc de 120px, triés comme vous, abstention, à l'inverse ; plein au surligneur et cerclé d'encre (comme vous), encre pleine (à l'inverse), vide cerclé de graphite (abstention) : trois formes lisibles sans la couleur, ni rouge ni vert. Les sièges montent en cascade (45ms). Légende en toutes lettres, « Un autre scrutin » en lien de lecture. Scrutins réels tirés de `src/data/scrutins.json`.
 
 ### Cahier
 Feuille à filet : trois avis passés, chacun surligné dans sa couleur fixe avec sa note en toutes lettres, puis « Votre prochain trait » dans la couleur du lecteur.
@@ -392,9 +392,9 @@ Une liste réglée au filet, 72ch max : chaque question est un `<details>` natif
 ### Essai de la colonne « Noter »
 Aucune note n'est choisie à la place du visiteur : les quatre niveaux sont des boutons, « Votre avis : à vous de choisir » attend son clic, puis la mesure se surligne (480ms) et l'avis s'écrit.
 
-### Pages de texte (Mentions légales, Méthode et corrections)
+### Page de texte (Mentions légales)
 
-`src/components/LegalPage.astro` : titre `headline` dont le dernier mot est surligné en jaune, chapô `lede`, puis sections à filet supérieur, intertitre `title` (21px) et paragraphes de 66ch au plus. Le texte vient de `src/data/legal.ts`, copie de celui de l'app. Liens en pied de page.
+`src/components/LegalPage.astro` : titre `headline` dont le dernier mot est surligné en jaune, chapô `lede`, puis sections à filet supérieur, intertitre `title` (21px) et paragraphes de 66ch au plus. Le texte vient de `src/data/legal.ts`, copie de celui de l'app. Lien en pied de page.
 
 ### Hérité de l'app
 La feuille de proposition, la rangée de vote et le panneau électoral de l'app restent la référence des mini-écrans : mêmes proportions, mêmes couleurs, mêmes règles d'égalité, à l'échelle réduite.
