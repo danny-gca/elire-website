@@ -137,7 +137,7 @@ h3 {
   text-wrap: balance;
 }
 
-/* Écriture du lecteur (« Votre avis », « Dernier vote ») : en grand et en peu de mots. */
+/* Écriture du lecteur (« Votre avis », « A voté ! ») : en grand et en peu de mots. */
 .note {
   font-family: var(--font-note);
   font-weight: 700;

@@ -7,7 +7,7 @@ Site de présentation de [élire](https://github.com/danny-gca/elire-app), l'app
 ## Pages
 
 1. **Présentation** (`src/pages/index.astro`, fait) : accroche et feuille en quatre temps (lire, noter, comparer, vérifier), principe, fonctionnement avec un essai du geste du vote (le visiteur note lui-même, rien n'est enregistré), « Votez comme au Parlement » (scrutin réel et hémicycle anonyme), « Votre surligneur », valeurs, méthode de calcul (propositions, scrutins et fiabilité du score), « Vos questions » (FAQ des testeurs), open source, appel vers l'app web. Propositions, avis et scrutin affichés sont tirés au hasard à chaque visite (`src/data/exemples.json`, une par thème, douze candidats différents ; `src/data/scrutins.json`, huit scrutins réels anonymes générés depuis le dataset de l'app).
-2. **Mentions légales et Méthode et corrections** (`src/pages/mentions-legales.astro`, `src/pages/corrections.astro`, fait) : même texte que l'app, dans `src/data/legal.ts` (éditeur, hébergeur, délai de correction, droit de réponse), liens en pied de page.
+2. **Mentions légales** (`src/pages/mentions-legales.astro`, fait) : même texte que l'app, dans `src/data/legal.ts` (éditeur, hébergeur, données personnelles, propriété), lien en pied de page. La méthode de calcul et la politique de correction restent dans l'app.
 3. **Signaler une erreur** (à faire) : formulaire sans compte, qui crée un ticket sur le dépôt de l'app. Pré-rempli depuis l'app (`?ref=P-531&titre=...`).
 
 Navigation centrée, sélecteur de surligneur et lien GitHub en haut à droite, surligneur qui balaie au survol des liens et boutons, indicateur de lecture en bas à droite. Liens, stores, chiffres et surligneurs : `src/config.ts`.
