@@ -267,7 +267,7 @@ L'encre sur papier froid de l'app, sans couleur institutionnelle ni partisane ; 
 ### Secondary
 - **Surligneurs** (marker-jaune, marker-rose, marker-vert, marker-bleu): les mêmes que l'app, chacun avec sa bande à 88% d'opacité. Texte encre sur chaque bande au-dessus de 4,5:1.
 - **Surligneur du lecteur** (mark, mark-band): pointe sur le surligneur choisi via `html[data-marker]` (jaune par défaut sans JavaScript). Sert au remplissage des boutons, au balayage des liens, à l'accroche, à la sélection de texte, à l'anneau de lecture, aux traits de la démo et du scrutin, aux sièges « comme vous » de l'hémicycle.
-- **Marque posée** (`data-tone`): bande droite sur une portion puis légèrement ondulée (tuile SVG de 240px) ; un mot clé de titre garde une couleur fixe, répartie entre les quatre surligneurs ; seuls « surligneur », « votre avis » et la note du lecteur suivent son choix. Le logo garde sa bande jaune.
+- **Marque posée** (`data-tone`): bande droite sur une portion puis légèrement ondulée (tuile SVG de 240px) ; un mot clé de titre garde une couleur fixe, répartie entre les quatre surligneurs ; seuls « surligneur », « votre avis » et la note du lecteur suivent son choix. Le logo, celui de l'app (la France d'un trait, un morceau par surligneur, le « é » au centre), garde ses quatre couleurs.
 
 ### Tertiary
 - **Échelle de vote** (vote-impossible, vote-contre, vote-neutre, vote-pour, vote-parfait): les signes de la mini rangée de vote, les puces de l'échelle (« −2 Impossible ») et les notes du tableau de calcul. Héritée telle quelle de l'app.
@@ -283,7 +283,7 @@ L'encre sur papier froid de l'app, sans couleur institutionnelle ni partisane ; 
 - **Tôle** (board) et **Bord de tôle** (board-edge): la tôle du mini Classement et son épaisseur basse. Plus sombres d'un cran que dans l'app (où la tôle est au filet et son bord à #B9BFC5), pour rester lisible en miniature.
 
 ### Named Rules
-**The Highlighter Gesture Rule.** Les surligneurs ont quatre emplois sur le site et pas d'autre : le geste de survol et de focus (bande qui balaie, bouton qui se remplit), le mot clé posé d'un titre ou d'une phrase forte, la note ou le vote du lecteur dans les mini-écrans, et la progression de l'indicateur de lecture. Le wordmark texte, les statuts, les issues parlementaires et les fonds de section ne sont jamais surlignés ; seul le logo de l'app porte sa bande.
+**The Highlighter Gesture Rule.** Les surligneurs ont quatre emplois sur le site et pas d'autre : le geste de survol et de focus (bande qui balaie, bouton qui se remplit), le mot clé posé d'un titre ou d'une phrase forte, la note ou le vote du lecteur dans les mini-écrans, et la progression de l'indicateur de lecture. Le wordmark texte, les statuts, les issues parlementaires et les fonds de section ne sont jamais surlignés ; seul le logo de l'app porte ses quatre couleurs.
 
 **The Mark Keeps Its Color Rule.** Une marque posée garde sa couleur quand le lecteur change de surligneur ; seuls les gestes à venir prennent la nouvelle. Aucune couleur ne correspond à un parti. Le focus clavier reste un contour encre.
 
