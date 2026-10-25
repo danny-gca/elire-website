@@ -193,6 +193,7 @@ const UNSURE = { value: 0, label: 'Je ne sais pas', sign: '', color: 'var(--vote
       <p class="facts num">
         <span><b>{COUNTS.candidats}</b> candidats</span>
         <span><b>{COUNTS.propositions}</b> propositions vérifiées</span>
+        <span><b>{COUNTS.enjeux}</b> questions communes</span>
         <span><b>{COUNTS.scrutins}</b> scrutins réels</span>
         <span><b>{COUNTS.themes}</b> thèmes</span>
       </p>
@@ -209,12 +210,13 @@ const UNSURE = { value: 0, label: 'Je ne sais pas', sign: '', color: 'var(--vote
           <div>
             <h3><span class="num">1.</span> Lire à l'aveugle</h3>
             <p>Les propositions arrivent une par une, sans nom ni parti, dans un ordre tiré au hasard. Deux propositions de suite ne viennent jamais du même candidat. « En savoir plus » donne le contexte et explique les sigles. La source est dans Explorer, où l'auteur est affiché.</p>
+            <p>Quand plusieurs candidats proposent la même mesure, ou son contraire, une seule question les réunit : votre note compte pour chacun, dans un sens ou dans l'autre. Juste après, vous voyez combien pensent comme vous, sans leurs noms.</p>
           </div>
         </li>
         <li>
           <div>
             <h3><span class="num">2.</span> Noter sur quatre niveaux</h3>
-            <p>Vous notez chaque mesure avec votre surligneur, d'« Impossible » à « Parfait ». Vous pouvez changer votre note à tout moment. Vous ne comprenez pas la mesure, ou vous n'avez pas d'avis ? Touchez « Je ne sais pas » : cette question ne compte pas dans le score.</p>
+            <p>Vous notez chaque mesure avec votre surligneur, d'« Impossible » à « Parfait ». Vous pouvez changer votre note à tout moment, depuis n'importe quel écran, avec la gomme. Vous ne comprenez pas la mesure, ou vous n'avez pas d'avis ? Touchez « Je ne sais pas » : cette question ne compte pas dans le score.</p>
             <ul class="scale" aria-label="Les niveaux de vote">
               {VOTES.map((v) => (
                 <li style={`--c:${v.color}`}><b class="num">{v.sign}</b> {v.label}</li>
@@ -227,6 +229,7 @@ const UNSURE = { value: 0, label: 'Je ne sais pas', sign: '', color: 'var(--vote
           <div>
             <h3><span class="num">3.</span> Comparer les candidats</h3>
             <p>Après 10 votes, le Classement s'ouvre. Chaque candidat y a le même panneau numéroté et un seul score, qui réunit son programme et ses votes au Parlement. Un candidat apparaît dès que vous avez noté 2 de ses propositions. Deux scores égaux ont le même rang. Toutes les 10 questions, un bilan indique si chaque score est fragile, assez sûr ou fiable.</p>
+            <p>Vous pouvez partager une image de votre Classement ou, sans aucun nom, votre avancée, vos thèmes, vos scrutins ou vos débats tranchés.</p>
           </div>
         </li>
         <li>
@@ -379,6 +382,7 @@ const UNSURE = { value: 0, label: 'Je ne sais pas', sign: '', color: 'var(--vote
         <h2 id="methode-titre">Le calcul, <span class="mark" data-tone="rose">en clair</span></h2>
         <p class="lede">Pour chaque candidat, l'app additionne vos notes sur ses propositions (de −2 à +2) et les points de ses scrutins (+2 ou −2). Elle convertit ensuite ce total en pourcentage, de 0 à 100 %. Tant que vous n'avez rien noté pour un candidat, il est marqué « pas encore évalué ».</p>
         <ul class="ruled">
+          <li>Une question commune compte pour chaque candidat qui a pris position : telle quelle pour ceux qui proposent la mesure, à l'inverse pour ceux qui proposent le contraire.</li>
           <li>Un vote de groupe compte deux fois moins qu'un vote personnel. Un scrutin où le candidat ne siégeait pas n'est pas compté pour lui.</li>
           <li>Plus il y a de scrutins comptés pour un candidat, plus ils pèsent, mais jamais plus de la moitié de son score. Le programme reste la base commune à tous, qu'un candidat ait siégé au Parlement ou non. <a href="https://github.com/danny-gca/elire-app/tree/main/docs/simulations">La simulation qui a guidé ce choix</a> est publique.</li>
           <li>Le Classement montre un seul score. La fiche du candidat détaille à part son programme et ses votes au Parlement.</li>
@@ -985,6 +989,9 @@ const UNSURE = { value: 0, label: 'Je ne sais pas', sign: '', color: 'var(--vote
   .valeur p {
     color: var(--ink-soft);
     max-width: 58ch;
+  }
+  .temps p + p {
+    margin-top: 8px;
   }
   .scale {
     list-style: none;

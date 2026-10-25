@@ -11,8 +11,8 @@ export const FUNDING = [
   { label: 'Buy Me a Coffee', url: 'https://buymeacoffee.com/danny_gca' },
 ];
 
-// Chiffres du jeu de données (elire-app, vérification du 2026-10-14).
-export const COUNTS = { candidats: 25, propositions: 194, scrutins: 42, themes: 12 };
+// Chiffres du jeu de données (elire-app, dataset du 2026-10-24 ; vérification du 2026-10-14).
+export const COUNTS = { candidats: 25, propositions: 197, enjeux: 17, scrutins: 42, themes: 12 };
 export const DATA_DATE = '14 octobre 2026';
 
 // Surligneurs du lecteur, mêmes couleurs que l'app ; aucune ne correspond à un parti.
