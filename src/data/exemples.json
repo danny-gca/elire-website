@@ -11,7 +11,7 @@
     "ref": "P-545",
     "theme": "Économie",
     "themeId": "economie",
-    "titre": "Rétablir l'impôt sur la fortune (ISF)",
+    "titre": "Rétablir l'impôt sur la fortune (ISF), payé chaque année par les plus riches",
     "accent": "#8C6A1A",
     "tint": "#F2EDDF"
   },
@@ -19,7 +19,7 @@
     "ref": "P-961",
     "theme": "Sécurité",
     "themeId": "securite",
-    "titre": "Peine plancher pour les agresseurs de policiers",
+    "titre": "Instaurer une peine minimale pour les agresseurs de policiers",
     "accent": "#5C5047",
     "tint": "#ECE9E6"
   },
@@ -27,15 +27,15 @@
     "ref": "P-575",
     "theme": "Travail",
     "themeId": "travail",
-    "titre": "Donner le maximum de liberté aux entreprises sur le temps de travail",
+    "titre": "Donner le maximum de liberté dans l'entreprise sur le temps de travail",
     "accent": "#A0532C",
     "tint": "#F4E8E1"
   },
   {
-    "ref": "P-408",
+    "ref": "P-101",
     "theme": "Éducation",
     "themeId": "education",
-    "titre": "Enseigner le respect des animaux dans tous les programmes scolaires",
+    "titre": "Enseigner le respect des animaux et initier à l'éthologie dans tous les programmes scolaires",
     "accent": "#1F7A70",
     "tint": "#E0EFED"
   },
@@ -51,7 +51,7 @@
     "ref": "P-881",
     "theme": "Société",
     "themeId": "societe",
-    "titre": "Régularisation de tous les sans-papiers et liberté de circulation et d'installation pour tous",
+    "titre": "Régulariser tous les sans-papiers et laisser chacun circuler et s'installer librement",
     "accent": "#40707A",
     "tint": "#E3EEEF"
   },
@@ -59,7 +59,7 @@
     "ref": "P-245",
     "theme": "International",
     "themeId": "international",
-    "titre": "Sortir complètement de l'Alliance atlantique (OTAN)",
+    "titre": "Faire sortir complètement la France de l'Alliance atlantique (OTAN)",
     "accent": "#3D5E88",
     "tint": "#E3E9F1"
   },
@@ -67,7 +67,7 @@
     "ref": "P-667",
     "theme": "Agriculture",
     "themeId": "agriculture",
-    "titre": "Fixer le prix agricole à partir des coûts de production",
+    "titre": "Calculer le prix payé aux agriculteurs à partir de leurs coûts de production",
     "accent": "#6B7722",
     "tint": "#EEF0DE"
   },
@@ -83,7 +83,7 @@
     "ref": "P-492",
     "theme": "Numérique",
     "themeId": "numerique",
-    "titre": "Interdire la publicité ciblée sur les plateformes",
+    "titre": "Interdire la publicité ciblée sur les grandes plateformes numériques et les réseaux sociaux",
     "accent": "#2B6A8F",
     "tint": "#E1ECF2"
   },
@@ -91,7 +91,7 @@
     "ref": "P-693",
     "theme": "Logement",
     "themeId": "logement",
-    "titre": "Assouplir la règle « zéro artificialisation nette » (ZAN) et laisser les communes décider des zonages",
+    "titre": "Assouplir la règle « zéro artificialisation nette », jugée inapplicable localement",
     "accent": "#77593A",
     "tint": "#EFE9E2"
   }

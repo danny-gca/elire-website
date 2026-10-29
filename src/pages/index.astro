@@ -5,7 +5,6 @@ import exemples from '../data/exemples.json';
 import scrutins from '../data/scrutins.json';
 import { APP_URL, COUNTS, DATA_DATE, FUNDING, REPO_URL, STORES } from '../config';
 
-const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const first = exemples[0];
 const scrutin = scrutins[0];
 
@@ -216,7 +215,7 @@ const UNSURE = { value: 0, label: 'Je ne sais pas', sign: '', color: 'var(--vote
         <li>
           <div>
             <h3><span class="num">2.</span> Noter sur quatre niveaux</h3>
-            <p>Vous notez chaque mesure avec votre surligneur, d'« Impossible » à « Parfait ». Vous pouvez changer votre note à tout moment, depuis n'importe quel écran, avec la gomme. Vous ne comprenez pas la mesure, ou vous n'avez pas d'avis ? Touchez « Je ne sais pas » : cette question ne compte pas dans le score.</p>
+            <p>Vous notez chaque mesure avec votre surligneur, d'« Impossible » à « Parfait ». Vous pouvez changer votre note à tout moment, depuis n'importe quel écran, avec la gomme : elle rouvre la question en entier, avec son contexte et ses sources. Vous ne comprenez pas la mesure, ou vous n'avez pas d'avis ? Touchez « Je ne sais pas » : cette question ne compte pas dans le score.</p>
             <ul class="scale" aria-label="Les niveaux de vote">
               {VOTES.map((v) => (
                 <li style={`--c:${v.color}`}><b class="num">{v.sign}</b> {v.label}</li>
@@ -243,7 +242,7 @@ const UNSURE = { value: 0, label: 'Je ne sais pas', sign: '', color: 'var(--vote
       <div class="geste">
         <div class="geste-text">
           <h3>Le geste du vote</h3>
-          <p>Essayez : notez cette proposition. Votre surligneur trace un trait sur la note choisie, puis sur la mesure. La proposition passe dans « A voté ! », et la suivante arrive.</p>
+          <p>Essayez : notez cette proposition. Votre surligneur trace un trait sur la note choisie, puis sur la mesure. La proposition passe dans « A voté ! » et la suivante arrive : dans l'app, la page du cahier tourne.</p>
           <p class="fine">C'est un essai : rien n'est enregistré ici. Vos vrais votes se font dans l'app.</p>
         </div>
         <div class="demo" data-demo role="group" aria-label="Essai : notez une proposition">
@@ -267,18 +266,15 @@ const UNSURE = { value: 0, label: 'Je ne sais pas', sign: '', color: 'var(--vote
       </div>
 
       <div class="explorer">
-        <figure class="phone">
-          <img src={`${base}/images/explorer.webp`} width="390" height="844" alt="L'écran Explorer de l'app : les douze thèmes en sommaire, avec le nombre de propositions notées pour chacun." decoding="async" />
-        </figure>
         <div class="explorer-text">
           <h3>Tout parcourir</h3>
           <p>L'onglet Explorer range les {COUNTS.propositions} propositions par thème, cette fois avec leur auteur. L'onglet Lois liste les {COUNTS.scrutins} scrutins suivis, à l'Assemblée nationale, au Sénat et au Parlement européen.</p>
-          <ul class="ruled">
-            <li>Les {COUNTS.themes} thèmes, avec le nombre de propositions déjà notées</li>
-            <li>Une recherche par mesure ou par candidat, même sans les accents</li>
-            <li>Un filtre « pas encore votées » pour noter ce qui reste</li>
-          </ul>
         </div>
+        <ul class="ruled">
+          <li>Les {COUNTS.themes} thèmes, avec le nombre de propositions déjà notées</li>
+          <li>Une recherche par mesure ou par candidat, même sans les accents</li>
+          <li>Un filtre « pas encore votées » pour noter ce qui reste</li>
+        </ul>
       </div>
     </div>
   </section>
@@ -1015,9 +1011,8 @@ const UNSURE = { value: 0, label: 'Je ne sais pas', sign: '', color: 'var(--vote
 
   .explorer {
     display: grid;
-    grid-template-columns: auto minmax(0, 60ch);
-    justify-content: center;
-    align-items: center;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
     gap: clamp(24px, 4vw, 64px);
     margin-top: 16px;
     padding: 32px;
@@ -1031,18 +1026,6 @@ const UNSURE = { value: 0, label: 'Je ne sais pas', sign: '', color: 'var(--vote
   }
   .explorer-text h3 {
     margin: 0;
-  }
-  .phone {
-    width: clamp(180px, 20vw, 260px);
-    aspect-ratio: 390 / 600;
-    overflow: hidden;
-    border: 1px solid var(--rule);
-    border-radius: 22px;
-    background: var(--paper);
-  }
-  .phone img {
-    width: 100%;
-    height: auto;
   }
 
   .valeurs {
@@ -1766,11 +1749,7 @@ const UNSURE = { value: 0, label: 'Je ne sais pas', sign: '', color: 'var(--vote
     }
     .explorer {
       grid-template-columns: minmax(0, 1fr);
-      justify-items: center;
       padding: 24px;
-    }
-    .phone {
-      width: min(260px, 80%);
     }
     .facts span {
       margin-right: 18px;

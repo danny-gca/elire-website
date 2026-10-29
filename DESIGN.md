@@ -343,7 +343,7 @@ La page est plate : la profondeur se lit dans le contraste papier / feuille et l
 
 ## Shapes
 
-Des coins doux et retenus, par taille d'objet : 14px pour les feuilles et cartes (feuille du premier écran, Explorer, calcul, menu ouvert), 12px pour le bouton primaire, 10px pour les contrôles de barre et les mini feuilles, 8px pour les puces d'échelle, les mini niveaux de vote et la tôle, 4px pour les mini panneaux. Deux formes à part : le cadre de téléphone de la capture Explorer (22px) et l'indicateur de lecture en pastille (32px, anneau rond). Les visages masqués sont des disques, les noms masqués des barres arrondies de 6px. Les traits de surligneur posés sur un bouton sont des bandes de 3px de rayon, inclinées de 2 à 14° ; les sièges de l'hémicycle des disques de 22px. Les bordures sont des filets de 1px ; le bouton primaire et le bouton GitHub sont cerclés d'encre (1.5px et 1px).
+Des coins doux et retenus, par taille d'objet : 14px pour les feuilles et cartes (feuille du premier écran, Explorer, calcul, menu ouvert), 12px pour le bouton primaire, 10px pour les contrôles de barre et les mini feuilles, 8px pour les puces d'échelle, les mini niveaux de vote et la tôle, 4px pour les mini panneaux. Une forme à part : l'indicateur de lecture en pastille (32px, anneau rond). Les visages masqués sont des disques, les noms masqués des barres arrondies de 6px. Les traits de surligneur posés sur un bouton sont des bandes de 3px de rayon, inclinées de 2 à 14° ; les sièges de l'hémicycle des disques de 22px. Les bordures sont des filets de 1px ; le bouton primaire et le bouton GitHub sont cerclés d'encre (1.5px et 1px).
 
 ## Components
 
@@ -369,7 +369,7 @@ Une feuille blanche à filet, coins de 14px, en quatre colonnes séparées par d
 Les listes n'ont pas de puces : un filet en haut, un filet sous chaque élément, 12px de marge verticale, texte encre douce, 58ch max. Les grilles de contenu suivent la même logique : quatre temps en deux colonnes à filet haut, quatre valeurs en 2x2 à filets vertical et horizontal, open source en quatre colonnes à filets verticaux.
 
 ### Cartes Explorer et calcul
-Feuilles blanches à filet, coins de 14px, 32px (Explorer) ou 28px (calcul) de marge interne. Explorer pose la capture réelle de l'app dans un cadre de téléphone à filet (22px, recadrée en 390 / 600) à côté de son texte. Le calcul est un tableau à filets légers (numéro graphite, note en couleur d'échelle à droite), une ligne de somme sous un filet, le résultat en 34 gras avec la bande jaune, la formule en 13 graphite.
+Feuilles blanches à filet, coins de 14px, 32px (Explorer) ou 28px (calcul) de marge interne. Explorer est une feuille de texte seule (titre, phrase, liste réglée), sans capture. Le calcul est un tableau à filets légers (numéro graphite, note en couleur d'échelle à droite), une ligne de somme sous un filet, le résultat en 34 gras avec la bande jaune, la formule en 13 graphite.
 
 ### Indicateur de lecture (signature)
 Une pastille fixe en bas à droite (64px de haut, 52px sous 600px), feuille blanche à filet et ombre de flottement : le nom de la section en cours en 14 semi-gras, puis un anneau de 56px dont la piste est au filet léger et le remplissage jaune suit la progression de lecture, avec le numéro de section (« 03 ») tabulaire au centre. Elle apparaît après 60% du premier écran (fondu et légère montée en 280ms), remonte en haut au clic, et au survol le numéro laisse place à une flèche.
