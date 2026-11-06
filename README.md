@@ -10,7 +10,7 @@ Site de présentation de [élire](https://github.com/danny-gca/elire-app), l'app
 2. **Mentions légales** (`src/pages/mentions-legales.astro`, fait) : même texte que l'app, dans `src/data/legal.ts` (éditeur, hébergeur, données personnelles, propriété), lien en pied de page. La méthode de calcul et la politique de correction restent dans l'app.
 3. **Signaler une erreur** (à faire) : formulaire sans compte, qui crée un ticket sur le dépôt de l'app. Pré-rempli depuis l'app (`?ref=P-531&titre=...`).
 
-Navigation centrée, sélecteur de surligneur et lien GitHub en haut à droite, surligneur qui balaie au survol des liens et boutons, indicateur de lecture en bas à droite. Liens, stores, chiffres et surligneurs : `src/config.ts`.
+Navigation centrée, sélecteur de surligneur et lien GitHub en haut à droite, surligneur qui balaie au survol des liens et boutons, indicateur de lecture en bas à droite. Badges officiels App Store et Google Play en français sous chaque « Ouvrir l'app web » (`public/badges/`, auto-hébergés et non modifiés, masqués si le lien est `null`). Liens, stores, chiffres et surligneurs : `src/config.ts`.
 
 Surligneur : 4 couleurs (jaune, rose, vert, bleu), comme dans l'app. Le choix du visiteur est enregistré dans le `localStorage` du navigateur (clé `elire-marker`), jamais envoyé, sans cookie ; sans choix, une couleur est tirée au hasard à chaque visite. Les mots clés déjà surlignés gardent leur couleur (`data-tone`).
 

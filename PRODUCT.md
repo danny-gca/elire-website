@@ -12,7 +12,7 @@ Citoyens et électeurs français qui découvrent élire (par un lien, un article
 
 ## Product Purpose
 
-Site vitrine de l'app élire : expliquer en une page ce qu'est l'app, comment elle fonctionne et pourquoi on peut lui faire confiance, puis mener vers l'app web. Deuxième page : un formulaire pour signaler une erreur dans les données, sans compte GitHub.
+Site vitrine de l'app élire : expliquer en une page ce qu'est l'app, comment elle fonctionne et pourquoi on peut lui faire confiance, puis mener vers l'app web ou les stores (App Store, Google Play). Deuxième page : un formulaire pour signaler une erreur dans les données, sans compte GitHub.
 
 ## Positioning
 

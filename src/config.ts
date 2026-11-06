@@ -2,8 +2,11 @@
 export const APP_URL = 'https://danny-gca.github.io/elire-app/';
 export const REPO_URL = 'https://github.com/danny-gca/elire-app';
 export const SITE_REPO_URL = 'https://github.com/danny-gca/elire-website';
-/** Fiches des stores : null tant que l'app n'est pas publiée (le site affiche « bientôt »). */
-export const STORES: { ios: string | null; android: string | null } = { ios: null, android: null };
+/** Fiches des stores (ids de elire-app : eas.json ascAppId, app.json android.package) ; null masque le bouton. */
+export const STORES: { ios: string | null; android: string | null } = {
+  ios: 'https://apps.apple.com/fr/app/id6826817464',
+  android: 'https://play.google.com/store/apps/details?id=fr.elire.app',
+};
 
 export const FUNDING = [
   { label: 'GitHub Sponsors', url: 'https://github.com/sponsors/danny-gca' },

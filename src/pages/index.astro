@@ -71,7 +71,12 @@ const keyed = (titre: string, cle: string) => {
   return { avant, cle, apres };
 };
 
-const storesSoon = !STORES.ios || !STORES.android;
+// Badges officiels (Apple Marketing Tools, Google Play), auto-hébergés et non modifiés.
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const storeLinks = [
+  { alt: "Télécharger dans l'App Store", url: STORES.ios, src: `${base}/badges/app-store-fr.svg`, width: 127 },
+  { alt: 'Disponible sur Google Play', url: STORES.android, src: `${base}/badges/google-play-fr.png`, width: 135 },
+].filter((s) => s.url);
 
 // Les vraies questions des testeurs, réponses tirées du fonctionnement de l'app.
 const FAQ = [
@@ -121,10 +126,12 @@ const UNSURE = { value: 0, label: 'Je ne sais pas', sign: '', color: 'var(--vote
           Ouvrir l'app web
           <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M3 8h10m-4-4 4 4-4 4" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg>
         </a>
-        <p class="stores">
-          {storesSoon ? 'Bientôt sur Android et iOS.' : 'Aussi sur Android et iOS.'}
-          <span>Gratuit, sans compte, sans publicité.</span>
-        </p>
+        <ul class="store-links" aria-label="Télécharger l'app">
+          {storeLinks.map((s) => (
+            <li><a href={s.url}><img src={s.src} alt={s.alt} width={s.width} height="40" /></a></li>
+          ))}
+        </ul>
+        <p class="stores">Gratuit, sans compte, sans publicité.</p>
       </div>
     </div>
 
@@ -465,7 +472,11 @@ const UNSURE = { value: 0, label: 'Je ne sais pas', sign: '', color: 'var(--vote
       Ouvrir l'app web
       <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M3 8h10m-4-4 4 4-4 4" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></svg>
     </a>
-    <p class="stores">{storesSoon ? 'Bientôt sur Android et iOS.' : 'Aussi sur Android et iOS.'}</p>
+    <ul class="store-links" aria-label="Télécharger l'app">
+      {storeLinks.map((s) => (
+        <li><a href={s.url}><img src={s.src} alt={s.alt} width={s.width} height="40" /></a></li>
+      ))}
+    </ul>
   </section>
 
   <!-- En fin de page : tous les blocs tirés au hasard existent déjà. -->
@@ -699,13 +710,36 @@ const UNSURE = { value: 0, label: 'Je ne sais pas', sign: '', color: 'var(--vote
 
   .stores {
     font-size: 15px;
-    font-weight: 600;
-    color: var(--ink);
-  }
-  .stores span {
-    display: block;
     font-weight: 500;
     color: var(--graphite);
+  }
+
+  /* Boutons des stores : deux à deux, sous l'appel principal. */
+  /* Colonnes au ratio des badges (40 px de haut : 126,5 et 134,6) : même hauteur, rangée calée sur le bouton. */
+  .store-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 126.5fr 134.6fr;
+    gap: 8px;
+    width: 100%;
+  }
+  .store-links a {
+    display: block;
+    border-radius: 8px;
+  }
+  .store-links img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .close .btn,
+  .close .store-links {
+    width: min(320px, 100%);
+  }
+  .close .store-links {
+    margin-top: -14px;
   }
 
   /* La feuille : quatre colonnes séparées par des filets. */
