@@ -1,0 +1,43 @@
+---
+import DataPage from '../../components/DataPage.astro';
+import { glossaire, reportUrl, slug } from '../../lib/donnees';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<DataPage
+  title="Glossaire · Nos données · élire"
+  description="Les sigles employés dans les données de l'app, avec leur forme développée, dans l'ordre alphabétique."
+  active="glossaire"
+  heading={['Le', 'glossaire']}
+  tone="jaune"
+  csv={[{ href: `${base}/donnees/csv/glossaire.csv`, label: 'Télécharger en CSV' }]}
+  search={{ one: 'sigle', many: 'sigles' }}
+>
+  <table class="d-table">
+    <thead>
+      <tr>
+        <th scope="col">Sigle</th>
+        <th scope="col">Forme développée</th>
+        <th scope="col">Définition</th>
+        <th scope="col">Liens</th>
+      </tr>
+    </thead>
+    <tbody>
+      {glossaire.map((g) => (
+        <tr id={slug(g.sigle)} data-item>
+          <td class="t-nowrap">
+            <a class="f-ref t-title" href={`#${slug(g.sigle)}`}><span class="hl">{g.sigle}</span></a>
+          </td>
+          <td><span class="t-title">{g.forme}</span></td>
+          <td>{g.definition ?? '-'}</td>
+          <td>
+            <span class="f-actions">
+              <a class="link f-report" href={reportUrl(g.sigle, g.forme)} rel="noopener"><span class="hl">Signaler une erreur</span></a>
+            </span>
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</DataPage>

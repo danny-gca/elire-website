@@ -1,0 +1,115 @@
+---
+import DataPage from '../../components/DataPage.astro';
+import {
+  byCandidat,
+  candidatById,
+  CHAMBRE_LABELS,
+  formatDate,
+  lois,
+  NATURE_LABELS,
+  POSITION_LABELS,
+  reportUrl,
+  STATUT_LABELS,
+  THEME_ACCENTS,
+  themeById,
+  TYPE_VOTE_LABELS,
+  type Vote,
+} from '../../lib/donnees';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const POSITIONS: Vote['position'][] = ['pour', 'contre', 'abstention'];
+// Votes dans l'ordre alphabétique des candidats.
+const votesOf = (votes: Record<string, Vote>) =>
+  Object.entries(votes)
+    .map(([candidatId, vote]) => ({ candidatId, vote, nom: candidatById.get(candidatId)?.nom ?? candidatId }))
+    .sort(byCandidat);
+---
+
+<DataPage
+  title="Scrutins · Nos données · élire"
+  description="Les scrutins du Parlement repris dans l'app, du plus récent au plus ancien, avec le vote de chaque candidat qui siégeait et sa source officielle."
+  active="scrutins"
+  heading={['Les', 'scrutins']}
+  tone="vert"
+  csv={[
+    { href: `${base}/donnees/csv/lois.csv`, label: 'Scrutins en CSV' },
+    { href: `${base}/donnees/csv/votes.csv`, label: 'Votes en CSV' },
+  ]}
+  search={{ one: 'scrutin', many: 'scrutins', candidat: true, theme: true }}
+>
+  <table class="d-table">
+    <thead>
+      <tr>
+        <th scope="col">Réf. et date</th>
+        <th scope="col">Scrutin</th>
+        <th scope="col">Résultat</th>
+        <th scope="col">Votes des candidats</th>
+      </tr>
+    </thead>
+    <tbody>
+      {lois.map((l) => {
+        const votes = votesOf(l.votes);
+        return (
+          <tr id={l.ref} data-item data-candidat={votes.map((v) => v.candidatId).join(' ')} data-theme={l.thematiqueId}>
+            <td class="t-nowrap num">
+              <a class="f-ref" href={`#${l.ref}`}><span class="hl">{l.ref}</span></a>
+              <p class="t-sub">{formatDate(l.dateVote)}</p>
+            </td>
+            <td class="t-main">
+              <p class="t-title">{l.question}</p>
+              <p class="t-sub">
+                <span style={`color:${THEME_ACCENTS[l.thematiqueId] ?? 'inherit'}`}>{themeById.get(l.thematiqueId)?.titre}</span> ·{' '}
+                {CHAMBRE_LABELS[l.chambre] ?? l.chambre} · {NATURE_LABELS[l.nature] ?? l.nature}
+              </p>
+              <details class="f-more">
+                <summary><span class="hl">Le texte voté</span></summary>
+                <p class="f-text">{l.titre}</p>
+                <p class="f-text">{l.enjeu}</p>
+              </details>
+              <span class="f-actions">
+                <a class="link" href={l.sourceOfficielleUrl} rel="noopener"><span class="hl">Source officielle</span></a>
+                <a class="link f-report" href={reportUrl(l.ref, l.titre)} rel="noopener"><span class="hl">Signaler une erreur</span></a>
+              </span>
+            </td>
+            <td data-label="Résultat">
+              <b>{STATUT_LABELS[l.statut] ?? l.statut}</b>
+              <p class="t-sub">{l.resume}</p>
+            </td>
+            <td>
+              {votes.length > 0 ? (
+                <>
+                  <ul class="t-list num">
+                    {POSITIONS.map((position) => {
+                      const n = votes.filter((v) => v.vote.position === position).length;
+                      return n > 0 && <li>{POSITION_LABELS[position]} : {n}</li>;
+                    })}
+                  </ul>
+                  <details class="f-more">
+                    <summary><span class="hl">Qui a voté quoi ({votes.length})</span></summary>
+                    <ul class="f-votes">
+                      {votes.map(({ candidatId, vote, nom }) => (
+                        <li>
+                          <span>
+                            <b>{nom}</b> : {POSITION_LABELS[vote.position]}, {TYPE_VOTE_LABELS[vote.typeVote].toLowerCase()}
+                            {vote.groupe && <> {vote.groupe}</>}
+                          </span>
+                          {vote.explication && <span>{vote.explication}</span>}
+                          <span>
+                            <a class="link" href={`${base}/donnees/candidats/#${candidatId}`}><span class="hl">Fiche</span></a> ·{' '}
+                            <a class="link" href={vote.sourceUrl} rel="noopener"><span class="hl">Source du vote</span></a>
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </details>
+                </>
+              ) : (
+                'Aucun candidat suivi ne siégeait.'
+              )}
+            </td>
+          </tr>
+        );
+      })}
+    </tbody>
+  </table>
+</DataPage>

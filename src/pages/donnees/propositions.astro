@@ -1,0 +1,95 @@
+---
+import DataPage from '../../components/DataPage.astro';
+import {
+  candidatById,
+  enjeuById,
+  formatDate,
+  plural,
+  propositions,
+  reportUrl,
+  thematiques,
+  THEME_ACCENTS,
+  TYPE_SOURCE_LABELS,
+} from '../../lib/donnees';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const groups = thematiques
+  .map((t) => ({ theme: t, items: propositions.filter((p) => p.thematiqueId === t.id) }))
+  .filter((g) => g.items.length > 0);
+---
+
+<DataPage
+  title="Propositions · Nos données · élire"
+  description="Chaque proposition de campagne lue dans l'app, avec son auteur, la citation exacte et sa source. Rangées par thème, puis par candidat."
+  active="propositions"
+  heading={['Les', 'propositions']}
+  tone="jaune"
+  csv={[{ href: `${base}/donnees/csv/propositions.csv`, label: 'Télécharger en CSV' }]}
+  search={{ one: 'proposition', many: 'propositions', candidat: true, theme: true }}
+>
+  {groups.map(({ theme, items }) => (
+    <section class="d-group" data-group aria-labelledby={`t-${theme.id}`}>
+      <h2 id={`t-${theme.id}`} style={`color:${THEME_ACCENTS[theme.id] ?? 'inherit'}`}>
+        {theme.titre} <small class="num">{plural(items.length, 'proposition')}</small>
+      </h2>
+      <table class="d-table">
+        <thead>
+          <tr>
+            <th scope="col">Réf.</th>
+            <th scope="col">Proposition</th>
+            <th scope="col">Candidat</th>
+            <th scope="col">Source</th>
+          </tr>
+        </thead>
+        <tbody>
+          {items.map((p) => {
+            const c = candidatById.get(p.candidatId);
+            const enjeu = p.enjeuId ? enjeuById.get(p.enjeuId) : undefined;
+            return (
+              <tr id={p.ref} data-item data-candidat={p.candidatId} data-theme={p.thematiqueId}>
+                <td class="t-nowrap num">
+                  <a class="f-ref" href={`#${p.ref}`}><span class="hl">{p.ref}</span></a>
+                </td>
+                <td class="t-main">
+                  <p class="t-title">{p.titre}</p>
+                  <blockquote class="f-quote" cite={p.sourceUrl}>{p.description}</blockquote>
+                  {enjeu && (
+                    <p class="t-sub">
+                      Question commune{' '}
+                      <a class="link num" href={`${base}/donnees/enjeux/#${enjeu.ref}`}><span class="hl">{enjeu.ref}</span></a>
+                      {p.sens === 'contre' ? ' : propose le contraire' : ''}
+                    </p>
+                  )}
+                  <details class="f-more">
+                    <summary><span class="hl">Contexte</span></summary>
+                    <p class="f-text">{p.contexte}</p>
+                  </details>
+                </td>
+                <td>
+                  {c && (
+                    <>
+                      <a class="link" href={`${base}/donnees/candidats/#${c.id}`}><span class="hl">{c.nom}</span></a>
+                      <p class="t-sub">{c.parti}</p>
+                    </>
+                  )}
+                </td>
+                <td>
+                  <div class="t-stack">
+                    <span>
+                      {TYPE_SOURCE_LABELS[p.typeSource] ?? p.typeSource}
+                      {p.dateDeclaration && <span class="num">, {formatDate(p.dateDeclaration)}</span>}
+                    </span>
+                    <span class="f-actions">
+                      <a class="link" href={p.sourceUrl} rel="noopener"><span class="hl">Source</span></a>
+                      <a class="link f-report" href={reportUrl(p.ref, p.titre)} rel="noopener"><span class="hl">Signaler une erreur</span></a>
+                    </span>
+                  </div>
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </section>
+  ))}
+</DataPage>

@@ -1,6 +1,6 @@
 # Plan - site vitrine élire
 
-Deux pages statiques sur GitHub Pages, même univers visuel que l'app (« le cahier annoté », `elire-app/DESIGN.md`), construites avec impeccable.
+Pages statiques sur GitHub Pages, même univers visuel que l'app (« le cahier annoté », `elire-app/DESIGN.md`), construites avec impeccable.
 
 ## Décisions
 
@@ -10,6 +10,7 @@ Deux pages statiques sur GitHub Pages, même univers visuel que l'app (« le cah
 | Domaine | `danny-gca.github.io/elire-website` (base `/elire-website/`) ; domaine perso plus tard (`elire-app.fr` et `elire2027.fr` libres le 2026-10-13, `elire.fr` pris) | Validé |
 | Outil | Astro : HTML statique, zéro JS par défaut, une mise en page commune aux 2 pages | Validé |
 | App web | Export Expo publié sur GitHub Pages du dépôt `elire-app` | Validé |
+| Nos données | Le site lit au build `elire-app/src/data/dataset.json` à chaque déploiement ; une page par onglet, JSON et CSV ([spec](feature-20261110-donnees-publiques.md)) | Fait |
 | Stores | « Bientôt sur Android et iOS » tant que l'app n'est pas publiée (`STORES` dans `src/config.ts`) | Validé |
 
 ## Étapes

@@ -1,0 +1,66 @@
+---
+import DataPage from '../../components/DataPage.astro';
+import IconDownload from '../../components/IconDownload.astro';
+import { REPO_URL } from '../../config';
+import { APP_VERSION, dataset, ONGLETS, plural, reportUrl } from '../../lib/donnees';
+import { EXPORTS } from '../../lib/exports';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const kilo = (bytes: number) => `${Math.round(bytes / 1024)} Ko`;
+const jsonSize = kilo(new TextEncoder().encode(JSON.stringify(dataset)).length);
+---
+
+<DataPage
+  title="Nos données · élire"
+  description="Tout ce que l'app élire affiche vient d'un seul fichier, publié dans son dépôt. Le voici, à lire ici ou à télécharger tel quel."
+  active="index"
+  heading={['Toutes nos', 'données', ', au grand jour']}
+  tone="vert"
+>
+  <section class="d-section" aria-labelledby="d-contenu">
+    <h2 id="d-contenu" class="visually-hidden">Ce que contient le jeu de données</h2>
+    <ul class="d-facts num">
+      {ONGLETS.map((o) => (
+        <li>
+          <a href={`${base}/donnees/${o.id}/`}>
+            <b>{o.count}</b>
+            <span><span class="hl">{o.label}</span></span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="d-section" aria-labelledby="d-origine">
+    <h2 id="d-origine">D'où elles viennent</h2>
+    <ul class="d-ruled">
+      <li><b>Un seul fichier.</b> L'app embarque <code>dataset.json</code>, compilé depuis les fichiers du dossier <code>data/</code> de son dépôt public. Ce site affiche ce même fichier, sans rien y ajouter ni retirer.</li>
+      <li><b>Une source par donnée.</b> Chaque proposition renvoie à un programme, un dépliant ou une déclaration publique ; chaque scrutin et chaque vote, à sa page officielle.</li>
+      <li><b>La dernière version publiée.</b> Le site reprend le fichier de la dernière version publiée de l'app, à chaque mise en ligne du site. Une correction apparaît ici avec la version de l'app qui la contient ; votre app installée peut être plus ancienne.</li>
+      <li>
+        <b>Une erreur ?</b> Chaque fiche a son lien « Signaler une erreur », qui ouvre un ticket pré-rempli sur le dépôt.{' '}
+        <a class="link" href={reportUrl()} rel="noopener"><span class="hl">Signaler une erreur</span></a>
+      </li>
+    </ul>
+  </section>
+
+  <section class="d-section" aria-labelledby="d-telecharger">
+    <h2 id="d-telecharger">Télécharger</h2>
+    <ul class="d-ruled d-downloads">
+      <li>
+        <a class="link d-dl" href={`${base}/donnees/dataset.json`} download><IconDownload /><span class="hl">Tout le jeu de données</span></a>
+        <span class="num">JSON, {jsonSize}, le fichier de l'app{APP_VERSION ? ` ${APP_VERSION}` : ''} tel quel</span>
+      </li>
+      {Object.entries(EXPORTS).map(([type, table]) => (
+        <li>
+          <a class="link d-dl" href={`${base}/donnees/csv/${type}.csv`} download><IconDownload /><span class="hl">{table.label}</span></a>
+          <span class="num">CSV, {plural(table.rows().length, 'ligne')}</span>
+        </li>
+      ))}
+    </ul>
+    <p class="f-text">
+      CSV encodés en UTF-8, lisibles dans Excel ou LibreOffice ; la colonne <code>ref</code> reprend la référence affichée dans l'app. Données sous licence CC BY-SA 4.0, historique complet sur{' '}
+      <a class="link" href={`${REPO_URL}/commits/main/data`} rel="noopener"><span class="hl">GitHub</span></a>.
+    </p>
+  </section>
+</DataPage>

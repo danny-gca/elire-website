@@ -104,6 +104,7 @@ const NAV = [
           <li><a href={SITE_REPO_URL} rel="noopener"><span class="hl">Code du site</span></a></li>
           <li><a href={`${REPO_URL}/blob/main/CODE_OF_CONDUCT.md`} rel="noopener"><span class="hl">Code de conduite</span></a></li>
           <li><a href={`${REPO_URL}/blob/main/CONTRIBUTING.md`} rel="noopener"><span class="hl">Contribuer</span></a></li>
+          <li><a href={`${base}/donnees/`}><span class="hl">Nos données</span></a></li>
           <li><a href={`${base}/mentions-legales`}><span class="hl">Mentions légales</span></a></li>
         </ul>
         <p class="foot-legal">Code sous licence MIT, données sous CC BY-SA 4.0.</p>
@@ -151,8 +152,9 @@ const NAV = [
         });
         links.forEach((a, i) => (i === current ? a.setAttribute('aria-current', 'true') : a.removeAttribute('aria-current')));
         const index = Math.max(current, 0);
-        if (label) label.textContent = String(index + 1).padStart(2, '0');
-        if (name) name.textContent = links[index]?.textContent?.trim() ?? '';
+        if (label) label.textContent = sections.length > 0 ? String(index + 1).padStart(2, '0') : '';
+        // Hors de l'accueil (aucune section suivie), l'indicateur garde seulement l'anneau et le retour en haut.
+        if (name) name.textContent = sections.length > 0 ? (links[index]?.textContent?.trim() ?? '') : '';
       };
       addEventListener('scroll', () => {
         if (!ticking) {
@@ -408,6 +410,10 @@ const NAV = [
         box-shadow: 0 6px 18px rgba(28, 30, 33, 0.1);
         transition: transform var(--sweep), opacity var(--sweep);
       }
+      .reading:has(.reading-name:empty) {
+        padding-left: 0;
+        grid-template-columns: 0 64px;
+      }
       .reading:not(.is-visible) {
         opacity: 0;
         transform: translateY(12px) scale(0.92);
@@ -440,6 +446,9 @@ const NAV = [
         .reading-name {
           font-size: 13px;
         }
+        .reading:has(.reading-name:empty) {
+          grid-template-columns: 0 52px;
+        }
       }
       .reading-fill {
         transition: stroke-dashoffset 120ms linear;
@@ -457,7 +466,8 @@ const NAV = [
         opacity: 0;
       }
       .reading:hover .reading-up,
-      .reading:focus-visible .reading-up {
+      .reading:focus-visible .reading-up,
+      .reading:has(.reading-name:empty) .reading-up {
         opacity: 1;
       }
     </style>

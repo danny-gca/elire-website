@@ -1,0 +1,555 @@
+/* Pages « Nos données » : le registre du cahier, des fiches réglées au filet, la référence dans la ligne meta (DESIGN.md). */
+.donnees {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: clamp(40px, 6vw, 80px) var(--gutter) clamp(64px, 9vw, 120px);
+}
+
+.d-head {
+  display: grid;
+  gap: 16px;
+}
+.d-head h1 {
+  font-size: clamp(30px, 3.6vw, 48px);
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  font-weight: 700;
+  max-width: 22ch;
+}
+.d-lede {
+  font-size: clamp(18px, 1.6vw, 21px);
+  line-height: 1.55;
+  color: var(--ink-soft);
+  max-width: 62ch;
+}
+.d-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 24px;
+  font-size: 15px;
+  color: var(--graphite);
+}
+.d-meta .link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--ink);
+}
+
+/* Lien de téléchargement : la flèche dit ce que fait le lien, le libellé reste souligné. */
+.d-dl {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  text-decoration: none;
+}
+.d-dl > .hl {
+  text-decoration: underline;
+  text-decoration-color: var(--graphite);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+.d-dl:hover > .hl,
+.d-dl:focus-visible > .hl {
+  text-decoration-color: transparent;
+}
+.d-dl .i-download {
+  flex: none;
+}
+
+/* Onglets : une page par onglet ; le lien de la page en cours garde sa bande, comme la section en cours du menu. */
+.d-tabs {
+  margin-top: 32px;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+.d-tabs ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 28px;
+}
+.d-tabs a {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  padding: 13px 0;
+  min-height: 48px;
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.d-tabs a:hover > .hl,
+.d-tabs a:focus-visible > .hl,
+.d-tabs a[aria-current='page'] > .hl {
+  background-size: 100% 100%;
+}
+.d-tabs a[aria-current='page'] {
+  box-shadow: inset 0 -2px 0 var(--ink);
+}
+.d-tab-count {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--graphite);
+}
+
+@media (max-width: 600px) {
+  .d-tabs ul {
+    gap: 0 20px;
+  }
+  .d-tabs a {
+    padding: 10px 0;
+    min-height: 44px;
+  }
+}
+
+/* Recherche : feuille posée, cachée tant que le script n'a pas pris la main. */
+.d-tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 12px 16px;
+  margin-top: 28px;
+  padding: 18px 20px;
+  background: var(--sheet);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+}
+.d-tools[hidden] {
+  display: none;
+}
+.d-field {
+  display: grid;
+  gap: 6px;
+  flex: 1 1 220px;
+  min-width: 0;
+}
+.d-field-q {
+  flex: 3 1 320px;
+}
+.d-field label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+.d-field input,
+.d-field select {
+  width: 100%;
+  min-height: 48px;
+  padding: 0 14px;
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  background-color: var(--paper);
+  color: var(--ink);
+  font: 400 17px/1.2 var(--font);
+  caret-color: var(--ink);
+}
+.d-field select {
+  appearance: none;
+  padding-right: 40px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='m4 6 4 4 4-4' fill='none' stroke='%235B6168' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 16px;
+  cursor: pointer;
+}
+.d-field input::placeholder {
+  color: var(--graphite);
+}
+.d-field input:hover,
+.d-field select:hover {
+  border-color: var(--board-edge);
+}
+.d-field input:focus-visible,
+.d-field select:focus-visible {
+  border-color: var(--ink);
+  outline-offset: 2px;
+}
+.d-count:empty {
+  display: none;
+}
+.d-count {
+  flex-basis: 100%;
+  font-size: 14px;
+  color: var(--graphite);
+}
+
+.d-body {
+  margin-top: 16px;
+}
+.d-empty {
+  display: grid;
+  justify-items: start;
+  gap: 16px;
+  padding: 32px 0;
+  border-top: 1px solid var(--rule);
+  font-size: 17px;
+  color: var(--ink-soft);
+}
+.d-empty[hidden] {
+  display: none;
+}
+
+/* Groupes (thème) : un tableau par thème. */
+.d-group {
+  padding-top: 40px;
+}
+.d-group[hidden] {
+  display: none;
+}
+.d-group > h2,
+.d-section > h2 {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 12px;
+  margin-bottom: 8px;
+  font-size: clamp(26px, 2.6vw, 34px);
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  font-weight: 700;
+}
+.d-group > h2 small {
+  font-family: var(--font);
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--graphite);
+}
+
+/* Tableau (tablette et bureau) : teintes tirées du surligneur du lecteur (en-tête, une ligne sur deux, survol), collant sous la barre. */
+.d-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+  color: var(--ink-soft);
+  border: 1px solid var(--rule);
+}
+.d-table th {
+  position: sticky;
+  top: 72px;
+  z-index: 1;
+  padding: 14px 16px 12px;
+  background: color-mix(in srgb, var(--mark) 55%, var(--sheet));
+  border-bottom: 1.5px solid var(--ink);
+  text-align: left;
+  vertical-align: bottom;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink);
+  white-space: nowrap;
+}
+.d-table td {
+  padding: 16px;
+  border-bottom: 1px solid var(--rule);
+  vertical-align: top;
+  overflow-wrap: break-word;
+  background: var(--sheet);
+}
+/* Alternance comptée sur les seules lignes visibles, pour rester juste après un filtre. */
+.d-table tbody tr:nth-child(even of :not([hidden])) td {
+  background: color-mix(in srgb, var(--mark) 16%, var(--sheet));
+}
+/* Ligne survolée ou atteinte par un lien : le surligneur du lecteur, très dilué. */
+.d-table tbody tr:target td {
+  background: color-mix(in srgb, var(--mark) 32%, var(--sheet));
+}
+@media (hover: hover) {
+  .d-table tbody tr:hover td {
+    background: color-mix(in srgb, var(--mark) 32%, var(--sheet));
+  }
+}
+.d-table .f-actions,
+.d-table .f-report,
+.d-table .f-more summary {
+  white-space: nowrap;
+}
+.d-table tr {
+  scroll-margin-top: 140px;
+}
+.d-table tr[hidden] {
+  display: none;
+}
+.t-nowrap {
+  white-space: nowrap;
+}
+.t-num {
+  text-align: right;
+}
+.d-table th.t-num {
+  text-align: right;
+}
+.t-main {
+  min-width: 16rem;
+}
+.t-title {
+  font: 600 17px/1.35 var(--font-title);
+  color: var(--ink);
+}
+.t-sub {
+  margin-top: 4px;
+  font-size: 14px;
+  color: var(--graphite);
+}
+.t-stack {
+  display: grid;
+  gap: 6px;
+  justify-items: start;
+}
+.t-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 6px;
+}
+
+.f-ref {
+  color: var(--ink);
+  font-weight: 700;
+  text-decoration: none;
+}
+/* La ligne atteinte par un lien (#P-531) : sa référence reçoit le trait du lecteur. */
+tr:target .f-ref > .hl,
+.f-ref:hover > .hl,
+.f-ref:focus-visible > .hl {
+  background-size: 100% 100%;
+}
+.f-quote {
+  margin: 6px 0 0;
+  font-size: 15px;
+  color: var(--ink);
+  max-width: 72ch;
+}
+.f-text {
+  font-size: 15px;
+  color: var(--ink-soft);
+  max-width: 72ch;
+}
+.f-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 16px;
+  font-size: 14px;
+}
+.f-actions a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+}
+.f-report {
+  color: var(--graphite);
+}
+
+/* Candidat : initiales, comme le repli de l'app ; aucune photo (pas de requête tierce). */
+.f-person {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr);
+  align-items: start;
+  gap: 12px;
+  min-width: 14rem;
+}
+.f-initials {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--rule);
+  background: var(--sheet);
+  color: var(--ink-soft);
+  font: 700 14px/1 var(--font-title);
+}
+
+/* Détail replié (contexte, votes un par un) : details natif, chevron dessiné comme la FAQ de l'accueil. */
+.f-more {
+  margin-top: 4px;
+}
+.f-more summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 36px;
+  cursor: pointer;
+  list-style: none;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+}
+.f-more summary::-webkit-details-marker {
+  display: none;
+}
+.f-more summary::after {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-right: 2px solid var(--graphite);
+  border-bottom: 2px solid var(--graphite);
+  transform: translateY(-2px) rotate(45deg);
+  transition: transform var(--sweep);
+}
+.f-more[open] summary::after {
+  transform: translateY(2px) rotate(-135deg);
+}
+.f-more summary:hover > .hl,
+.f-more summary:focus-visible > .hl {
+  background-size: 100% 100%;
+}
+.f-more > :not(summary) {
+  margin-top: 4px;
+}
+.f-votes {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.f-votes li {
+  display: grid;
+  gap: 2px;
+  padding: 8px 0;
+  border-top: 1px solid var(--rule-soft);
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+.f-votes b {
+  color: var(--ink);
+}
+
+/* Téléphone : chaque ligne redevient une fiche réglée, l'en-tête passe aux lecteurs d'écran seulement. */
+@media (max-width: 720px) {
+  .d-table thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+  .d-table,
+  .d-table tbody,
+  .d-table td {
+    display: block;
+  }
+  .d-table {
+    border: 0;
+  }
+  .d-table tr {
+    display: grid;
+    gap: 8px;
+    padding: 18px 16px 20px;
+    border: 1px solid var(--rule);
+    border-bottom: 0;
+    background: var(--sheet);
+  }
+  .d-table tbody tr:last-child {
+    border-bottom: 1px solid var(--rule);
+  }
+  .d-table tbody tr:nth-child(even of :not([hidden])) {
+    background: color-mix(in srgb, var(--mark) 16%, var(--sheet));
+  }
+  .d-table tbody tr:target {
+    background: color-mix(in srgb, var(--mark) 32%, var(--sheet));
+  }
+  .d-table td,
+  .d-table tbody tr:nth-child(even of :not([hidden])) td,
+  .d-table tbody tr:hover td,
+  .d-table tbody tr:target td {
+    padding: 0;
+    border: 0;
+    background: none;
+  }
+  .d-table td[data-label]::before {
+    content: attr(data-label) ' : ';
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .t-num {
+    text-align: left;
+  }
+  .t-main,
+  .f-person {
+    min-width: 0;
+  }
+  .f-actions a {
+    min-height: 44px;
+  }
+}
+
+/* Vue d'ensemble : chiffres en rangée réglée, liens vers chaque onglet. */
+.d-section {
+  padding-top: 48px;
+  display: grid;
+  gap: 16px;
+}
+.d-facts {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  border-top: 1px solid var(--rule);
+}
+@media (max-width: 1080px) {
+  .d-facts {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@media (max-width: 480px) {
+  .d-facts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+.d-facts a {
+  display: grid;
+  gap: 2px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--rule);
+  text-decoration: none;
+  color: var(--ink-soft);
+  font-size: 15px;
+}
+.d-facts b {
+  font: 700 clamp(26px, 2.6vw, 34px) / 1.15 var(--font-title);
+  color: var(--ink);
+}
+.d-facts a:hover .hl,
+.d-facts a:focus-visible .hl {
+  background-size: 100% 100%;
+}
+.d-ruled {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-width: 72ch;
+  border-top: 1px solid var(--rule);
+}
+.d-ruled li {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--rule);
+  color: var(--ink-soft);
+}
+.d-ruled b {
+  color: var(--ink);
+}
+.d-downloads li {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 4px 24px;
+  padding: 6px 0;
+}
+.d-downloads a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+.d-downloads li > span {
+  font-size: 14px;
+  color: var(--graphite);
+}
