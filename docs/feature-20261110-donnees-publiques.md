@@ -39,7 +39,7 @@ src/data/dataset.json  ── actions/checkout ──> build : lit dataset.json
                                                pages /donnees/*
 ```
 
-- **Déclencheurs du déploiement** : push sur `main` du site, `workflow_dispatch`, et `schedule` quotidien (récupère les données fusionnées dans l'app depuis la veille). Pas de `repository_dispatch` : il demanderait un workflow et un PAT dans l'app.
+- **Déclencheurs du déploiement** : push sur `main` du site et `workflow_dispatch`, rien d'autre. Les données sont relues à chaque déploiement du site (pas de build planifié, décision du 2026-11-10).
 - **Lecture locale, pas `raw.githubusercontent.com`** : son cache CDN peut servir l'ancienne version pendant quelques minutes.
 - **URL publique** : `https://danny-gca.github.io/elire-website/donnees/`.
 - **Données** : `metadata` (`generatedAt`, compteurs), `partis` (26), `candidats` (27), `thematiques` (12), `propositions` (191), `lois` (47, votes inclus), `enjeux` (16), `glossaire` (48). `mots` et `sujets` restent internes à l'app.
@@ -51,7 +51,7 @@ src/data/dataset.json  ── actions/checkout ──> build : lit dataset.json
 | `scripts/fetch-dataset.mjs` (nouveau) | Avant `astro build` / `astro dev` : copie `src/data/dataset.json` depuis `ELIRE_APP_DIR` (défaut `../elire-app`), vérifie `metadata.generatedAt` et la présence des tableaux, écrit `src/data/dataset.json` (gitignoré). Fichier absent ou invalide = build en échec (le site en ligne reste l'ancien). |
 | `package.json` | `prebuild` / `predev` -> `fetch-dataset`. |
 | `.gitignore` | `src/data/dataset.json`. |
-| [.github/workflows/deploy.yml](../.github/workflows/deploy.yml) | `schedule` quotidien en plus. Étape `actions/checkout` de `danny-gca/elire-app` dans `elire-app/` avant le build, `ELIRE_APP_DIR=elire-app`. |
+| [.github/workflows/deploy.yml](../.github/workflows/deploy.yml) | Étape `actions/checkout` de `danny-gca/elire-app` dans `elire-app/` avant le build, `ELIRE_APP_DIR=elire-app`. |
 | [.github/workflows/ci.yml](../.github/workflows/ci.yml) | Même étape `actions/checkout` d'elire-app (le build en a besoin). |
 | `src/pages/donnees/dataset.json.ts` (nouveau) | Endpoint statique : le dataset tel quel. |
 | `src/pages/donnees/csv/[type].csv.ts` (nouveau) | Un CSV par type (candidats, partis, propositions, lois, votes, enjeux, glossaire), UTF-8 avec BOM pour Excel, une colonne `ref`. Test : guillemets, virgules et retours à la ligne échappés. |
@@ -101,4 +101,4 @@ Contexte : `PRODUCT.md`, `DESIGN.md`, `docs/reference/direction-app.md`, directi
 ## Doc
 
 - `AGENTS.md` (« Two pages only » devient faux), `README.md` (d'où viennent les données, délai de publication, relancer avec `workflow_dispatch`, `ELIRE_APP_DIR` en local), `PRODUCT.md`, `docs/plan.md`.
-- Délai à annoncer : une donnée fusionnée dans `main` de l'app apparaît sur le site au plus tard le lendemain (ou tout de suite via `workflow_dispatch`).
+- Pas de délai à annoncer : les données sont celles de `main` de l'app au dernier déploiement du site (date affichée sur chaque page).

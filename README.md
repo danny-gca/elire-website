@@ -29,7 +29,7 @@ Surligneur : 4 couleurs (jaune, rose, vert, bleu), comme dans l'app. Le choix du
 - `npm install` (Node 22), puis `npm run dev` : http://localhost:4321/elire-website/
 - `npm test` : tests unitaires (échappement CSV).
 - `npm run check` : vérification Astro et build statique dans `dist/`.
-- Déploiement : `.github/workflows/deploy.yml` publie sur GitHub Pages à chaque push sur `main`, chaque jour à 4 h 17 UTC (données fusionnées dans `main` de l'app depuis la veille) et à la demande (Actions > Déployer le site > Run workflow). Une donnée corrigée dans l'app apparaît donc sur le site au plus tard le lendemain. Le workflow récupère `src/data/dataset.json` de `danny-gca/elire-app` (dépôt public, sans jeton). GitHub suspend les tâches planifiées après 60 jours sans activité sur le dépôt : relancer à la main si besoin.
+- Déploiement : `.github/workflows/deploy.yml` publie sur GitHub Pages à chaque push sur `main` et à la demande (Actions > Déployer le site > Run workflow). Il récupère alors `src/data/dataset.json` de `main` de `danny-gca/elire-app` (dépôt public, sans jeton) : les données du site sont celles du dernier déploiement.
 - Stack : Astro 7 (version figée), aucune dépendance côté visiteur.
 
 ## Licence

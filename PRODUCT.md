@@ -30,7 +30,7 @@ Site vitrine de l'app élire : expliquer en une page ce qu'est l'app, comment el
 - Pages : one page de présentation, Mentions légales et Nos données. La méthode de calcul et la politique de correction sont dans l'app.
 - Le formulaire crée un ticket GitHub sur `danny-gca/elire-app` via un Cloudflare Worker (label `via-formulaire`) ; aucun compte demandé, e-mail facultatif.
 - Aucune requête tierce côté visiteur (polices libres auto-hébergées, pas de CDN, pas d'analytics, pas de cookie), thème clair uniquement.
-- Données : le site lit au build le fichier compilé de l'app (`elire-app/src/data/dataset.json`) et se republie chaque jour ; ce qu'il affiche est ce que l'app embarque, à un jour près.
+- Données : le site lit au build le fichier compilé de l'app (`elire-app/src/data/dataset.json`) à chaque déploiement du site ; la date des données est affichée sur chaque page.
 - Les chiffres et textes viennent de l'app, comptés dans ce fichier (pas de chiffre écrit à la main)  : questions communes (une note qui compte pour chaque candidat ayant pris position, à l'inverse pour qui propose le contraire), scrutins ; 4 niveaux de vote sur les propositions (Impossible, Contre, Pour, Parfait) et « Je ne sais pas », non compté, 3 sur les scrutins (Contre, Abstention, Pour : +2 comme le candidat, −2 à l'inverse, 0 si le candidat s'est abstenu, rien si le lecteur s'abstient, moitié pour un vote de groupe, rien pour un candidat qui ne siégeait pas ; les scrutins jamais plus de la moitié du score ; égalités dans un ordre tiré au hasard).
 - Domaine : `danny-gca.github.io/elire-website` pour l'instant.
 

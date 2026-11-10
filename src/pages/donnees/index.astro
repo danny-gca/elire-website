@@ -35,7 +35,7 @@ const jsonSize = kilo(new TextEncoder().encode(JSON.stringify(dataset)).length);
     <ul class="d-ruled">
       <li><b>Un seul fichier.</b> L'app embarque <code>dataset.json</code>, compilé depuis les fichiers du dossier <code>data/</code> de son dépôt public. Ce site affiche ce même fichier, sans rien y ajouter ni retirer.</li>
       <li><b>Une source par donnée.</b> Chaque proposition renvoie à un programme, un dépliant ou une déclaration publique ; chaque scrutin et chaque vote, à sa page officielle.</li>
-      <li><b>Un jour de délai.</b> Le site relit le fichier du dépôt chaque jour : une correction y apparaît au plus tard le lendemain, et dans l'app à sa prochaine version.</li>
+      <li><b>Mis à jour à chaque publication du site.</b> Le fichier est relu à chaque mise en ligne du site ; la date des données est indiquée en haut de chaque page.</li>
       <li>
         <b>Une erreur ?</b> Chaque fiche a son lien « Signaler une erreur », qui ouvre un ticket pré-rempli sur le dépôt.{' '}
         <a class="link" href={reportUrl()} rel="noopener"><span class="hl">Signaler une erreur</span></a>
