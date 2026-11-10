@@ -1,3 +1,5 @@
+import dataset from './data/dataset.json';
+
 // Liens et chiffres affichés : à tenir à jour avec le dépôt de l'app.
 export const APP_URL = 'https://danny-gca.github.io/elire-app/';
 export const REPO_URL = 'https://github.com/danny-gca/elire-app';
@@ -14,9 +16,17 @@ export const FUNDING = [
   { label: 'Buy Me a Coffee', url: 'https://buymeacoffee.com/danny_gca' },
 ];
 
-// Chiffres du jeu de données (elire-app, dataset et vérification du 2026-10-29).
-export const COUNTS = { candidats: 25, propositions: 196, enjeux: 16, scrutins: 47, themes: 12 };
-export const DATA_DATE = '29 octobre 2026';
+// Chiffres du jeu de données : lus dans le fichier de l'app copié au build (scripts/fetch-dataset.mjs).
+const MOIS = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
+export const COUNTS = {
+  candidats: dataset.candidats.length,
+  propositions: dataset.propositions.length,
+  enjeux: dataset.enjeux.length,
+  scrutins: dataset.lois.length,
+  themes: dataset.thematiques.length,
+};
+const generated = new Date(dataset.metadata.generatedAt);
+export const DATA_DATE = `${generated.getUTCDate()} ${MOIS[generated.getUTCMonth()]} ${generated.getUTCFullYear()}`;
 
 // Surligneurs du lecteur, mêmes couleurs que l'app ; aucune ne correspond à un parti.
 export const MARKERS = [

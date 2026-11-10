@@ -203,7 +203,10 @@ const UNSURE = { value: 0, label: 'Je ne sais pas', sign: '', color: 'var(--vote
         <span><b>{COUNTS.scrutins}</b> scrutins réels</span>
         <span><b>{COUNTS.themes}</b> thèmes</span>
       </p>
-      <p class="fine">Données vérifiées le {DATA_DATE} : chaque proposition a été relue avec sa source.</p>
+      <p class="fine">
+        Données vérifiées le {DATA_DATE} : chaque proposition a été relue avec sa source.
+        <a class="link" href={`${base}/donnees/`}><span class="hl">Toutes nos données sont là</span></a>
+      </p>
     </div>
   </section>
 

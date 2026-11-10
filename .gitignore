@@ -17,3 +17,6 @@ dist/
 .impeccable/review/
 .impeccable/build/
 .impeccable/questions/
+
+# données copiées depuis elire-app au build (scripts/fetch-dataset.mjs)
+src/data/dataset.json

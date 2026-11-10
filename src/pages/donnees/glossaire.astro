@@ -1,0 +1,30 @@
+---
+import DataPage from '../../components/DataPage.astro';
+import { glossaire, reportUrl, slug } from '../../lib/donnees';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<DataPage
+  title="Glossaire · Nos données · élire"
+  description="Les sigles employés dans les données de l'app, avec leur forme développée, dans l'ordre alphabétique."
+  active="glossaire"
+  heading={['Le', 'glossaire']}
+  tone="jaune"
+  csv={[{ href: `${base}/donnees/csv/glossaire.csv`, label: 'Télécharger en CSV' }]}
+  search={{ one: 'sigle', many: 'sigles' }}
+>
+  <dl class="d-terms">
+    {glossaire.map((g) => (
+      <div class="fiche" id={slug(g.sigle)} data-item>
+        <dt>
+          <a class="f-ref" href={`#${slug(g.sigle)}`}><span class="hl">{g.sigle}</span></a> <span>{g.forme}</span>
+        </dt>
+        {g.definition && <dd>{g.definition}</dd>}
+        <dd class="f-actions">
+          <a class="link f-report" href={reportUrl(g.sigle, g.forme)} rel="noopener"><span class="hl">Signaler une erreur</span></a>
+        </dd>
+      </div>
+    ))}
+  </dl>
+</DataPage>

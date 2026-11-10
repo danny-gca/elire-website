@@ -1,0 +1,146 @@
+---
+// Gabarit des pages « Nos données » : titre, onglets (une page statique par onglet), recherche et filtres en amélioration progressive.
+import Base from '../layouts/Base.astro';
+import '../styles/donnees.css';
+import { candidats, formatDate, GENERATED_AT, ONGLETS, thematiques, type OngletId } from '../lib/donnees';
+
+interface Props {
+  title: string;
+  description: string;
+  active: OngletId | 'index';
+  /** Titre en trois morceaux : le mot du milieu reçoit la marque posée. */
+  heading: [string, string, string?];
+  tone: 'jaune' | 'rose' | 'vert' | 'bleu';
+  csv?: { href: string; label: string }[];
+  /** Barre de recherche : noms singulier / pluriel, filtres proposés. */
+  search?: { one: string; many: string; candidat?: boolean; theme?: boolean };
+}
+
+const { title, description, active, heading, tone, csv = [], search } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const onglet = ONGLETS.find((o) => o.id === active);
+---
+
+<Base title={title} description={description}>
+  <div class="donnees">
+    <header class="d-head">
+      <h1>{heading[0]} <span class="mark" data-tone={tone}>{heading[1]}</span>{heading[2] ?? ''}</h1>
+      <p class="d-lede">{description}</p>
+      <p class="d-meta num">
+        {onglet && <span>{onglet.count} {onglet.count > 1 ? search?.many ?? '' : search?.one ?? ''}</span>}
+        <span>Données de l'app du <time datetime={GENERATED_AT}>{formatDate(GENERATED_AT, true)}</time></span>
+        {csv.map((file) => (
+          <a class="link" href={file.href} download><span class="hl">{file.label}</span></a>
+        ))}
+      </p>
+    </header>
+
+    <nav class="d-tabs" aria-label="Nos données">
+      <ul>
+        <li>
+          <a href={`${base}/donnees/`} aria-current={active === 'index' ? 'page' : undefined}><span class="hl">Vue d'ensemble</span></a>
+        </li>
+        {ONGLETS.map((o) => (
+          <li>
+            <a href={`${base}/donnees/${o.id}/`} aria-current={active === o.id ? 'page' : undefined}>
+              <span class="hl">{o.label}</span> <span class="d-tab-count num">{o.count}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    {search && (
+      <search class="d-tools" data-tools hidden data-one={search.one} data-many={search.many}>
+        <div class="d-field d-field-q">
+          <label for="d-q">Rechercher</label>
+          <input id="d-q" type="search" name="q" autocomplete="off" spellcheck="false" placeholder="Un mot, une référence, un nom" data-q />
+        </div>
+        {search.candidat && (
+          <div class="d-field">
+            <label for="d-candidat">Candidat</label>
+            <select id="d-candidat" name="candidat" data-filter="candidat">
+              <option value="">Tous</option>
+              {candidats.map((c) => <option value={c.id}>{c.nom}</option>)}
+            </select>
+          </div>
+        )}
+        {search.theme && (
+          <div class="d-field">
+            <label for="d-theme">Thème</label>
+            <select id="d-theme" name="theme" data-filter="theme">
+              <option value="">Tous</option>
+              {thematiques.map((t) => <option value={t.id}>{t.titre}</option>)}
+            </select>
+          </div>
+        )}
+        <p class="d-count num" role="status" aria-live="polite" data-count></p>
+      </search>
+    )}
+
+    <div class="d-body">
+      <slot />
+      {search && (
+        <div class="d-empty" data-empty hidden>
+          <p>Aucun résultat pour cette recherche.</p>
+          <button class="btn btn-quiet" type="button" data-reset>Tout afficher</button>
+        </div>
+      )}
+    </div>
+  </div>
+</Base>
+
+<script>
+  // Recherche et filtres : sans JavaScript, tout reste listé ; l'état suit l'adresse (?q=&candidat=&theme=) pour être partagé.
+  const tools = document.querySelector<HTMLElement>('[data-tools]');
+  if (tools) {
+    const normalize = (t: string) => t.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+    const items = [...document.querySelectorAll<HTMLElement>('[data-item]')].map((el) => ({ el, text: normalize(el.textContent ?? '') }));
+    const groups = [...document.querySelectorAll<HTMLElement>('[data-group]')];
+    const q = tools.querySelector<HTMLInputElement>('[data-q]');
+    const filters = [...tools.querySelectorAll<HTMLSelectElement>('[data-filter]')];
+    const count = tools.querySelector<HTMLElement>('[data-count]');
+    const empty = document.querySelector<HTMLElement>('[data-empty]');
+    const { one = '', many = '' } = tools.dataset;
+
+    const params = new URLSearchParams(location.search);
+    if (q) q.value = params.get('q') ?? '';
+    filters.forEach((s) => {
+      const v = params.get(s.name) ?? '';
+      if ([...s.options].some((o) => o.value === v)) s.value = v;
+    });
+
+    const apply = () => {
+      const words = normalize(q?.value ?? '').split(/\s+/).filter(Boolean);
+      let shown = 0;
+      for (const { el, text } of items) {
+        const ok =
+          words.every((w) => text.includes(w)) &&
+          filters.every((s) => !s.value || (el.dataset[s.dataset.filter ?? ''] ?? '').split(' ').includes(s.value));
+        el.hidden = !ok;
+        if (ok) shown++;
+      }
+      groups.forEach((g) => (g.hidden = !g.querySelector('[data-item]:not([hidden])')));
+      const filtered = words.length > 0 || filters.some((s) => s.value);
+      if (count) count.textContent = filtered ? `${shown} ${shown > 1 ? many : one} sur ${items.length}` : '';
+      if (empty) empty.hidden = shown > 0;
+
+      const next = new URLSearchParams();
+      if (q?.value.trim()) next.set('q', q.value.trim());
+      filters.forEach((s) => s.value && next.set(s.name, s.value));
+      const query = next.toString();
+      history.replaceState(null, '', `${location.pathname}${query ? `?${query}` : ''}${location.hash}`);
+    };
+
+    q?.addEventListener('input', apply);
+    filters.forEach((s) => s.addEventListener('change', apply));
+    document.querySelector('[data-reset]')?.addEventListener('click', () => {
+      if (q) q.value = '';
+      filters.forEach((s) => (s.value = ''));
+      apply();
+      q?.focus();
+    });
+    tools.hidden = false;
+    apply();
+  }
+</script>

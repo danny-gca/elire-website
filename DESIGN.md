@@ -396,13 +396,24 @@ Aucune note n'est choisie à la place du visiteur : les quatre niveaux sont des 
 
 `src/components/LegalPage.astro` : titre `headline` dont le dernier mot est surligné en jaune, chapô `lede`, puis sections à filet supérieur, intertitre `title` (21px) et paragraphes de 66ch au plus. Le texte vient de `src/data/legal.ts`, copie de celui de l'app. Lien en pied de page.
 
+### Nos données (`/donnees/`)
+
+`src/components/DataPage.astro` et `src/styles/donnees.css`, mode Read avec une recherche en Operate. Le registre du cahier : rien de neuf, les fiches sont des listes réglées.
+- **En-tête :** titre `headline` avec un mot posé, chapô `lede`, ligne meta en 15 graphite (compteur, date des données, liens de téléchargement en lien de lecture).
+- **Onglets :** une page statique par onglet, liens en 15 semi-gras entre deux filets, compteur en 13 graphite tabulaire ; l'onglet en cours garde la bande du lecteur et un trait d'encre de 2px dessous (comme la section en cours du menu). Ils passent à la ligne sur mobile, sans défilement caché.
+- **Recherche :** feuille blanche à filet (14px) : champ et listes de 48px sur papier, bordure filet, encre au focus, chevron graphite dessiné ; caché sans JavaScript (tout reste listé). Le compteur « 12 propositions sur 191 » n'apparaît qu'une fois filtré, annoncé en `role=status`. Aucun résultat : phrase et bouton calme « Tout afficher ».
+- **Fiche :** filet haut, 24px dessus, 28px dessous, en deux colonnes de 34rem au-dessus de 1100px environ. Ligne meta 13 graphite avec la référence en encre grasse (ancre de la fiche ; elle reçoit la bande au survol ou quand la fiche est atteinte par `#P-531`), titre `title` (21), auteur en 15 semi-gras, citation en 17 encre, contexte en 15 encre douce, puis « Source » et « Signaler une erreur » (graphite) en liens de lecture de 44px.
+- **Lignes internes :** filets légers, libellé semi-gras de 7.5rem puis valeur ; empilés sous 480px. Le détail des votes est un `details` natif au chevron de la FAQ.
+- **Groupes :** les propositions sont rangées par thème sous un titre `headline-value` dans l'accent du thème, avec le compte en 15 graphite.
+- **Positions :** Pour, Contre, Abstention en toutes lettres et en encre neutre (The Scale Is Yours Rule) ; candidats dans l'ordre alphabétique du nom dans chaque position.
+
 ### Hérité de l'app
 La feuille de proposition, la rangée de vote et le panneau électoral de l'app restent la référence des mini-écrans : mêmes proportions, mêmes couleurs, mêmes règles d'égalité, à l'échelle réduite.
 
 ### Named Rules
 **The Highlighter Sweep Rule.** Le surligneur bouge toujours de la même façon : de gauche à droite, en 280ms (`cubic-bezier(0.2, 0.7, 0.2, 1)`), au survol ou au focus. L'accroche « qui parle » est la seule bande qui balaie d'elle-même, une fois, à l'arrivée (900ms après 250ms). Le mot clé des titres est posé, immobile. Tout mouvement suit « Réduire les animations ».
 
-**The No Face Rule.** Le site ne montre aucun nom, visage ou parti de candidat : visages en disques vides, noms en barres, scores fictifs. La proposition d'exemple et l'avis affiché sont tirés au hasard à chaque visite.
+**The No Face Rule.** Le site ne montre aucun nom, visage ou parti de candidat : visages en disques vides, noms en barres, scores fictifs. La proposition d'exemple et l'avis affiché sont tirés au hasard à chaque visite. Seule exception, « Nos données » : noms et partis sont la donnée elle-même ; ils y sont tous traités pareil (ordre alphabétique du nom de famille, initiales en disque filet léger de 48px, jamais de photo ni de couleur de parti).
 
 **The Identical Furniture Rule.** Tous les panneaux du mini Classement sont identiques ; deux scores égaux partagent le même rang.
 
@@ -424,6 +435,6 @@ La feuille de proposition, la rangée de vote et le panneau électoral de l'app 
 - **Don't** ajouter une colonne de marge hors de la feuille de l'app.
 - **Don't** poser de surtitre en capitales au-dessus d'un titre.
 - **Don't** utiliser de puces : les listes sont réglées.
-- **Don't** montrer un nom, un visage ou un parti de candidat sur le site.
+- **Don't** montrer un nom, un visage ou un parti de candidat sur le site, hors des fiches de « Nos données ».
 - **Don't** utiliser de crème, de violet ou de dégradé décoratif, ni d'ombre sur une feuille posée.
 - **Don't** évoquer un site gouvernemental, une appli gamifiée ou des cartes à swiper.

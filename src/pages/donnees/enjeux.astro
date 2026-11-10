@@ -1,0 +1,52 @@
+---
+import DataPage from '../../components/DataPage.astro';
+import { byCandidat, candidatById, enjeux, propositionById, reportUrl, THEME_ACCENTS, themeById, type Proposition } from '../../lib/donnees';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const positionsOf = (positions: { propositionId: string; sens: 'pour' | 'contre' }[]) =>
+  positions
+    .map((pos) => ({ sens: pos.sens, prop: propositionById.get(pos.propositionId) }))
+    .filter((x): x is { sens: 'pour' | 'contre'; prop: Proposition } => x.prop !== undefined)
+    .sort((a, b) => byCandidat(a.prop, b.prop));
+---
+
+<DataPage
+  title="Questions communes · Nos données · élire"
+  description="Les questions sur lesquelles plusieurs candidats ont pris position. Une seule note du lecteur compte pour chacun : dans le même sens pour qui propose la mesure, à l'inverse pour qui propose le contraire."
+  active="enjeux"
+  heading={['Les questions', 'communes']}
+  tone="rose"
+  csv={[{ href: `${base}/donnees/csv/enjeux.csv`, label: 'Télécharger en CSV' }]}
+  search={{ one: 'question', many: 'questions', candidat: true, theme: true }}
+>
+  <ul class="d-list">
+    {enjeux.map((e) => {
+      const positions = positionsOf(e.positions);
+      return (
+        <li class="fiche" id={e.ref} data-item data-candidat={positions.map((p) => p.prop.candidatId).join(' ')} data-theme={e.thematiqueId}>
+          <p class="f-meta num">
+            <a class="f-ref" href={`#${e.ref}`}><span class="hl">{e.ref}</span></a> ·{' '}
+            <span style={`color:${THEME_ACCENTS[e.thematiqueId] ?? 'inherit'}`}>{themeById.get(e.thematiqueId)?.titre}</span>
+          </p>
+          <h3>{e.question}</h3>
+          <p class="f-text">{e.enjeu}</p>
+          <ul class="f-rows">
+            {positions.map(({ sens, prop }) => (
+              <li>
+                <span class="f-label">{candidatById.get(prop.candidatId)?.nom}</span>
+                <span>
+                  <a class="link num" href={`${base}/donnees/propositions/#${prop.ref}`}><span class="hl">{prop.ref}</span></a>
+                  {sens === 'contre' ? ' (propose le contraire) ' : ' '}
+                  {prop.titre}
+                </span>
+              </li>
+            ))}
+          </ul>
+          <p class="f-actions">
+            <a class="link f-report" href={reportUrl(e.ref, e.question)} rel="noopener"><span class="hl">Signaler une erreur</span></a>
+          </p>
+        </li>
+      );
+    })}
+  </ul>
+</DataPage>

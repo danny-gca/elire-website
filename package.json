@@ -3,10 +3,15 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "fetch-dataset": "node scripts/fetch-dataset.mjs",
+    "predev": "npm run fetch-dataset",
     "dev": "astro dev",
+    "prebuild": "npm run fetch-dataset",
     "build": "astro build",
     "preview": "astro preview",
-    "check": "astro check && astro build"
+    "precheck": "npm run fetch-dataset",
+    "check": "astro check && astro build",
+    "test": "node --test \"src/**/*.test.mjs\""
   },
   "dependencies": {
     "astro": "7.3.8"

@@ -1,0 +1,106 @@
+---
+import DataPage from '../../components/DataPage.astro';
+import {
+  byCandidat,
+  candidatById,
+  CHAMBRE_LABELS,
+  formatDate,
+  lois,
+  NATURE_LABELS,
+  plural,
+  POSITION_LABELS,
+  reportUrl,
+  STATUT_LABELS,
+  THEME_ACCENTS,
+  themeById,
+  TYPE_VOTE_LABELS,
+  type Vote,
+} from '../../lib/donnees';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const POSITIONS: Vote['position'][] = ['pour', 'contre', 'abstention'];
+// Votes rangés par position, candidats dans l'ordre alphabétique.
+const votesOf = (votes: Record<string, Vote>) =>
+  Object.entries(votes)
+    .map(([candidatId, vote]) => ({ candidatId, vote, nom: candidatById.get(candidatId)?.nom ?? candidatId }))
+    .sort(byCandidat);
+---
+
+<DataPage
+  title="Scrutins · Nos données · élire"
+  description="Les scrutins du Parlement repris dans l'app, du plus récent au plus ancien, avec le vote de chaque candidat qui siégeait et sa source officielle."
+  active="scrutins"
+  heading={['Les', 'scrutins']}
+  tone="vert"
+  csv={[
+    { href: `${base}/donnees/csv/lois.csv`, label: 'Scrutins en CSV' },
+    { href: `${base}/donnees/csv/votes.csv`, label: 'Votes en CSV' },
+  ]}
+  search={{ one: 'scrutin', many: 'scrutins', candidat: true, theme: true }}
+>
+  <ul class="d-list">
+    {lois.map((l) => {
+      const votes = votesOf(l.votes);
+      return (
+        <li class="fiche" id={l.ref} data-item data-candidat={votes.map((v) => v.candidatId).join(' ')} data-theme={l.thematiqueId}>
+          <p class="f-meta num">
+            <a class="f-ref" href={`#${l.ref}`}><span class="hl">{l.ref}</span></a> ·{' '}
+            <span style={`color:${THEME_ACCENTS[l.thematiqueId] ?? 'inherit'}`}>{themeById.get(l.thematiqueId)?.titre}</span> ·{' '}
+            {CHAMBRE_LABELS[l.chambre] ?? l.chambre} · {formatDate(l.dateVote)}
+          </p>
+          <h3>{l.question}</h3>
+          <p class="f-quote">{l.enjeu}</p>
+          <p class="f-text">
+            {NATURE_LABELS[l.nature] ?? l.nature}, <b>{(STATUT_LABELS[l.statut] ?? l.statut).toLowerCase()}</b> : {l.titre}
+          </p>
+          <p class="f-text">{l.resume}</p>
+          {votes.length > 0 ? (
+            <>
+              <dl class="f-rows">
+                {POSITIONS.map((position) => {
+                  const list = votes.filter((v) => v.vote.position === position);
+                  return (
+                    list.length > 0 && (
+                      <div>
+                        <dt class="num">
+                          {POSITION_LABELS[position]} ({list.length})
+                        </dt>
+                        <dd>{list.map((v) => v.nom).join(', ')}</dd>
+                      </div>
+                    )
+                  );
+                })}
+              </dl>
+              <details class="f-more">
+                <summary>
+                  <span class="hl">Le détail des {plural(votes.length, 'vote')}</span>
+                </summary>
+                <ul class="f-votes">
+                  {votes.map(({ candidatId, vote, nom }) => (
+                    <li>
+                      <span>
+                        <b>{nom}</b> : {POSITION_LABELS[vote.position]}, {TYPE_VOTE_LABELS[vote.typeVote].toLowerCase()}
+                        {vote.groupe && <> {vote.groupe}</>}
+                      </span>
+                      {vote.explication && <span>{vote.explication}</span>}
+                      <span>
+                        <a class="link" href={`${base}/donnees/candidats/#${candidatId}`}><span class="hl">Fiche</span></a> ·{' '}
+                        <a class="link" href={vote.sourceUrl} rel="noopener"><span class="hl">Source du vote</span></a>
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </details>
+            </>
+          ) : (
+            <p class="f-text">Aucun candidat suivi ne siégeait lors de ce vote.</p>
+          )}
+          <p class="f-actions">
+            <a class="link" href={l.sourceOfficielleUrl} rel="noopener"><span class="hl">Source officielle</span></a>
+            <a class="link f-report" href={reportUrl(l.ref, l.titre)} rel="noopener"><span class="hl">Signaler une erreur</span></a>
+          </p>
+        </li>
+      );
+    })}
+  </ul>
+</DataPage>
