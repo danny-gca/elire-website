@@ -24,16 +24,29 @@ jobs:
         with:
           node-version: 22
           cache: npm
-      # Le site affiche le fichier compilé de l'app (scripts/fetch-dataset.mjs) : dépôt public, sans jeton.
+      # Le site affiche le fichier compilé de la dernière release de l'app, pas de main (scripts/fetch-dataset.mjs).
+      - id: release
+        run: |
+          tag=$(gh release view --repo danny-gca/elire-app --json tagName --jq .tagName)
+          test -n "$tag"
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+        env:
+          GH_TOKEN: ${{ github.token }}
       - uses: actions/checkout@v7
         with:
           repository: danny-gca/elire-app
+          ref: ${{ steps.release.outputs.tag }}
           path: elire-app
           sparse-checkout: src/data/dataset.json
           sparse-checkout-cone-mode: false
           persist-credentials: false
       - run: npm ci
-      - run: npm test
       - run: npm run check
         env:
           ELIRE_APP_DIR: elire-app
+          ELIRE_APP_VERSION: ${{ steps.release.outputs.tag }}
+      # Tests unitaires puis tests du site construit (CSV, onglets, ancres, chiffres, aucune requête tierce).
+      - run: npm test
+        env:
+          ELIRE_APP_DIR: elire-app
+          ELIRE_APP_VERSION: ${{ steps.release.outputs.tag }}

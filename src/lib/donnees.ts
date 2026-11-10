@@ -1,6 +1,10 @@
 // Données de l'app (src/data/dataset.json, copié au build par scripts/fetch-dataset.mjs) et libellés repris de elire-app/src/lib/format.ts.
 import raw from '../data/dataset.json';
+import release from '../data/app-release.json';
 import { REPO_URL } from '../config';
+import { buildReportUrl, compareFamilyName, compareFr, dataOrigin } from './format';
+
+export { candidatureText, formatDate, normalize, plural, programmeText, slug } from './format';
 
 export interface Parti {
   id: string;
@@ -88,41 +92,10 @@ export interface Dataset {
 
 export const dataset = raw as unknown as Dataset;
 
-const MOIS = ['janv.', 'févr.', 'mars', 'avr.', 'mai', 'juin', 'juil.', 'août', 'sept.', 'oct.', 'nov.', 'déc.'];
-const MOIS_LONGS = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
-
-export function formatDate(isoDate: string, long = false): string {
-  const [year, month, day] = isoDate.slice(0, 10).split('-').map(Number);
-  if (!year || !month || !day) {
-    return isoDate;
-  }
-  return `${day} ${(long ? MOIS_LONGS : MOIS)[month - 1]} ${year}`;
-}
-
 export const GENERATED_AT = dataset.metadata.generatedAt;
-
-export function candidatureText({ statut, date }: Candidat['candidature']): string {
-  const jour = formatDate(date);
-  switch (statut) {
-    case 'officielle':
-      return `Candidature officielle, liste du Conseil constitutionnel du ${jour}`;
-    case 'designee':
-      return `Candidature désignée par son parti le ${jour}`;
-    case 'sous_condition':
-      return `Candidature annoncée sous condition le ${jour}`;
-    case 'pressentie':
-      return `Candidature pressentie, pas encore annoncée (source du ${jour})`;
-    default:
-      return `Candidature annoncée le ${jour}`;
-  }
-}
-
-export function programmeText({ statut, date }: Candidat['programme']): string {
-  if (statut === 'aucun') {
-    return 'Pas de programme 2027 publié : mesures tirées d’un programme précédent ou de prises de position.';
-  }
-  return `Programme 2027 ${statut === 'complet' ? 'complet' : 'partiel (premières mesures)'}${date ? `, publié le ${formatDate(date)}` : ''}`;
-}
+/** Version de l'app dont viennent les données (dernière release en CI), null pour une copie locale. */
+export const APP_VERSION: string | null = release.version;
+export const DATA_ORIGIN = dataOrigin(APP_VERSION, GENERATED_AT);
 
 export const CHAMBRE_LABELS: Record<string, string> = {
   assemblee_nationale: 'Assemblée nationale',
@@ -162,29 +135,12 @@ export const THEME_ACCENTS: Record<string, string> = {
   securite: '#5C5047',
 };
 
-export function plural(count: number, singular: string, pluralForm = `${singular}s`): string {
-  return `${count} ${count > 1 ? pluralForm : singular}`;
-}
-
-/** Comparaison insensible à la casse et aux accents (même règle que la recherche de l'app). */
-export function normalize(text: string): string {
-  return text.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
-}
-
-export function slug(text: string): string {
-  return normalize(text).replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-}
-
-/** Nom de famille d'abord, pour un ordre alphabétique qui ne favorise personne. */
-const familyName = (nom: string) => nom.split(' ').slice(1).join(' ') || nom;
-const fr = (a: string, b: string) => a.localeCompare(b, 'fr', { sensitivity: 'base' });
-
-export const candidats = [...dataset.candidats].sort((a, b) => fr(familyName(a.nom), familyName(b.nom)));
-export const partis = [...dataset.partis].sort((a, b) => fr(a.nom, b.nom));
-export const thematiques = [...dataset.thematiques].sort((a, b) => fr(a.titre, b.titre));
-export const glossaire = [...dataset.glossaire].sort((a, b) => fr(a.sigle, b.sigle));
-export const lois = [...dataset.lois].sort((a, b) => b.dateVote.localeCompare(a.dateVote) || fr(b.ref, a.ref));
-export const enjeux = [...dataset.enjeux].sort((a, b) => fr(a.ref, b.ref));
+export const candidats = [...dataset.candidats].sort((a, b) => compareFamilyName(a.nom, b.nom));
+export const partis = [...dataset.partis].sort((a, b) => compareFr(a.nom, b.nom));
+export const thematiques = [...dataset.thematiques].sort((a, b) => compareFr(a.titre, b.titre));
+export const glossaire = [...dataset.glossaire].sort((a, b) => compareFr(a.sigle, b.sigle));
+export const lois = [...dataset.lois].sort((a, b) => b.dateVote.localeCompare(a.dateVote) || compareFr(b.ref, a.ref));
+export const enjeux = [...dataset.enjeux].sort((a, b) => compareFr(a.ref, b.ref));
 
 export const candidatById = new Map(dataset.candidats.map((c) => [c.id, c]));
 export const partiById = new Map(dataset.partis.map((p) => [p.id, p]));
@@ -196,21 +152,13 @@ const candidatRank = new Map(candidats.map((c, i) => [c.id, i]));
 export const byCandidat = (a: { candidatId: string }, b: { candidatId: string }) =>
   (candidatRank.get(a.candidatId) ?? 0) - (candidatRank.get(b.candidatId) ?? 0);
 
-export const propositions = [...dataset.propositions].sort((a, b) => byCandidat(a, b) || fr(a.ref, b.ref));
+export const propositions = [...dataset.propositions].sort((a, b) => byCandidat(a, b) || compareFr(a.ref, b.ref));
 
 export function votesOf(candidatId: string): number {
   return dataset.lois.filter((l) => candidatId in l.votes).length;
 }
 
-/** Même repli que reportUrl() de l'app : ticket GitHub pré-rempli, en attendant le formulaire du site. */
-export function reportUrl(ref?: string, titre?: string): string {
-  const params = new URLSearchParams({
-    template: 'erreur-donnees.yml',
-    title: ref ? `Erreur ${ref}${titre ? ` : ${titre}` : ''}` : 'Erreur dans les données',
-    reference: ref ?? '',
-  });
-  return `${REPO_URL}/issues/new?${params.toString()}`;
-}
+export const reportUrl = (ref?: string, titre?: string) => buildReportUrl(REPO_URL, ref, titre);
 
 export const ONGLETS = [
   { id: 'candidats', label: 'Candidats', count: dataset.candidats.length },

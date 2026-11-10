@@ -1,4 +1,5 @@
 import dataset from './data/dataset.json';
+import { formatDate } from './lib/format';
 
 // Liens et chiffres affichés : à tenir à jour avec le dépôt de l'app.
 export const APP_URL = 'https://danny-gca.github.io/elire-app/';
@@ -17,7 +18,6 @@ export const FUNDING = [
 ];
 
 // Chiffres du jeu de données : lus dans le fichier de l'app copié au build (scripts/fetch-dataset.mjs).
-const MOIS = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
 export const COUNTS = {
   candidats: dataset.candidats.length,
   propositions: dataset.propositions.length,
@@ -25,8 +25,7 @@ export const COUNTS = {
   scrutins: dataset.lois.length,
   themes: dataset.thematiques.length,
 };
-const generated = new Date(dataset.metadata.generatedAt);
-export const DATA_DATE = `${generated.getUTCDate()} ${MOIS[generated.getUTCMonth()]} ${generated.getUTCFullYear()}`;
+export const DATA_DATE = formatDate(dataset.metadata.generatedAt, true);
 
 // Surligneurs du lecteur, mêmes couleurs que l'app ; aucune ne correspond à un parti.
 export const MARKERS = [

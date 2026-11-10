@@ -3,7 +3,7 @@
 import Base from '../layouts/Base.astro';
 import IconDownload from './IconDownload.astro';
 import '../styles/donnees.css';
-import { candidats, formatDate, GENERATED_AT, ONGLETS, thematiques, type OngletId } from '../lib/donnees';
+import { candidats, DATA_ORIGIN, ONGLETS, thematiques, type OngletId } from '../lib/donnees';
 
 interface Props {
   title: string;
@@ -29,7 +29,7 @@ const onglet = ONGLETS.find((o) => o.id === active);
       <p class="d-lede">{description}</p>
       <p class="d-meta num">
         {onglet && <span>{onglet.count} {onglet.count > 1 ? search?.many ?? '' : search?.one ?? ''}</span>}
-        <span>Données de l'app du <time datetime={GENERATED_AT}>{formatDate(GENERATED_AT, true)}</time></span>
+        <span>{DATA_ORIGIN}</span>
         {csv.map((file) => (
           <a class="link d-dl" href={file.href} download><IconDownload /><span class="hl">{file.label}</span></a>
         ))}
@@ -92,10 +92,11 @@ const onglet = ONGLETS.find((o) => o.id === active);
 </Base>
 
 <script>
+  import { normalize } from '../lib/format';
+
   // Recherche et filtres : sans JavaScript, tout reste listé ; l'état suit l'adresse (?q=&candidat=&theme=) pour être partagé.
   const tools = document.querySelector<HTMLElement>('[data-tools]');
   if (tools) {
-    const normalize = (t: string) => t.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
     const items = [...document.querySelectorAll<HTMLElement>('[data-item]')].map((el) => ({ el, text: normalize(el.textContent ?? '') }));
     const groups = [...document.querySelectorAll<HTMLElement>('[data-group]')];
     const q = tools.querySelector<HTMLInputElement>('[data-q]');

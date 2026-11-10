@@ -20,3 +20,4 @@ dist/
 
 # données copiées depuis elire-app au build (scripts/fetch-dataset.mjs)
 src/data/dataset.json
+src/data/app-release.json

@@ -25,11 +25,11 @@ Surligneur : 4 couleurs (jaune, rose, vert, bleu), comme dans l'app. Le choix du
 
 ## Développement
 
-- Cloner [elire-app](https://github.com/danny-gca/elire-app) à côté du site (ou `ELIRE_APP_DIR=/chemin/elire-app`).
+- Cloner [elire-app](https://github.com/danny-gca/elire-app) à côté du site (ou `ELIRE_APP_DIR=/chemin/elire-app`). En local, les pages affichent « copie locale de l'app » ; `ELIRE_APP_VERSION=v1.8.0` simule une release (le dossier doit alors être à ce tag).
 - `npm install` (Node 22), puis `npm run dev` : http://localhost:4321/elire-website/
-- `npm test` : tests unitaires (échappement CSV).
+- `npm test` : tests unitaires (CSV, dates, tri, lien de signalement, script de copie des données), puis build et tests du site construit (`tests/build.test.mjs` : JSON publié identique à l'app, une ligne CSV et une ligne de tableau par élément, ancres, ordre des candidats, chiffres de l'accueil, aucune requête tierce).
 - `npm run check` : vérification Astro et build statique dans `dist/`.
-- Déploiement : `.github/workflows/deploy.yml` publie sur GitHub Pages à chaque push sur `main` et à la demande (Actions > Déployer le site > Run workflow). Il récupère alors `src/data/dataset.json` de `main` de `danny-gca/elire-app` (dépôt public, sans jeton) : les données du site sont celles du dernier déploiement.
+- Déploiement : `.github/workflows/deploy.yml` publie sur GitHub Pages à chaque push sur `main` et à la demande (Actions > Déployer le site > Run workflow). Il cherche la dernière release de `danny-gca/elire-app` (`gh release view`), récupère `src/data/dataset.json` à ce tag (dépôt public, jeton par défaut du workflow) et passe la version au build (`ELIRE_APP_VERSION`). Une nouvelle release de l'app n'apparaît sur le site qu'au déploiement suivant : relancer le workflow à la main après une release. La CI des PR utilise la même release, donc un changement sur `main` de l'app ne casse pas une PR du site.
 - Stack : Astro 7 (version figée), aucune dépendance côté visiteur.
 
 ## Licence

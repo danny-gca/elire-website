@@ -32,17 +32,17 @@ Le site lit **le fichier compilé de l'app** (`elire-app/src/data/dataset.json`)
 ## Architecture
 
 ```
-elire-app (main, dépôt public)            elire-website (GitHub Pages)
+elire-app (dernière release, public)      elire-website (GitHub Pages)
 src/data/dataset.json  ── actions/checkout ──> build : lit dataset.json
                                                publie /donnees/dataset.json
                                                publie /donnees/csv/*.csv
                                                pages /donnees/*
 ```
 
-- **Déclencheurs du déploiement** : push sur `main` du site et `workflow_dispatch`, rien d'autre. Les données sont relues à chaque déploiement du site (pas de build planifié, décision du 2026-11-10).
+- **Déclencheurs du déploiement** : push sur `main` du site et `workflow_dispatch`, rien d'autre. Les données sont relues à chaque déploiement du site (pas de build planifié), au tag de la **dernière release** de l'app, pas sur `main` (décisions du 2026-11-10). La CI des PR suit la même release : un changement de schéma sur `main` de l'app ne casse pas une PR du site.
 - **Lecture locale, pas `raw.githubusercontent.com`** : son cache CDN peut servir l'ancienne version pendant quelques minutes.
 - **URL publique** : `https://danny-gca.github.io/elire-website/donnees/`.
-- **Données** : `metadata` (`generatedAt`, compteurs), `partis` (26), `candidats` (27), `thematiques` (12), `propositions` (191), `lois` (47, votes inclus), `enjeux` (16), `glossaire` (48). `mots` et `sujets` restent internes à l'app.
+- **Données** : `metadata` (`generatedAt`, compteurs), `partis` (26), `candidats` (27), `thematiques` (12), `propositions` (191), `lois` (47, votes inclus), `enjeux` (16), `glossaire` (48). `mots` et `sujets` n'ont pas d'onglet mais restent dans `dataset.json` téléchargeable, publié tel quel (transparence : le fichier de l'app, sans tri).
 
 ## Données
 
@@ -101,4 +101,4 @@ Contexte : `PRODUCT.md`, `DESIGN.md`, `docs/reference/direction-app.md`, directi
 ## Doc
 
 - `AGENTS.md` (« Two pages only » devient faux), `README.md` (d'où viennent les données, délai de publication, relancer avec `workflow_dispatch`, `ELIRE_APP_DIR` en local), `PRODUCT.md`, `docs/plan.md`.
-- Pas de délai à annoncer : les données sont celles de `main` de l'app au dernier déploiement du site (date affichée sur chaque page).
+- Version affichée : chaque page dit « Données de la version X.Y.Z de l'app, la dernière publiée (compilées le …) » ; une copie locale est nommée comme telle. La version installée chez le visiteur peut être plus ancienne.
