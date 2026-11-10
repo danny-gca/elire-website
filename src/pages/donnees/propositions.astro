@@ -32,39 +32,64 @@ const groups = thematiques
       <h2 id={`t-${theme.id}`} style={`color:${THEME_ACCENTS[theme.id] ?? 'inherit'}`}>
         {theme.titre} <small class="num">{plural(items.length, 'proposition')}</small>
       </h2>
-      <ul class="d-list">
-        {items.map((p) => {
-          const c = candidatById.get(p.candidatId);
-          const enjeu = p.enjeuId ? enjeuById.get(p.enjeuId) : undefined;
-          return (
-            <li class="fiche" id={p.ref} data-item data-candidat={p.candidatId} data-theme={p.thematiqueId}>
-              <p class="f-meta num">
-                <a class="f-ref" href={`#${p.ref}`}><span class="hl">{p.ref}</span></a> · {TYPE_SOURCE_LABELS[p.typeSource] ?? p.typeSource}
-                {p.dateDeclaration && <> · {formatDate(p.dateDeclaration)}</>}
-              </p>
-              <h3>{p.titre}</h3>
-              {c && (
-                <p class="f-who">
-                  <a href={`${base}/donnees/candidats/#${c.id}`}><span class="hl">{c.nom}</span></a> · {c.parti}
-                </p>
-              )}
-              <blockquote class="f-quote" cite={p.sourceUrl}>{p.description}</blockquote>
-              <p class="f-text">{p.contexte}</p>
-              {enjeu && (
-                <p class="f-text">
-                  Question commune{' '}
-                  <a class="link" href={`${base}/donnees/enjeux/#${enjeu.ref}`}><span class="hl">{enjeu.ref}</span></a>
-                  {p.sens === 'contre' ? ' : propose le contraire' : ''}
-                </p>
-              )}
-              <p class="f-actions">
-                <a class="link" href={p.sourceUrl} rel="noopener"><span class="hl">Source</span></a>
-                <a class="link f-report" href={reportUrl(p.ref, p.titre)} rel="noopener"><span class="hl">Signaler une erreur</span></a>
-              </p>
-            </li>
-          );
-        })}
-      </ul>
+      <table class="d-table">
+        <thead>
+          <tr>
+            <th scope="col">Réf.</th>
+            <th scope="col">Proposition</th>
+            <th scope="col">Candidat</th>
+            <th scope="col">Source</th>
+          </tr>
+        </thead>
+        <tbody>
+          {items.map((p) => {
+            const c = candidatById.get(p.candidatId);
+            const enjeu = p.enjeuId ? enjeuById.get(p.enjeuId) : undefined;
+            return (
+              <tr id={p.ref} data-item data-candidat={p.candidatId} data-theme={p.thematiqueId}>
+                <td class="t-nowrap num">
+                  <a class="f-ref" href={`#${p.ref}`}><span class="hl">{p.ref}</span></a>
+                </td>
+                <td class="t-main">
+                  <p class="t-title">{p.titre}</p>
+                  <blockquote class="f-quote" cite={p.sourceUrl}>{p.description}</blockquote>
+                  {enjeu && (
+                    <p class="t-sub">
+                      Question commune{' '}
+                      <a class="link num" href={`${base}/donnees/enjeux/#${enjeu.ref}`}><span class="hl">{enjeu.ref}</span></a>
+                      {p.sens === 'contre' ? ' : propose le contraire' : ''}
+                    </p>
+                  )}
+                  <details class="f-more">
+                    <summary><span class="hl">Contexte</span></summary>
+                    <p class="f-text">{p.contexte}</p>
+                  </details>
+                </td>
+                <td>
+                  {c && (
+                    <>
+                      <a class="link" href={`${base}/donnees/candidats/#${c.id}`}><span class="hl">{c.nom}</span></a>
+                      <p class="t-sub">{c.parti}</p>
+                    </>
+                  )}
+                </td>
+                <td>
+                  <div class="t-stack">
+                    <span>
+                      {TYPE_SOURCE_LABELS[p.typeSource] ?? p.typeSource}
+                      {p.dateDeclaration && <span class="num">, {formatDate(p.dateDeclaration)}</span>}
+                    </span>
+                    <span class="f-actions">
+                      <a class="link" href={p.sourceUrl} rel="noopener"><span class="hl">Source</span></a>
+                      <a class="link f-report" href={reportUrl(p.ref, p.titre)} rel="noopener"><span class="hl">Signaler une erreur</span></a>
+                    </span>
+                  </div>
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
     </section>
   ))}
 </DataPage>

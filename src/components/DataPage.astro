@@ -1,6 +1,7 @@
 ---
 // Gabarit des pages « Nos données » : titre, onglets (une page statique par onglet), recherche et filtres en amélioration progressive.
 import Base from '../layouts/Base.astro';
+import IconDownload from './IconDownload.astro';
 import '../styles/donnees.css';
 import { candidats, formatDate, GENERATED_AT, ONGLETS, thematiques, type OngletId } from '../lib/donnees';
 
@@ -30,7 +31,7 @@ const onglet = ONGLETS.find((o) => o.id === active);
         {onglet && <span>{onglet.count} {onglet.count > 1 ? search?.many ?? '' : search?.one ?? ''}</span>}
         <span>Données de l'app du <time datetime={GENERATED_AT}>{formatDate(GENERATED_AT, true)}</time></span>
         {csv.map((file) => (
-          <a class="link" href={file.href} download><span class="hl">{file.label}</span></a>
+          <a class="link d-dl" href={file.href} download><IconDownload /><span class="hl">{file.label}</span></a>
         ))}
       </p>
     </header>

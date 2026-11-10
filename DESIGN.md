@@ -326,7 +326,7 @@ Le premier écran aligne l'accroche à gauche et, à droite, une colonne d'actio
 ### Named Rules
 **The Margin Belongs to the App Sheet Rule.** Aucune colonne de marge sur le site. Le numéro d'une étape s'écrit dans son titre (« 1. Lire à l'aveugle »), la référence d'une proposition dans la ligne meta ; la marge large reste une affaire de la feuille Voter de l'app.
 
-**The Ruled Page Rule.** On sépare au filet : entre sections, entre colonnes, entre les éléments d'une liste. Pas de bandes de fond alternées, pas de puces.
+**The Ruled Page Rule.** On sépare au filet : entre sections, entre colonnes, entre les éléments d'une liste. Pas de bandes de fond alternées (sauf les lignes des tableaux de « Nos données »), pas de puces.
 
 ## Elevation & Depth
 
@@ -398,12 +398,13 @@ Aucune note n'est choisie à la place du visiteur : les quatre niveaux sont des 
 
 ### Nos données (`/donnees/`)
 
-`src/components/DataPage.astro` et `src/styles/donnees.css`, mode Read avec une recherche en Operate. Le registre du cahier : rien de neuf, les fiches sont des listes réglées.
+`src/components/DataPage.astro` et `src/styles/donnees.css`, mode Read avec une recherche en Operate. Le registre du cahier : un tableau réglé sur tablette et bureau, des fiches réglées sur téléphone, à partir du même `<table>`.
 - **En-tête :** titre `headline` avec un mot posé, chapô `lede`, ligne meta en 15 graphite (compteur, date des données, liens de téléchargement en lien de lecture).
 - **Onglets :** une page statique par onglet, liens en 15 semi-gras entre deux filets, compteur en 13 graphite tabulaire ; l'onglet en cours garde la bande du lecteur et un trait d'encre de 2px dessous (comme la section en cours du menu). Ils passent à la ligne sur mobile, sans défilement caché.
 - **Recherche :** feuille blanche à filet (14px) : champ et listes de 48px sur papier, bordure filet, encre au focus, chevron graphite dessiné ; caché sans JavaScript (tout reste listé). Le compteur « 12 propositions sur 191 » n'apparaît qu'une fois filtré, annoncé en `role=status`. Aucun résultat : phrase et bouton calme « Tout afficher ».
-- **Fiche :** filet haut, 24px dessus, 28px dessous, en deux colonnes de 34rem au-dessus de 1100px environ. Ligne meta 13 graphite avec la référence en encre grasse (ancre de la fiche ; elle reçoit la bande au survol ou quand la fiche est atteinte par `#P-531`), titre `title` (21), auteur en 15 semi-gras, citation en 17 encre, contexte en 15 encre douce, puis « Source » et « Signaler une erreur » (graphite) en liens de lecture de 44px.
-- **Lignes internes :** filets légers, libellé semi-gras de 7.5rem puis valeur ; empilés sous 480px. Le détail des votes est un `details` natif au chevron de la FAQ.
+- **Tableau (au-dessus de 720px) :** une ligne par élément, cadre et filets de 1px, en-tête en 14 gras encre sur le surligneur du lecteur dilué à 55 % avec un trait d'encre de 1.5px dessous, collant sous la barre (72px). Une ligne sur deux au surligneur dilué à 16 %, comptée sur les seules lignes visibles (`:nth-child(even of :not([hidden]))`) ; ligne survolée (souris) ou atteinte par un lien à 32 %. Le tableau prend la couleur choisie par le lecteur, sans signification. Exception assumée à la règle des bandes de fond, réservée aux tableaux de données (demande du 2026-11-10). Cellules en 15 encre douce, alignées en haut, 16px dessus et dessous. Référence en encre grasse dans sa colonne (ancre de la ligne ; bande au survol ou quand la ligne est atteinte par `#P-531`), intitulé en Literata 17 semi-gras, compléments en 14 graphite. « Source » et « Signaler une erreur » (graphite) en liens de lecture. Le contexte, le texte voté et le détail des votes sont des `details` natifs au chevron de la FAQ. Quatre à cinq colonnes au plus, pour tenir à 768px sans défilement horizontal.
+- **Fiche (720px et moins) :** chaque ligne devient une fiche à filet haut, cellules empilées, en-tête réservé aux lecteurs d'écran, libellé en gras devant les cellules qui en ont besoin (« Parti : »), liens de 44px.
+- **Téléchargement :** flèche vers un plateau (16px, trait 1.8 arrondi) devant chaque lien de téléchargement, libellé souligné graphite.
 - **Groupes :** les propositions sont rangées par thème sous un titre `headline-value` dans l'accent du thème, avec le compte en 15 graphite.
 - **Positions :** Pour, Contre, Abstention en toutes lettres et en encre neutre (The Scale Is Yours Rule) ; candidats dans l'ordre alphabétique du nom dans chaque position.
 
@@ -435,6 +436,6 @@ La feuille de proposition, la rangée de vote et le panneau électoral de l'app 
 - **Don't** ajouter une colonne de marge hors de la feuille de l'app.
 - **Don't** poser de surtitre en capitales au-dessus d'un titre.
 - **Don't** utiliser de puces : les listes sont réglées.
-- **Don't** montrer un nom, un visage ou un parti de candidat sur le site, hors des fiches de « Nos données ».
+- **Don't** montrer un nom, un visage ou un parti de candidat sur le site, hors de « Nos données ».
 - **Don't** utiliser de crème, de violet ou de dégradé décoratif, ni d'ombre sur une feuille posée.
 - **Don't** évoquer un site gouvernemental, une appli gamifiée ou des cartes à swiper.

@@ -73,7 +73,7 @@ Choix de conception (à challenger) :
 
 - **Une page statique par onglet**, pas un onglet JS : chaque onglet a une URL partageable, la page s'affiche sans JS, Astro génère tout au build.
 - **Ancre par élément** (`/donnees/propositions/#P-531`) : lien direct depuis un signalement ou un article.
-- **Fiches, pas tableau, sur mobile** : référence dans la ligne d'infos (pas de colonne de marge, même règle que l'app), sources en liens. Sur grand écran, l'impeccable shape décidera si un tableau dense apporte quelque chose.
+- **Tableau sur tablette et bureau, fiches sur mobile** (décision du 2026-11-10) : un seul `<table>`, replié en fiches sous 720px ; sources en liens.
 - **Photos des candidats** : aucune (pas de requête tierce vers Wikimedia), initiales comme le repli de l'app.
 - **Recherche et filtres** (texte, candidat, thématique) : petit script côté client, amélioration progressive ; sans JS tout reste listé.
 - **« Signaler une erreur » sur chaque fiche** : lien vers le formulaire du site pré-rempli (référence + titre), même principe que `reportUrl(ref, titre)` de l'app.
@@ -93,7 +93,7 @@ Contexte : `PRODUCT.md`, `DESIGN.md`, `docs/reference/direction-app.md`, directi
 ### Contrat retenu (impeccable shape)
 
 - **Mode** : Read, recherche en Operate. Thèse : le registre du cahier, des fiches réglées au filet, pas un tableau.
-- **Structure** : en-tête (titre à mot posé, chapô, compteur, date, CSV), onglets entre deux filets (l'onglet en cours garde la bande du lecteur), feuille de recherche (texte, candidat, thème) cachée sans JS, puis les fiches en une colonne sur mobile, deux sur grand écran. Pas de tableau dense : les fiches suffisent et restent lisibles à 360 px.
+- **Structure** : en-tête (titre à mot posé, chapô, compteur, date, CSV), onglets entre deux filets (l'onglet en cours garde la bande du lecteur), feuille de recherche (texte, candidat, thème) cachée sans JS, puis un tableau réglé (4 à 5 colonnes, en-tête collant) qui redevient une fiche par ligne sous 720 px.
 - **Fiche** : ligne meta avec la référence (ancre), titre en 21, auteur, citation, contexte, Source et Signaler une erreur. Scrutin : question, enjeu, nature et statut, résumé, votes rangés Pour / Contre / Abstention (encre neutre), détail repliable vote par vote.
 - **Vue d'ensemble** : chiffres en rangée réglée (liens vers les onglets), d'où viennent les données, téléchargements.
 - **Hors scope** : finish review et audit complets (étapes 4 à 6) faits en une passe dans la session de construction ; à refaire si la PR change la direction.

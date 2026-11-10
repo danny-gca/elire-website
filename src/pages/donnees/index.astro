@@ -1,5 +1,6 @@
 ---
 import DataPage from '../../components/DataPage.astro';
+import IconDownload from '../../components/IconDownload.astro';
 import { REPO_URL } from '../../config';
 import { dataset, ONGLETS, plural, reportUrl } from '../../lib/donnees';
 import { EXPORTS } from '../../lib/exports';
@@ -47,12 +48,12 @@ const jsonSize = kilo(new TextEncoder().encode(JSON.stringify(dataset)).length);
     <h2 id="d-telecharger">Télécharger</h2>
     <ul class="d-ruled d-downloads">
       <li>
-        <a class="link" href={`${base}/donnees/dataset.json`} download><span class="hl">Tout le jeu de données</span></a>
+        <a class="link d-dl" href={`${base}/donnees/dataset.json`} download><IconDownload /><span class="hl">Tout le jeu de données</span></a>
         <span class="num">JSON, {jsonSize}, le fichier de l'app tel quel</span>
       </li>
       {Object.entries(EXPORTS).map(([type, table]) => (
         <li>
-          <a class="link" href={`${base}/donnees/csv/${type}.csv`} download><span class="hl">{table.label}</span></a>
+          <a class="link d-dl" href={`${base}/donnees/csv/${type}.csv`} download><IconDownload /><span class="hl">{table.label}</span></a>
           <span class="num">CSV, {plural(table.rows().length, 'ligne')}</span>
         </li>
       ))}

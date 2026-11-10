@@ -15,7 +15,7 @@ Citoyens, journalistes, curieux, souvent sur téléphone : vérifier une donnée
 
 ## Direction contract
 
-THESIS: Le registre du cahier annoté : des fiches réglées au filet, la référence dans la ligne meta, les sources en liens de lecture. Refuse le tableau dense et la carte à ombre.
+THESIS: Le registre du cahier annoté : un tableau réglé au filet sur tablette et bureau, une fiche par ligne sur téléphone, la référence en première colonne, les sources en liens de lecture. Refuse la carte à ombre et le tableau Excel qui déborde.
 
 OWN-WORLD: Celui de l'accueil (DESIGN.md), sans ajout : papier, feuille, encre, graphite, filets, surligneur du lecteur au survol et sur l'onglet en cours, accents thématiques sur les titres de thème et la ligne meta.
 

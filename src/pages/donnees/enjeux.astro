@@ -19,34 +19,47 @@ const positionsOf = (positions: { propositionId: string; sens: 'pour' | 'contre'
   csv={[{ href: `${base}/donnees/csv/enjeux.csv`, label: 'Télécharger en CSV' }]}
   search={{ one: 'question', many: 'questions', candidat: true, theme: true }}
 >
-  <ul class="d-list">
-    {enjeux.map((e) => {
-      const positions = positionsOf(e.positions);
-      return (
-        <li class="fiche" id={e.ref} data-item data-candidat={positions.map((p) => p.prop.candidatId).join(' ')} data-theme={e.thematiqueId}>
-          <p class="f-meta num">
-            <a class="f-ref" href={`#${e.ref}`}><span class="hl">{e.ref}</span></a> ·{' '}
-            <span style={`color:${THEME_ACCENTS[e.thematiqueId] ?? 'inherit'}`}>{themeById.get(e.thematiqueId)?.titre}</span>
-          </p>
-          <h3>{e.question}</h3>
-          <p class="f-text">{e.enjeu}</p>
-          <ul class="f-rows">
-            {positions.map(({ sens, prop }) => (
-              <li>
-                <span class="f-label">{candidatById.get(prop.candidatId)?.nom}</span>
-                <span>
-                  <a class="link num" href={`${base}/donnees/propositions/#${prop.ref}`}><span class="hl">{prop.ref}</span></a>
-                  {sens === 'contre' ? ' (propose le contraire) ' : ' '}
-                  {prop.titre}
-                </span>
-              </li>
-            ))}
-          </ul>
-          <p class="f-actions">
-            <a class="link f-report" href={reportUrl(e.ref, e.question)} rel="noopener"><span class="hl">Signaler une erreur</span></a>
-          </p>
-        </li>
-      );
-    })}
-  </ul>
+  <table class="d-table">
+    <thead>
+      <tr>
+        <th scope="col">Réf.</th>
+        <th scope="col">Question</th>
+        <th scope="col">Thème</th>
+        <th scope="col">Propositions liées</th>
+      </tr>
+    </thead>
+    <tbody>
+      {enjeux.map((e) => {
+        const positions = positionsOf(e.positions);
+        return (
+          <tr id={e.ref} data-item data-candidat={positions.map((p) => p.prop.candidatId).join(' ')} data-theme={e.thematiqueId}>
+            <td class="t-nowrap num">
+              <a class="f-ref" href={`#${e.ref}`}><span class="hl">{e.ref}</span></a>
+            </td>
+            <td class="t-main">
+              <p class="t-title">{e.question}</p>
+              <p class="t-sub">{e.enjeu}</p>
+              <span class="f-actions">
+                <a class="link f-report" href={reportUrl(e.ref, e.question)} rel="noopener"><span class="hl">Signaler une erreur</span></a>
+              </span>
+            </td>
+            <td class="t-nowrap" data-label="Thème">
+              <span style={`color:${THEME_ACCENTS[e.thematiqueId] ?? 'inherit'}`}>{themeById.get(e.thematiqueId)?.titre}</span>
+            </td>
+            <td>
+              <ul class="t-list">
+                {positions.map(({ sens, prop }) => (
+                  <li>
+                    <b>{candidatById.get(prop.candidatId)?.nom}</b>{' '}
+                    <a class="link num" href={`${base}/donnees/propositions/#${prop.ref}`}><span class="hl">{prop.ref}</span></a>
+                    {sens === 'contre' && ' (propose le contraire)'}
+                  </li>
+                ))}
+              </ul>
+            </td>
+          </tr>
+        );
+      })}
+    </tbody>
+  </table>
 </DataPage>

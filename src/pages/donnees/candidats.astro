@@ -15,59 +15,58 @@ const propositionsOf = (id: string) => dataset.propositions.filter((p) => p.cand
   csv={[{ href: `${base}/donnees/csv/candidats.csv`, label: 'Télécharger en CSV' }]}
   search={{ one: 'candidat', many: 'candidats' }}
 >
-  <ul class="d-list">
-    {candidats.map((c) => {
-      const parti = c.partiId ? partiById.get(c.partiId) : undefined;
-      const props = propositionsOf(c.id);
-      const votes = votesOf(c.id);
-      return (
-        <li class="fiche" id={c.id} data-item>
-          <div class="f-person">
-            <span class="f-initials" aria-hidden="true">{c.avatar}</span>
-            <div>
-              <h3>
-                <a class="f-ref" href={`#${c.id}`}><span class="hl">{c.nom}</span></a>
-              </h3>
-              <p>
-                {parti ? <a class="link" href={`${base}/donnees/partis/#${parti.id}`}><span class="hl">{c.parti}</span></a> : c.parti}
-              </p>
-            </div>
-          </div>
-          <p class="f-text">{c.biographie}</p>
-          <ul class="f-rows">
-            <li>
-              <span class="f-label">Candidature</span>
-              <span>
-                {candidatureText(c.candidature)}.{' '}
-                <a class="link" href={c.candidature.sourceUrl} rel="noopener"><span class="hl">Source</span></a>
+  <table class="d-table">
+    <thead>
+      <tr>
+        <th scope="col">Candidat</th>
+        <th scope="col">Parti</th>
+        <th scope="col">Candidature</th>
+        <th scope="col">Programme 2027</th>
+        <th scope="col">Dans l'app</th>
+      </tr>
+    </thead>
+    <tbody>
+      {candidats.map((c) => {
+        const parti = c.partiId ? partiById.get(c.partiId) : undefined;
+        const props = propositionsOf(c.id);
+        const votes = votesOf(c.id);
+        return (
+          <tr id={c.id} data-item>
+            <td>
+              <div class="f-person">
+                <span class="f-initials" aria-hidden="true">{c.avatar}</span>
+                <div>
+                  <a class="f-ref t-title" href={`#${c.id}`}><span class="hl">{c.nom}</span></a>
+                  <p class="t-sub">{c.biographie}</p>
+                </div>
+              </div>
+            </td>
+            <td data-label="Parti">
+              {parti ? <a class="link" href={`${base}/donnees/partis/#${parti.id}`}><span class="hl">{c.parti}</span></a> : c.parti}
+            </td>
+            <td>
+              {candidatureText(c.candidature)}.{' '}
+              <a class="link" href={c.candidature.sourceUrl} rel="noopener"><span class="hl">Source</span></a>
+            </td>
+            <td>
+              {programmeText(c.programme)}
+              {c.programme.url && (
+                <>
+                  {' '}
+                  <a class="link" href={c.programme.url} rel="noopener"><span class="hl">Lire</span></a>
+                </>
+              )}
+            </td>
+            <td>
+              <span class="t-stack num">
+                {props > 0 ? <a class="link" href={`${base}/donnees/propositions/?candidat=${c.id}`}><span class="hl">{plural(props, 'proposition')}</span></a> : <span>Aucune proposition</span>}
+                {votes > 0 ? <a class="link" href={`${base}/donnees/scrutins/?candidat=${c.id}`}><span class="hl">{plural(votes, 'vote')}</span></a> : <span>Aucun vote au Parlement</span>}
+                <a class="link f-report" href={reportUrl(c.id, c.nom)} rel="noopener"><span class="hl">Signaler une erreur</span></a>
               </span>
-            </li>
-            <li>
-              <span class="f-label">Programme</span>
-              <span>
-                {programmeText(c.programme)}
-                {c.programme.url && (
-                  <>
-                    {' '}
-                    <a class="link" href={c.programme.url} rel="noopener"><span class="hl">Lire</span></a>
-                  </>
-                )}
-              </span>
-            </li>
-            <li>
-              <span class="f-label">Dans l'app</span>
-              <span class="num">
-                {props > 0 ? <a class="link" href={`${base}/donnees/propositions/?candidat=${c.id}`}><span class="hl">{plural(props, 'proposition')}</span></a> : 'Aucune proposition'}
-                {' · '}
-                {votes > 0 ? <a class="link" href={`${base}/donnees/scrutins/?candidat=${c.id}`}><span class="hl">{plural(votes, 'vote')}</span></a> : 'aucun vote au Parlement'}
-              </span>
-            </li>
-          </ul>
-          <p class="f-actions">
-            <a class="link f-report" href={reportUrl(c.id, c.nom)} rel="noopener"><span class="hl">Signaler une erreur</span></a>
-          </p>
-        </li>
-      );
-    })}
-  </ul>
+            </td>
+          </tr>
+        );
+      })}
+    </tbody>
+  </table>
 </DataPage>
