@@ -2,7 +2,7 @@
 export type LegalSection = { titre: string; paragraphes: string[] };
 
 /** Éditeur à titre personnel, et son adresse de contact. */
-export const EDITEUR = { nom: 'Danny Garcia', contact: 'contact@danny-garcia.fr' };
+export const EDITEUR = { nom: 'Danny Garcia', contact: 'contact@danny-garcia.fr', site: 'https://danny-garcia.fr' };
 export const HEBERGEUR = 'GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, États-Unis (GitHub Pages)';
 
 const contact = `par courriel à ${EDITEUR.contact}`;
