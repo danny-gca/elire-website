@@ -270,7 +270,7 @@ L'encre sur papier froid de l'app, sans couleur institutionnelle ni partisane ; 
 - **Marque posée** (`data-tone`): bande droite sur une portion puis légèrement ondulée (tuile SVG de 240px) ; un mot clé de titre garde une couleur fixe, répartie entre les quatre surligneurs ; seuls « surligneur », « votre avis » et la note du lecteur suivent son choix. Le logo, celui de l'app (la France d'un trait, un morceau par surligneur, le « é » au centre), garde ses quatre couleurs.
 
 ### Tertiary
-- **Échelle de vote** (vote-impossible, vote-contre, vote-neutre, vote-pour, vote-parfait): les signes de la mini rangée de vote, les puces de l'échelle (« −2 Impossible ») et les notes du tableau de calcul. Héritée telle quelle de l'app.
+- **Échelle de vote** (vote-impossible, vote-contre, vote-neutre, vote-pour, vote-parfait): les signes de la mini rangée de vote, les puces de l'échelle (« −2 Jamais ») et les notes du tableau de calcul. Héritée telle quelle de l'app.
 - **Accents thématiques** (theme-*): les douze accents de l'app ; le site n'emploie que l'accent, en couleur du nom de thème dans la ligne meta de la mini feuille, tiré avec l'exemple de la visite. Les teintes accompagnent les données d'exemple.
 
 ### Neutral
@@ -313,7 +313,7 @@ L'encre sur papier froid de l'app, sans couleur institutionnelle ni partisane ; 
 ### Named Rules
 **The Small Steps Rule.** Sous le corps, le site descend en 15, puis 13 ; le 14 est réservé aux contrôles compacts de la barre et de l'indicateur. Les chiffres forts (24px pour les chiffres clés, 34px pour le résultat du calcul) sont des valeurs, pas des titres.
 
-**The Written Value Rule.** Une note s'écrit en toutes lettres avec son signe : Impossible −2, Contre −1, Neutre 0, Pour +1, Parfait +2, avec le vrai signe moins (U+2212). Numéros (P-531, L-28), compteurs et scores en chiffres tabulaires.
+**The Written Value Rule.** Une note s'écrit en toutes lettres avec son signe : Jamais −2, Contre −1, Neutre 0, Pour +1, Parfait +2, avec le vrai signe moins (U+2212). Numéros (P-531, L-28), compteurs et scores en chiffres tabulaires.
 
 ## Layout
 

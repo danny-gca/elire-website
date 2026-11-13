@@ -171,7 +171,7 @@
       },
       "vote-impossible": {
         "role": "tertiary",
-        "displayName": "Impossible −2",
+        "displayName": "Jamais −2",
         "canonical": "oklch(45.9% 0.121 38.0)",
         "tonalRamp": [
           "#1D0100",
@@ -858,7 +858,7 @@
       },
       {
         "name": "The Written Value Rule",
-        "body": "Une note s'écrit en toutes lettres avec son signe : Impossible −2, Contre −1, Neutre 0, Pour +1, Parfait +2, avec le vrai signe moins (U+2212). Numéros (P-531, L-28), compteurs et scores en chiffres tabulaires.",
+        "body": "Une note s'écrit en toutes lettres avec son signe : Jamais −2, Contre −1, Neutre 0, Pour +1, Parfait +2, avec le vrai signe moins (U+2212). Numéros (P-531, L-28), compteurs et scores en chiffres tabulaires.",
         "section": "typography"
       },
       {
