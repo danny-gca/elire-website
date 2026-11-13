@@ -11,7 +11,7 @@ App élire complète (4 onglets, fiche candidat, onboarding). Mode : Operate. Pl
 
 ## Audience et tâche
 
-Citoyen qui se fait son avis seul, au calme : lire une proposition anonyme, la noter sur 5 niveaux (Impossible, Contre, Neutre, Pour, Parfait), puis confronter ses notes aux candidats et à leurs votes réels. À éviter : air de site gouv, gadget/gamifié, fade, ressemblance avec les applis à cartes à swiper (dégradé violet).
+Citoyen qui se fait son avis seul, au calme : lire une proposition anonyme, la noter sur 5 niveaux (Jamais, Contre, Neutre, Pour, Parfait), puis confronter ses notes aux candidats et à leurs votes réels. À éviter : air de site gouv, gadget/gamifié, fade, ressemblance avec les applis à cartes à swiper (dégradé violet).
 
 ## Direction contract
 

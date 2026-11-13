@@ -23,7 +23,7 @@ const CAHIER = [
 const VALEUR_TONES = ['bleu', 'vert', 'rose', 'jaune'];
 
 const VOTES = [
-  { value: -2, label: 'Impossible', sign: '−2', color: 'var(--vote-m2)' },
+  { value: -2, label: 'Jamais', sign: '−2', color: 'var(--vote-m2)' },
   { value: -1, label: 'Contre', sign: '−1', color: 'var(--vote-m1)' },
   { value: 1, label: 'Pour', sign: '+1', color: 'var(--vote-p1)' },
   { value: 2, label: 'Parfait', sign: '+2', color: 'var(--vote-p2)' },
@@ -225,7 +225,7 @@ const UNSURE = { value: 0, label: 'Je ne sais pas', sign: '', color: 'var(--vote
         <li>
           <div>
             <h3><span class="num">2.</span> Noter sur quatre niveaux</h3>
-            <p>Vous notez chaque mesure avec votre surligneur, d'« Impossible » à « Parfait ». Vous pouvez changer votre note à tout moment, depuis n'importe quel écran, avec la gomme : elle rouvre la question en entier, avec son contexte et ses sources. Vous ne comprenez pas la mesure, ou vous n'avez pas d'avis ? Touchez « Je ne sais pas » : cette question ne compte pas dans le score.</p>
+            <p>Vous notez chaque mesure avec votre surligneur, de « Jamais » à « Parfait ». Vous pouvez changer votre note à tout moment, depuis n'importe quel écran, avec la gomme : elle rouvre la question en entier, avec son contexte et ses sources. Vous ne comprenez pas la mesure, ou vous n'avez pas d'avis ? Touchez « Je ne sais pas » : cette question ne compte pas dans le score.</p>
             <ul class="scale" aria-label="Les niveaux de vote">
               {VOTES.map((v) => (
                 <li style={`--c:${v.color}`}><b class="num">{v.sign}</b> {v.label}</li>
@@ -522,7 +522,7 @@ const UNSURE = { value: 0, label: 'Je ne sais pas', sign: '', color: 'var(--vote
       el.textContent = ex.theme;
       el.style.color = ex.accent;
     });
-    const labels = { '-2': 'Impossible −2', '-1': 'Contre −1', '0': 'Je ne sais pas', '1': 'Pour +1', '2': 'Parfait +2' };
+    const labels = { '-2': 'Jamais −2', '-1': 'Contre −1', '0': 'Je ne sais pas', '1': 'Pour +1', '2': 'Parfait +2' };
     // Colonne 2 : aucune note n'est choisie à la place du visiteur ; son clic pose le trait sur la mesure.
     document.querySelectorAll('[data-vote]').forEach((button) =>
       button.addEventListener('click', () => {
